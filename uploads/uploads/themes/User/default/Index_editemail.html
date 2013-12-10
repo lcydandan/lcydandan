@@ -1,0 +1,61 @@
+<include file="Public:head"/>
+<div class="content">
+          <div class="cLineB"><h4>邮件平台</h4></div>
+          <form method="post" action="{ai9me::U('User/Index/upsave')}" enctype="multipart/form-data">
+          <input type="hidden" name="id" value="{ai9me:$info.id}">
+          <div class="msgWrap">
+            <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+              <thead>
+			    <tr>
+                  <th><span class="red">*</span>邮件地址：</th>
+                  <td><input type="text" required="" class="px" name="email" value="{ai9me:$info.email}" tabindex="1" size="25">
+                  <span class="red">商家邮箱用于接收邮件</span>
+                  </td>
+                </tr>
+                <tr>
+                  <th><span class="red">*</span>SMTP账号：</th>
+                  <td><input type="text" required="" class="px" name="emailuser" value="{ai9me:$info.emailuser}" tabindex="1" size="25">
+                  <span class="red">输入QQ帐号</span>
+                  </td>
+                </tr>
+				<tr>
+                  <th><span class="red">*</span>SMTP密码：</th>
+                  <td><input type="text" required="" class="px" name="emailpassword" value="{ai9me:$info.emailpassword}" tabindex="1" size="25">
+                  <span class="red">输入QQ密码</span>
+                  </td>
+                </tr>
+				<tr>
+                  <th><span class="red">*</span>邮件平台状态：</th>
+                  <td><input type="radio" value="1" checked="checked" name="emailstatus"/>开启 <input type="radio" value="0" name="emailstatus"/>关闭
+                  </td>
+                </tr>
+				<div style="display:none;">
+				<input type="text" required="" class="px" name="wxname" value="{ai9me:$info.wxname}" tabindex="1" size="25">
+				<input type="text" disabled="disabled" required="" title="无法修改，您可以联系管理员" name="wxid" value="{ai9me:$info.wxid}" class="px" tabindex="1" size="25" style="color:#DDD;">
+				<input type="text" required="" name="weixin" value="{ai9me:$info.weixin}" class="px" tabindex="1" size="25">
+				<input class="px" name="headerpic" value="{ai9me:$info.headerpic}" size="60">
+				<input type="hidden" name="token" value="{ai9me:$info.token}" class="px" tabindex="1" size="40">
+				<input type="text" class="px" id="province" value="{ai9me:$info.province}" name="province" tabindex="1" size="20">
+				<input id="city" value="{ai9me:$info.city}" type="text" name="city" class="px" tabindex="1" size="20">
+				<input type="text" required="" class="px" tabindex="1" value="{ai9me:$info.qq}" name="qq" size="25">
+				<input type="text" required="" name="wxfans" value="{ai9me:$info.wxfans}" class="px" tabindex="1" size="25">
+				<input type="text" required="" name="type" value="{ai9me:$info.typeid}" class="px" tabindex="1" size="25">
+				</div>
+              </thead>
+              
+                <tr>
+                  <td><button type="submit" class="btnGreen" id="saveSetting">保存</button></td>
+                </tr>
+            </table>
+            
+          </div>
+          </form>
+        </div>
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+<include file="Public:footer"/>	
