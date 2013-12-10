@@ -35,7 +35,28 @@ class ClassifyAction extends UserAction{
 		}
 	}
 	public function insert(){
-		$this->all_insert();
+// 		$this->all_insert();
+		$data['name'] = $this->_post('name');
+		$data['img'] = $this->_post('img');
+		$data['info'] = $this->_post('info');
+		$data['url'] = str_replace('&amp;', "&", $this->_post('url'));
+		$data['sorts'] = $this->_post('sorts', 'intval');
+		$data['status'] = $this->_post('status', 'intval');
+		$data['token'] = session('token');
+		$id = M(MODULE_NAME)->add($data);
+		if ($id)
+		{
+			$this->success('操作成功',U(MODULE_NAME.'/index'));
+		}
+		else
+		{
+			$this->error('操作失败',U(MODULE_NAME.'/index'));
+		}
+	}
+	
+	public function insertMany()
+	{
+		
 	}
 	public function upsave(){
 		$this->all_save();

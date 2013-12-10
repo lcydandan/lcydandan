@@ -2,7 +2,7 @@
  <div class="content">
           <div class="cLineB"><h4>添加文章分类</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a></div> 
 <div class="msgWrap">
-  <form class="form" method="post"   action="{ai9me::U('Classify/insert')}"  target="_top" enctype="multipart/form-data" >
+  <form class="form" method="post"   action="/myown/classify_add.php"  target="_top" enctype="multipart/form-data" >
 <TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
   <THEAD>
 <TR>
@@ -43,6 +43,13 @@
   <TD><input type="radio" class="px" id="keyword" value="1" name="status" checked />是<br />
   <input type="radio" class="px" id="keyword" value="0" name="status" />否
                    </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<!-- add by lcy -->
+<TR>
+<TD>
+<input type="input" name="addnew" style="width:300px;height:50px;border:5px" >
+</TD>
   <TD>&nbsp;</TD>
 </TR>
 <TR>
