@@ -37,6 +37,8 @@ class ClassifyAction extends UserAction{
 	public function insert(){
 // 		$this->all_insert();
 		$data['name'] = $this->_post('name');
+		$size = sizeof($this->_post('name'));
+		echo $size;
 		$data['img'] = $this->_post('img');
 		$data['info'] = $this->_post('info');
 		$data['url'] = str_replace('&amp;', "&", $this->_post('url'));

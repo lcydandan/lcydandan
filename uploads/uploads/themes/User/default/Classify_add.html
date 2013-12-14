@@ -2,12 +2,13 @@
  <div class="content">
           <div class="cLineB"><h4>添加文章分类</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a></div> 
 <div class="msgWrap">
-  <form class="form" method="post"   action="/myown/classify_add.php"  target="_top" enctype="multipart/form-data" >
-<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
+  <form class="form" method="post"   action="{ai9me::U('Classify/insert')}"  target="_top" enctype="multipart/form-data" >
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%" margin-top="5px">
   <THEAD>
 <TR>
   <TH valign="top"><label for="keyword">分类名称：</label></TH>
   <TD><input type="input" class="px" id="keyword" value="" name="name" style="width:500px" ><br />
+      <input type="input" class="px" name="name" style="width:500px" > <br />
                   </TD>
   <TD>&nbsp;</TD>
 </TR>

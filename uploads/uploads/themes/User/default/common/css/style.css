@@ -533,15 +533,33 @@ textarea {
 }
 .tableContent .content {
     border-left: 1px solid #D3D3D3;
-    float: right;
+    float: left;
     margin-left: -2px;
     padding: 20px;
-    width: 997px;
+    width: 925px;
 	background-color: #FFFFFF;
 	min-height:925px;
 }
+
+.tableContent .mycontent {
+    border-left: 1px solid #D3D3D3;
+    float: left;
+    margin-left: -2px;
+    padding: 20px;
+    width: 550px;
+	background-color: #FFFFFF;
+	min-height:925px;
+}
+.tableContent .mycontent h4{
+	font-size:16px;
+}
 .tableContent .content h4{
 	font-size:16px;
+}
+.tableContent select {
+	width:100px;
+	height:35px;
+	margin-bottom:5px;
 }
 .cLine {
     overflow: hidden;
@@ -909,7 +927,7 @@ TABLE.ListProduct .edit{
 }
 .userinfoArea th {
     text-align: left;
-    width: 145px;
+    width: 150px;
 	font-size: 14px;
 	font-weight:bold;
 	line-height: 1.5;
@@ -917,7 +935,7 @@ TABLE.ListProduct .edit{
 }
 .userinfoArea td {
     /*display: block;*/
-    margin-left: 10px;
+    margin-left: 5px;
     padding: 8px 0;
 	color:#666;
 	font-size:12px;
@@ -1446,7 +1464,7 @@ color:#333;
 .tooltips:hover span:before {
     content: "";
     width: 0;
-    height: 0;
+    height: 0; 
     position: absolute;
     bottom: 100%;
     left: 4px;
@@ -1464,4 +1482,11 @@ color:#333;
     border-width: 0 6px 6px 6px;
     border-style: solid;
     border-color: rgba(255, 255, 255, 1) transparent;    
+}
+
+.webreview {
+	background:url(../images/img/radio_iphone_new.png) no-repeat center top ;
+	background-size:450px 800px;
+	width:400px;
+	height:800px;
 }

@@ -1,0 +1,77 @@
+<include file="Public:head"/>
+<TABLE>
+<TR height="60">
+<TD width="450" height="50" bgcolor="0xffff" font-size="20px">效果预览</TD>
+<TD width="500" height="50" font-size="20px" font-size="bold">3G网站编辑</TD>
+</TR>
+<TR>
+<TD width="250px" height="900px" margin-left="10px">
+	<div bgcolor="0xffff">
+		 <img src="{ai9me::RES}/images/cate5.png" class="webreview">
+	</div>
+</TD>
+<TD>
+ <div class="mycontent" >
+          <div class="cLineB"><h4>添加3G网站素材</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a></div> 
+<div class="msgWrap">
+  <form class="form" method="post"   action="{ai9me::U('Classify/insert')}"  target="_top" enctype="multipart/form-data" >
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%" margin-top="5px">
+  <THEAD>
+<TR>
+  <TH valign="top"><label for="keyword">网站名称：</label></TH>
+  <TD><input type="input" class="px" id="keyword" value="" name="name" style="width:300px" ><br />
+                    该名称在手机上不显示，只用于标识不同3G网站
+                     </TD>
+  <TD>&nbsp;</TD>
+</TR>
+                            </THEAD>
+  <TBODY>
+<TR>
+  <TH valign="top"><label for="keyword">图片描述：</label></TH>
+  <TD><input type="input" class="px" id="keyword" value="" name="info" style="width:300px" ><br />
+                  30个字描述图片，可为空   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">图片上传：</label></TH>
+  <TD><input type="input" class="px" id="keyword" value="" name="img" style="width:300px" ><br />
+                  建议图片大小：宽720高400  
+				  <input style="font-size:12px;color:red"type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img))}')" value="点击上传图片"></TD>
+  <TD>&nbsp;</TD>
+</TR>
+<TR>
+  <TH valign="top"><label for="keyword">点击图片的链接地址 ：</label></TH>
+  <TD><input type="input" class="px" id="keyword" value="" name="url" style="width:300px" ><br />
+  		以http://开头
+                   </TD>
+  <TD>&nbsp;</TD>
+</TR>
+
+<!-- add by lcy -->
+<TR>
+  <TH></TH>
+  <TD><button type="submit"  name="button"  class="btnGreen left" >保存</button>
+  	<div class="clr"></div>
+  	</TD>
+  </TR>
+  </TBODY>
+</TABLE>
+  </form>
+  </div> 
+        </div>
+</TD>
+</TR>
+</TABLE>        
+        
+        
+        
+        
+        
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div> 
+
+<!--底部-->
+  	</div>
+<include file="Public:footer"/>
