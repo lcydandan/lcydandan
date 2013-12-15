@@ -1,5 +1,4 @@
 <include file="Public:head"/>
-<div style="font-size:20px; font-weight:bold;padding:20px" >3G网站编辑</div>
 <TABLE>
 <TR>
 <TD width="250px" height="900px" margin-left="10px">
@@ -8,85 +7,86 @@
 	</div>
 </TD>
 <TD>
-	 选择网页模板： <select id="webmodel" onchange="modelChange(this.value)">
+	选择网页模板： <select id="webmodel" onchange="modelChange(this.value)">
 		<option value="{ai9me::RES}/images/cate1.png" selected="selected">模板1</option>
 		<option value="{ai9me::RES}/images/cate2.png" >模板2</option>
 		<option value="{ai9me::RES}/images/cate3.png" >模板3</option>
 		<option value="{ai9me::RES}/images/cate4.png" >模板4</option>
 		<option value="{ai9me::RES}/images/cate5.png" >模板5</option>
 	</select>
- <div class="mycontent" >
-          <div class="cLineB"><h4>添加3G网站素材</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a></div> 
-<div class="msgWrap">
-  <form class="form" method="post"   action="{ai9me::U('Classify/insert')}"  target="_top" enctype="multipart/form-data" >
-<TABLE id="classifyTable" class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%" margin-top="5px">
-<THEAD>
-<TR>
-  <TH valign="top"><label for="keyword">网站标题：</label></TH>
-  <TD><input type="input" class="px" id="keyword" value="" name="name" style="width:450px" ><br />
-                      该名称在手机上不显示，只用于标识不同3G网站
-                     </TD>
-  <TD>&nbsp;</TD>
-</TR>
-</THEAD>
-  <TBODY>
-  <TR>
-  <TH valign="top">图文编辑：</TH>
-  <TD>
-  <div style="border:1px solid #ccc;">
-  <TABLE class="imgtable">
-  <tr>
-  
-  <th>图片标题：</th>
-  <td>
-  	<input class="input info" name="info0"><br />
-  	30个字描述图片，可为空  
-  </td>
-  </tr>
-  <tr>
-  <th>图片上传：</th>
-  <td><input class="input img" name="img0"><br />
-  	建议图片大小：宽720高400  
-  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img0))}')" value="点击上传图片">
-  </td>
-   	
-  </tr>
-  <tr>
-  <th>二次链接地址：</th>
-  <td><input class="input url" name="url0"><br />
-  	以http://开头
-  </td>
-  	</tr>
-  	<tr>
-  	<th></th>
-  	<td>
-  		<input type="button" value="删除" class="btndelete right" onclick="deleteImg(this)">
-  	</td>
-  	</tr>
-  	</TABLE>
-  </div>
-  	</TD>
-  	</TR>
-<TR>
-	<TH></TH>
-	<TD>
-		<input type="button" value="增加图文描述" class="btnadd left" onclick="addImg(this)">
-	</TD>
-</TR>
-<TR>
-  <TH></TH>
-  <TD><button type="submit"  name="button"  class="btnGreen left" >保存</button>
-  	<div class="clr"></div>
-  	</TD>
-  </TR>
-  </TBODY>
-</TABLE>
-  </form>
-  </div> 
-</div>
+ 	<div class="mycontent" >
+         <div class="cLineB">
+         	<h4>添加3G网站素材</h4>
+         	<a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a>
+         </div> 
+         <div class="msgWrap">
+  			<form class="form" method="post"   action="{ai9me::U('Classify/insert')}"  target="_top" enctype="multipart/form-data" >
+         	<TABLE id="classifyTable" class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%" margin-top="5px">
+			<THEAD>
+			<TR>
+			  <TH valign="top"><label for="keyword">网站标题：</label></TH>
+			  <TD><input type="input" class="px" id="keyword" value="" name="name" style="width:450px" ><br />
+			                      该名称在手机上不显示，只用于标识不同3G网站
+			                     </TD>
+			  <TD>&nbsp;</TD>
+			</TR>
+			</THEAD>
+			<TBODY>
+				  <TR>
+				  <TH valign="top">图文编辑：</TH>
+				  <TD>
+				  <div style="border:1px solid #ccc;">
+				  <TABLE class="imgtable">
+				      <tr>  
+					  <th>图片标题：</th>
+					  <td>
+					  	  <input class="input info" name="info0"><br />
+					  	  30个字描述图片，可为空  
+					  </td>
+					  </tr>
+					  <tr>
+						  <th>图片上传：</th>
+						  <td><input class="input img" name="img0"><br />
+						  	建议图片大小：宽720高400  
+						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img0))}')" value="点击上传图片">
+						  </td>						   	
+					  </tr>
+					  <tr>
+						  <th>二次链接地址：</th>
+						  <td><input class="input url" name="url0"><br />
+						  	以http://开头
+						  </td>
+					  </tr>
+					  <tr>
+					  	<th></th>
+					  	<td>
+					  		<input type="button" value="删除" class="btndelete right" onclick="deleteImg(this)">
+					  	</td>
+					  </tr>
+				  </TABLE>
+				  </div>
+				  </TD>
+				  </TR>
+				  <TR>
+					<TH></TH>
+					<TD>
+						<input type="button" value="增加图文描述" class="btnadd left" onclick="addImg(this)">
+					</TD>
+				  </TR>
+				  <TR>
+					  <TH></TH>
+					  <TD><button type="submit"  name="button"  class="btnGreen left" >保存</button>
+					  	<div class="clr"></div>
+					  	</TD>
+				  </TR>
+			</TBODY>
+			</TABLE>
+         </div>
+    </div>
 </TD>
 </TR>
-</TABLE>               
+</TABLE>        
+        
         
         
         
@@ -113,8 +113,8 @@
 		var table = document.getElementById("classifyTable");
 		table.deleteRow(rowindex);
 	}
-
-	/*function addImg(obj)
+	
+	function addImg(obj)
  	{
 	    if(window.XMLHttpRequest)
 	    {
@@ -128,40 +128,37 @@
 	    	alert ("您的浏览器不支持AJAX！");
 	    	return;
 	    }
-		xmlhttp.onreadystatechange=function()
-		{
-		  	if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+
+	    xmlhttp.onreadystatechange=function()
+	    {
+	    	if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			{
 				var rowindex = obj.parentNode.parentNode.rowIndex;
 				var table = document.getElementById("classifyTable");
 				var newrow = table.insertRow(rowindex);
 				newrow.innerHTML = xmlhttp.responseText;
-				
-				//设置name的值
-				nameIndex++;
-				var infos = document.getElementsByClassName("input info");
-				infos[infos.length-1].name = "info" + nameIndex;
-				var imgs = document.getElementsByClassName("input img");
-				imgs[imgs.length-1].name = "img" + nameIndex;
-				var urls = document.getElementsByClassName("input url");
-				urls[urls.length-1].name = "url" + nameIndex;
-				//var uploads = document.getElementsByClassName("upload");
-				uploads[uploads.length-1].onclick = function()
-				{
-					//var imgname = 'img' + nameIndex;
-					//alert(imgname);
-					//var url = '{ai9me::U(\'Upload/index\',array(\'token\'=>$token,\'n\'=>img';
-					//alert(url);
-					//window.open('{ai9me::U(\'Upload/index\',array(\'token\'=>$token,\'n\'=>' + imgname + '))}');
-					alert("success");
-				};
 			}
-		}
+	    	//设置name的值
+			nameIndex++;
+			var infos = document.getElementsByClassName("input info");
+			infos[infos.length-1].name = "info" + nameIndex;
+			var imgs = document.getElementsByClassName("input img");
+			imgs[imgs.length-1].name = "img" + nameIndex;
+			var urls = document.getElementsByClassName("input url");
+			urls[urls.length-1].name = "url" + nameIndex;
+			
+			var uploads = document.getElementsByClassName("upload");
+			uploads[uploads.length-1].onclick = function()
+			{
+			};
+			
+	    }
 		xmlhttp.open("GET","/themes/User/default/Classify_add_innertable.html",true);
 		xmlhttp.send();
  
+ 		
  	}
-	*/	
-		
+	
+	
 </script>
 <include file="Public:footer"/>
