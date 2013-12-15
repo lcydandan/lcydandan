@@ -927,7 +927,7 @@ TABLE.ListProduct .edit{
 }
 .userinfoArea th {
     text-align: left;
-    width: 150px;
+    width: 70px;
 	font-size: 14px;
 	font-weight:bold;
 	line-height: 1.5;
@@ -1484,9 +1484,67 @@ color:#333;
     border-color: rgba(255, 255, 255, 1) transparent;    
 }
 
-.webreview {
+.webpreview {
 	background:url(../images/img/radio_iphone_new.png) no-repeat center top ;
-	background-size:450px 800px;
-	width:400px;
-	height:800px;
+	width:340px;
+	height:605px;
+	padding:126px 31px 120px 34px;
+}
+
+.imgtable {
+	width:450px;
+	height:150px;
+	border:3px;
+	bordercolor:#CCFF33;
+	margin-left:10px;
+}
+
+.imgtable th {
+    text-align: left;
+    width: 110px;
+	font-size: 14px;
+	font-weight:bold;
+	line-height: 1.5;
+	padding: 15px 0;
+}
+.imgtable td {
+    /*display: block;*/
+    margin-left: 5px;
+    padding: 8px 0;
+	color:#666;
+	font-size:12px;
+}
+
+.imgtable .input {
+	background: url(../images/img/px.png) repeat-x scroll 0 0 #FFFFFF;
+    border-color: #848484 #E0E0E0 #E0E0E0 #848484;
+    border-style: solid;
+    border-width: 1px;
+	border-radius: 2px 2px 2px 2px;
+	height:29px;
+	width:320px;
+}
+
+.imgtable .info{}
+
+.imgtable .url {}
+
+.imgtable .img {}
+
+.imgtable .delete {}
+
+.imgtable .upload{
+	font-size:12px;
+	color:blue;
+}
+
+
+.btndelete {
+	color:red; font-size:14px; 
+	text-decoration:underline;
+}
+
+.btnadd {
+	color:blue; font-size:15px; line-height:1.5;
+	text-decoration:underline;
 }
