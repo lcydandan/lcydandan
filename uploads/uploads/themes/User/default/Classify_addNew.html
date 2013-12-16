@@ -129,33 +129,40 @@
 	    	return;
 	    }
 
+
 	    xmlhttp.onreadystatechange=function()
 	    {
 	    	if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
 			{
+	        	//设置name的值
+	    		nameIndex++;
 				var rowindex = obj.parentNode.parentNode.rowIndex;
 				var table = document.getElementById("classifyTable");
 				var newrow = table.insertRow(rowindex);
 				newrow.innerHTML = xmlhttp.responseText;
+				
+
+				var infos = document.getElementsByClassName("input info");
+				infos[infos.length-1].name = "info" + nameIndex;
+				var imgs = document.getElementsByClassName("input img");
+				imgs[imgs.length-1].name = "img" + nameIndex;
+				var urls = document.getElementsByClassName("input url");
+				urls[urls.length-1].name = "url" + nameIndex;
+					
+				var uploads = document.getElementsByClassName("upload");
+				uploads[uploads.length-1].onclick = function()
+				{
+					var imgname = "img" + nameIndex;
+					var tmpurl = "{ai9me::U('Upload/index',array('token'=>$token,'n'=>imgreplace))}";
+					var url = tmpurl.replace("imgreplace", imgname);					
+					window.open(url);
+				};
 			}
-	    	//设置name的值
-			nameIndex++;
-			var infos = document.getElementsByClassName("input info");
-			infos[infos.length-1].name = "info" + nameIndex;
-			var imgs = document.getElementsByClassName("input img");
-			imgs[imgs.length-1].name = "img" + nameIndex;
-			var urls = document.getElementsByClassName("input url");
-			urls[urls.length-1].name = "url" + nameIndex;
-			
-			var uploads = document.getElementsByClassName("upload");
-			uploads[uploads.length-1].onclick = function()
-			{
-			};
 			
 	    }
 		xmlhttp.open("GET","/themes/User/default/Classify_add_innertable.html",true);
 		xmlhttp.send();
- 
+ 		
  		
  	}
 	
