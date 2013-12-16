@@ -34,6 +34,7 @@ class ClassifyAction extends UserAction{
 			$this->error('操作失败',U(MODULE_NAME.'/index'));
 		}
 	}
+		
 	public function insert(){
 // 		$this->all_insert();
 		$data['name'] = $this->_post('name');
@@ -58,8 +59,41 @@ class ClassifyAction extends UserAction{
 	
 	public function insertMany()
 	{
+		$token = session('token');
+		$id = null;
+		for ($i=0; $i<20; $i++)
+		{
+			$data['name'] = $this->_post('name');
+			$img = $this->_post('img'.$i);
+			if ($img == null)
+			{
+				continue;
+			}
+			$id = null;
+			$data['img'] = $img;
+			$data['url'] = str_replace('&amp;', "&", $this->_post('url'.$i));
+			$data['info'] = $this->_post('info'.$i);
+			$data['name'] = $this->_post('name');
+			$data['status'] = '1';
+			$data['sorts'] = strval($i);
+			$data['token'] = $token;
+			$id = M(MODULE_NAME)->add($data);
+			if ($id == null)
+			{
+				break;
+			}
+		}
+		if ($id)
+		{
+			$this->success('操作成功',U(MODULE_NAME.'/index'));
+		}
+		else
+		{
+			$this->error('操作失败',U(MODULE_NAME.'/index'));
+		}
 		
 	}
+	
 	public function upsave(){
 		$this->all_save();
 	}
