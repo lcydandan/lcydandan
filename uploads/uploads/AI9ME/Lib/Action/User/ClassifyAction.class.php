@@ -58,12 +58,13 @@ class ClassifyAction extends UserAction{
 	}
 	
 	public function insertMany()
-	{
+	{		
 		$token = session('token');
 		$id = null;
+		$name = $this->_post('name');
 		for ($i=0; $i<20; $i++)
 		{
-			$data['name'] = $this->_post('name');
+			$data['name'] = $name;
 			$img = $this->_post('img'.$i);
 			if ($img == null)
 			{
@@ -92,6 +93,12 @@ class ClassifyAction extends UserAction{
 			$this->error('操作失败',U(MODULE_NAME.'/index'));
 		}
 		
+		//加入3g_website数据库
+		$db = M('3g_website');
+		$webdata['name'] = $name;
+		$webdata['url'] = 'http://www.baidu.com';
+		$webdata['token'] = $token;
+		$db->add($data);
 	}
 	
 	public function upsave(){
