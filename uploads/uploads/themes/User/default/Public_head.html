@@ -131,13 +131,13 @@
 								<a href="{ai9me::U('Other/index',array('token'=>$token))}">回答不上来的配置</a>
 							</li>
 							<li <if condition="MODULE_NAME eq 'Sms'">class="selected" <else/>class="subCatalogList"</if>>
-								<a href="{ai9me::U('Index/editsms',array('id'=>session('wxid')))}">短信平台配置</a>
+								<a href="{ai9me::U('Index/editsms',array('id'=>session('wxid')))}">短信平台配置<span class="new"></span></a>
 							</li>
 							<li <if condition="MODULE_NAME eq 'Email'">class="selected" <else/>class="subCatalogList"</if>>
-								<a href="{ai9me::U('Index/editemail',array('token'=>$token))}">邮件平台配置</a>
+								<a href="{ai9me::U('Index/editemail',array('token'=>$token))}">邮件平台配置<span class="new"></span></a>
 							</li>
 							<li <if condition="MODULE_NAME eq 'Yun'">class="selected" <else/>class="subCatalogList"</if>>
-								<a href="{ai9me::U('Index/edityun',array('token'=>$token))}">云相册配置</a>
+								<a href="{ai9me::U('Index/edityun',array('token'=>$token))}">云相册配置<span class="new"></span></a>
 							</li>
 							<!--li <if condition="MODULE_NAME eq 'lbslist'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="javascript:alert('已经实现智能地理位置回复，无需人工设置')">LBS回复</a><span class="new"></span>
@@ -157,8 +157,14 @@
 							<li <if condition="MODULE_NAME eq 'Flash'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Flash/index',array('token'=>$token))}">首页幻灯片<span class="new"></span></a>
 							</li>
+							<li <if condition="MODULE_NAME eq 'Yulan'">class="selected" <else/>class="subCatalogList"</if>>
+								<a href="{ai9me::U('Yulan/index',array('token'=>$token))}">微网站预览<span class="new"></span></a>
+							</li>
 							<li <if condition="MODULE_NAME eq 'Diymen'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Diymen/index',array('token'=>$token))}">自定义菜单<span class="new"></span></a>
+							</li>
+                           <li <if condition="MODULE_NAME eq 'Home'">class="selected" <else/>class="subCatalogList"</if>>
+								<a href="{ai9me::U('Home/menuplus',array('token'=>$token))}">一键导航<span class="new"></span></a>
 							</li>
 						</ul>
 						<ul>

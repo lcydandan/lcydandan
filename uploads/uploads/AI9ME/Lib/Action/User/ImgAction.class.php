@@ -44,14 +44,27 @@ class ImgAction extends UserAction{
 			$this->error('操作失败',U(MODULE_NAME.'/index'));
 		}
 	}
-	public function insert(){
+	
+	public function insert()
+	{
 		$pat = "/<(\/?)(script|i?frame|style|html|body|title|font|strong|span|div|marquee|link|meta|\?|\%)([^>]*?)>/isU";
 		$_POST['info'] = preg_replace($pat,"",$_POST['info']);
-		//$_POST['info']=strip_tags($this->_post('info'),'<a> <p> <br>');  
-		//dump($_POST['info']);
+    	if($_FILES['upfile']['name']){
+			$img = $this->_upload();
+			$_POST['pic'] = $img[0]['savepath'].$img[0]['savename'];
+    	}
 		$this->all_insert();
 	}
 	public function upsave(){
+		$pat = "/<(\/?)(script|i?frame|style|html|body|title|font|strong|span|div|marquee|link|meta|\?|\%)([^>]*?)>/isU";
+		$_POST['info'] = preg_replace($pat,"",$_POST['info']);
+		$n_arr = explode(',', $_POST['classid']);
+		$_POST['classid'] = intval($n_arr[0]);
+		$_POST['classname'] = $n_arr[1];
+    	if($_FILES['upfile']['name']){
+			$img = $this->_upload();
+			$_POST['pic'] = $img[0]['savepath'].$img[0]['savename'];
+    	}
 		$this->all_save();
 	}
 }

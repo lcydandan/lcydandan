@@ -1,7 +1,7 @@
 <include file="Public:head"/>
 <div class="content">
           <div class="cLineB"><h4>邮件平台</h4></div>
-          <form method="post" action="{ai9me::U('User/Index/upsave')}" enctype="multipart/form-data">
+          <form method="post" action="{ai9me::U('User/Index/upsaveemail')}" enctype="multipart/form-data">
           <input type="hidden" name="id" value="{ai9me:$info.id}">
           <div class="msgWrap">
             <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -26,7 +26,11 @@
                 </tr>
 				<tr>
                   <th><span class="red">*</span>邮件平台状态：</th>
-                  <td><input type="radio" value="1" checked="checked" name="emailstatus"/>开启 <input type="radio" value="0" name="emailstatus"/>关闭
+                  <td>
+				  <input type="radio" class="radio" class="ipt" value="1" name="emailstatus" id="status1" <if condition="($info.emailstatus eq 1) OR ($info['emailstatus'] eq '') ">checked=""</if> >
+							启用
+							<input type="radio" class="radio" class="ipt"  value="0" name="emailstatus" id="status2" <eq name="info.emailstatus" value="0">checked=""</eq> >
+							关闭
                   </td>
                 </tr>
 				<div style="display:none;">

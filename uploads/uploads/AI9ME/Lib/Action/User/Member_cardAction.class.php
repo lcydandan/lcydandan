@@ -143,8 +143,7 @@ class Member_cardAction extends UserAction{
 				return;
 			}
 			
-			$group_cread_num=M('User_group')->field('create_card_num,create_card_num')->where(array('id'=>session('gid')))->find();
-			//echo $num.'-'.$group_cread_num['create_card_num'];exit;
+			$group_cread_num = M('User_group')->field('create_card_num,wechat_card_num')->where(array('id'=>session('gid')))->find();
 			if(($num>$group_cread_num['create_card_num'])){
 			 $this->error('你当前的vip等级只允许创建'.$group_cread_num['create_card_num'].'张卡');exit;
 			}	

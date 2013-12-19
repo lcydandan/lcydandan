@@ -36,7 +36,35 @@ class HostAction extends UserAction{
 		if(empty($checkdata)){
             $this->error("没有商家记录.您现在可以添加.",U('Host/add',array('token'=>session('token'))));
         }
-		if(IS_POST){ 
+		if(IS_POST){
+		echo "<pre>";
+			print_r($_FILES);
+			$img = $this->_upload();
+			print_r($img);
+			echo "</pre>";
+			die;
+	    	if($_FILES['ppicurlfile']['name']) {
+				$img = $this->_upload();
+				echo "<pre>";
+				//print_r($ppimg);
+				echo "</pre>";
+				$_POST['ppicurl'] = $ppimg[0]['savepath'].$ppimg[0]['savename'];
+	    	}
+			if($_FILES['headpicfile']['name']) {
+				$himg = $this->_upload();
+				echo "<pre>";
+				//print_r($himg);
+				echo "</pre>";
+				$_POST['headpic'] = $himg[0]['savepath'].$himg[0]['savename'];
+	    	}
+			if($_FILES['picurlfile']['name']) {
+				$pimg = $this->_upload();
+				echo "<pre>";
+				print_r($pimg);
+				echo "</pre>";
+				$_POST['picurl'] = $pimg[0]['savepath'].$pimg[0]['savename'];
+	    	}
+			die;
             $_POST['id']        = $this->_post('id');
             $_POST['token']     = session('token');
             $_POST['keyword']   = $this->_post('keyword');            
@@ -67,7 +95,19 @@ class HostAction extends UserAction{
 	}
     
 	public function add(){ 
-          if(IS_POST){   
+          if(IS_POST){
+	    	if($_FILES['ppicurlfile']['name']) {
+				$img = $this->_upload();
+				$_POST['ppicurl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
+			if($_FILES['headpicfile']['name']) {
+				$img = $this->_upload();
+				$_POST['headpic'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
+			if($_FILES['picurlfile']['name']) {
+				$img = $this->_upload();
+				$_POST['picurl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
             $this->all_insert('Host'); 
           }else{
 			$this->display('set');

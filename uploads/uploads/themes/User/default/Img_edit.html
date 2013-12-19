@@ -66,8 +66,8 @@ items : [
                 </TR> 
 				<TR>
                   <TH valign="top"><label for="pic">封面图片地址：</label></TH>
-                  <TD><input class="text textMiddle inputQ"  name="pic" value="{ai9me:$info.pic}" style="width:580px;"  /><br />
-                  推荐将图片上传到腾讯微薄再获取外链
+                  <TD><input class="text textMiddle inputQ"  name="pic" value="{ai9me:$info.pic}" style="width:480px;"  /><input class="btnFile btnGreen" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>pic))}')" value="点击上传图片"><br />
+                  支持外链和上传到本地或者云相册
 </TD>
                 </TR>
 				<input type="hidden" name="id" value="{ai9me:$info.id}" />

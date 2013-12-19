@@ -1,7 +1,7 @@
 <include file="Public:head"/>
 <div class="content">
           <div class="cLineB"><h4>云相册</h4></div>
-          <form method="post" action="{ai9me::U('User/Index/upsave')}" enctype="multipart/form-data">
+          <form method="post" action="{ai9me::U('User/Index/upsaveyun')}" enctype="multipart/form-data">
           <input type="hidden" name="id" value="{ai9me:$info.id}">
           <div class="msgWrap">
             <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
@@ -32,7 +32,11 @@
                 </tr>
 				<tr>
                   <th><span class="red">*</span>云相册状态：</th>
-                  <td><input type="radio" value="1" checked="checked" name="yunstatus"/>开启 <input type="radio" value="0" name="yunstatus"/>关闭
+                  <td>
+				  <input type="radio" class="radio" class="ipt" value="1" name="yunstatus" id="status1" <if condition="($info.yunstatus eq 1) OR ($info['yunstatus'] eq '') ">checked=""</if> >
+							启用
+							<input type="radio" class="radio" class="ipt"  value="0" name="yunstatus" id="status2" <eq name="info.yunstatus" value="0">checked=""</eq> >
+							关闭
                   </td>
                 </tr>
 				<div style="display:none;">

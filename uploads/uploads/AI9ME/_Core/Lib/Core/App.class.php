@@ -57,6 +57,9 @@ class App {
         // 系统变量安全过滤
         if(C('VAR_FILTERS') || C('DEFAULT_FILTER')) {
 			$filter = C('VAR_FILTERS') ? C('DEFAULT_FILTER').",".C('VAR_FILTERS') : C('DEFAULT_FILTER');
+			if (get_magic_quotes_gpc()) {
+				$filter = str_replace('addslashes,', '', $filter);
+			}
             $filters    =   explode(',',$filter);
 			$arr = array_unique($filters);
 			$filters = array_values($arr);

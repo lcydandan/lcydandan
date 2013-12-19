@@ -3,12 +3,11 @@
           <div class="cLineB"><h4>添加文章分类</h4><a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a></div> 
 <div class="msgWrap">
   <form class="form" method="post"   action="{ai9me::U('Classify/insert')}"  target="_top" enctype="multipart/form-data" >
-<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%" margin-top="5px">
+<TABLE class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%">
   <THEAD>
 <TR>
   <TH valign="top"><label for="keyword">分类名称：</label></TH>
   <TD><input type="input" class="px" id="keyword" value="" name="name" style="width:500px" ><br />
-      <input type="input" class="px" name="name" style="width:500px" > <br />
                   </TD>
   <TD>&nbsp;</TD>
 </TR>
@@ -22,9 +21,9 @@
 </TR>
 <TR>
   <TH valign="top"><label for="keyword">分类图片外链地址：</label></TH>
-  <TD><input type="input" class="px" id="keyword" value="" name="img" style="width:500px" ><br />
+  <TD><input type="input" class="px" id="keyword" value="" name="img" style="width:380px" ><input class="btnFile btnGreen" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img))}')" value="点击上传图片"><br />
                   为了提搞速度，建议将图片上传百度bae然后获取链接地址，微信限制3秒内无反应将终止；图片(宽720高400)  
-				  <input style="font-size:12px;color:red"type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img))}')" value="点击上传图片"></TD>
+				  </TD>
   <TD>&nbsp;</TD>
 </TR>
 <TR>
@@ -44,13 +43,6 @@
   <TD><input type="radio" class="px" id="keyword" value="1" name="status" checked />是<br />
   <input type="radio" class="px" id="keyword" value="0" name="status" />否
                    </TD>
-  <TD>&nbsp;</TD>
-</TR>
-<!-- add by lcy -->
-<TR>
-<TD>
-<input type="input" name="addnew" style="width:300px;height:50px;border:5px" >
-</TD>
   <TD>&nbsp;</TD>
 </TR>
 <TR>

@@ -5,6 +5,9 @@ class SiteAction extends BackAction{
     }
 	
 	public function index(){
+		$role = M('User_group')->field('id,name')->where('status = 1')->select();
+		$this->assign('role',$role);
+		$this->assign('user_first_grade',C('user_first_grade'));
 		$this->display();
 	}
 	public function email(){
@@ -37,7 +40,7 @@ class SiteAction extends BackAction{
 			//$config = require $config_file;
 			//$config = array_merge($config, $new_config);
 			//dump($config);EXIT;
-			file_put_contents($config_file, "<?php \nreturn " . stripslashes(var_export($config, true)) . ";", LOCK_EX);
+			file_put_contents($config_file, "<?php \nreturn " . var_export($config, true) . ";", LOCK_EX);
 			@unlink(RUNTIME_FILE);
 			return true;
 		} else {

@@ -60,15 +60,9 @@ items : [
                     </select><a href="{ai9me::U('Classify/add')}"  target="ddd" >添加分类</a>
                   </TD>
                 </TR>
-                <TR>
-                  <TH valign="top"><label for="picurl">封面图片：</label></TH>
-                  <TD>（尺寸：宽720像素，高400像素） 小于500k;<div style=""><input name="upfile" type="file"  class="text textMiddle inputQ" value="请选择图片" />不上传不设置系统会自动随机分配</div></TD>
-                </TR>
-                
-                          <TR>
                   <TH valign="top"><label for="pic">封面图片地址：</label></TH>
-                  <TD><input class="text textMiddle inputQ"  name="pic" value="" style="width:580px;"  /><br />
-                  推荐将图片上传到腾讯微薄再获取外链 <input style="font-size:12px;color:red"type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>pic))}')" value="点击上传图片">
+                  <TD><input class="text textMiddle inputQ"  name="pic" value="" style="width:480px;"  /><input class="btnFile btnGreen" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>pic))}')" value="点击上传图片"><br />
+                  支持外链和上传到本地或者云相册 
 </TD>
                 </TR>
                <TR>

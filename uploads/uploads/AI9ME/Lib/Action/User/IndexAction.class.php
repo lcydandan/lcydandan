@@ -21,6 +21,7 @@ class IndexAction extends UserAction{
 	//添加公众帐号
 	public function add(){
 		$email = str_replace("http://","",C('site_url'));
+		$email = str_replace("/","",C('site_url'));
 		$email_l = strpos($email,".") + 1;
 		$email = substr($email,$email_l);
 		$randLength=6;
@@ -60,6 +61,14 @@ class IndexAction extends UserAction{
 		$this->display();
 	}
 
+	public function upsavesms(){
+		$id = $this->_get('id','intval');
+		$where['uid'] = session('uid');
+		$res = M('Wxuser')->where($where)->find($id);
+		$_POST['wxid'] = $_POST['wxid'] != $res['wxid'] ? $res['wxid'] : $_POST['wxid'];
+		$this->all_save('Wxuser','/editsms');
+	}
+
 	public function editemail(){
 		$id=$this->_get('id','intval');
 		$where['uid']=session('uid');
@@ -68,12 +77,28 @@ class IndexAction extends UserAction{
 		$this->display();
 	}
 
+	public function upsaveemail(){
+		$id = $this->_get('id','intval');
+		$where['uid'] = session('uid');
+		$res = M('Wxuser')->where($where)->find($id);
+		$_POST['wxid'] = $_POST['wxid'] != $res['wxid'] ? $res['wxid'] : $_POST['wxid'];
+		$this->all_save('Wxuser','/editemail');
+	}
+
 	public function edityun(){
 		$id=$this->_get('id','intval');
 		$where['uid']=session('uid');
 		$res=M('Wxuser')->where($where)->find($id);
 		$this->assign('info',$res);
 		$this->display();
+	}
+
+	public function upsaveyun(){
+		$id = $this->_get('id','intval');
+		$where['uid'] = session('uid');
+		$res = M('Wxuser')->where($where)->find($id);
+		$_POST['wxid'] = $_POST['wxid'] != $res['wxid'] ? $res['wxid'] : $_POST['wxid'];
+		$this->all_save('Wxuser','/editeyun');
 	}
 	
 	public function del(){

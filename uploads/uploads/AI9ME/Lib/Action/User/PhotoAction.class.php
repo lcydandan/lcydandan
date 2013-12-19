@@ -10,15 +10,44 @@ class PhotoAction extends UserAction{
 		$count      = $data->where(array('token'=>$_SESSION['token']))->count();
 		$Page       = new Page($count,12);
 		$show       = $Page->show();
-		$list = $data->where(array('token'=>$_SESSION['token']))->limit($Page->firstRow.','.$Page->listRows)->select();	
-		$this->assign('page',$show);		
-		$this->assign('photo',$list);
-		$this->display();		
+		$list = $data->where(array('token'=>$_SESSION['token']))->limit($Page->firstRow.','.$Page->listRows)->select();
+        $home = M('Wxuser')->where(array(
+            'token' => session('token')
+        ))->find();
+        if (IS_POST) {
+			$_POST['wxname'] = $home['wxname'];
+			$_POST['wxid'] = $home['wxid'];
+			$_POST['weixin'] = $home['weixin'];
+			$_POST['headerpic'] = $home['headerpic'];
+			$_POST['token'] = $home['token'];
+			$_POST['province'] = $home['province'];
+			$_POST['city'] = $home['city'];
+			$_POST['typename'] = $home['typename'];
+	    	if($_FILES['file']['name']) {
+				$img = $this->_upload();
+				$_POST['headpicurl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
+            if ($home == false) {
+                $this->all_insert('Wxuser', '/index');
+            } else {
+                $_POST['id'] = $home['id'];
+                $this->all_save('Wxuser', '/index');
+            }
+		}else{
+			$this->assign('page',$show);		
+			$this->assign('photo',$list);
+			$this->assign('home',$home);
+			$this->display();
+		}
 	}
 	public function edit(){
 		if($this->_get('token')!=session('token')){$this->error('非法操作');}
 		$data=D('Photo');
 		if(IS_POST){
+	    	if($_FILES['file']['name']) {
+				$img = $this->_upload();
+				$_POST['picurl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
 			$this->all_save('Photo');
 		}else{
 			$photo=$data->where(array('token'=>session('token'),'id'=>$this->_get('id')))->find();
@@ -36,6 +65,10 @@ class PhotoAction extends UserAction{
 		$check=M('Photo_list')->field('id,pid')->where(array('token'=>$_SESSION['token'],'id'=>$this->_post('id')))->find();
 		if($check==false){$this->error('照片不存在');}
 		if(IS_POST){
+	    	if($_FILES['file']['name']) {
+				$img = $this->_upload();
+				$_POST['picurl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
 			$this->all_save('Photo_list','/list_add');		
 		}else{
 			$this->error('非法操作');
@@ -58,7 +91,11 @@ class PhotoAction extends UserAction{
 		
 		$checkdata=M('Photo')->where(array('token'=>$_SESSION['token'],'pid'=>$this->_get('pid')))->find();
 		if($checkdata==false){$this->error('相册不存在');}
-		if(IS_POST){			
+		if(IS_POST){
+	    	if($_FILES['file']['name']) {
+				$img = $this->_upload();
+				$_POST['picurl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
 			M('Photo')->where(array('token'=>session('token'),'id'=>$this->_post('pid')))->setInc('num');
 			$this->all_insert('Photo_list');			
 		}else{
@@ -75,7 +112,11 @@ class PhotoAction extends UserAction{
 		
 	}
 	public function add(){
-		if(IS_POST){			
+		if(IS_POST){
+	    	if($_FILES['file']['name']) {
+				$img = $this->_upload();
+				$_POST['picurl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
 			$this->all_insert('Photo','/add');			
 		}else{
 			$this->display();	

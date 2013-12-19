@@ -1,0 +1,132 @@
+<include file="Public:head"/>
+				<script src="{ai9me::RES}/js/date/WdatePicker.js"></script>
+				<style type="text/css">
+				.plug-menu {width:36px;height:36px;border-radius:36px;-moz-box-shadow:0 0 0 4px #FFFFFF, 0 2px 5px 4px rgba(0, 0, 0, 0.25);-webkit-box-shadow:0 0 0 4px #FFFFFF, 0 2px 5px 4px rgba(0, 0, 0, 0.25);box-shadow:0 0 0 4px #FFFFFF, 0 2px 5px 4px rgba(0, 0, 0, 0.25);background-color: FF0000;position:relative}
+				.plug-menu span {display: block;width:28px;height:28px;background: url({ai9me::RES}/images/photo/menuplus.png) no-repeat;background-size: 28px 28px;text-indent: -999px;position:absolute;top:4px;left:4px;overflow: hidden;}
+				</style>
+				<script src="{ai9me::RES}/js/cart/jscolor.js" type="text/javascript"></script>
+				<div class="content">
+					<div class="cLineB">
+						<h4>快捷菜单 <span class="FAQ">提供一键拨号，一键导航，一键email等等快捷功能</span></h4>
+					</div>
+					<form method="post" action="" enctype="multipart/form-data">
+						<input type="hidden" name="formhash" id="formhash" value="<php> echo substr(str_shuffle(session(token)), 8);</php>">
+						<div class="msgWrap bgfc" style="padding: 5px 20px;">
+							<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+								<tbody>
+									<tr>
+										<td width="60"><div class="plug-menu" id="menupluscolor" style="background-color:{ai9me:$homeInfo.menupluscolor}"><span class="close"></span></div></td>
+										<td width="140"><strong>请选择快捷菜单的颜色：</strong></td>
+										<td width="95"><input type="text" name="menupluscolor" id="themeStyle" value="{ai9me:$homeInfo.menupluscolor}" class="px color" style="width: 55px; background-image: none; background-color:{ai9me:$homeInfo.menupluscolor}; color: rgb(255, 255, 255);" onblur="document.getElementById('menupluscolor').style.backgroundColor=document.getElementById('themeStyle').value;"></td>
+										<td width="536">请在手机上查看效果！</td>
+									</tr>
+									
+									<tr>
+									<td width="60"> </td>
+										<td><strong>设置页面版权：</strong></td>
+										<td colspan="2"><textarea class="px" style="width:550px; height:35px" name="copyright">{ai9me:$homeInfo.copyright}</textarea><br>例如：© 2001-2013 某某版权所有 </td>
+									</tr>
+							
+								</tbody>
+							</table>
+						</div>
+						<div class="msgWrap form">
+							<div class="bdrcontent">
+								<div id="div_ptype">
+									<table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+										<thead>
+											<tr>
+												<th style=" width:40px;">图标</th>
+												<th style=" width:80px;">名称</th>
+												<th style=" width:270px;"><span class="tooltips">外链网站或活动 <img src="{ai9me::RES}/images/price_help.png" align="absmiddle"><span>
+												<p>比如你想跳转到AI9，就填写<a class="red">http://www.ai9.me</a></p>
+												</span></span></th>
+												<th style=" width:70px;">显示顺序</th>
+												<th>显示(<span class="red">只显示勾选的前4项</span>) </th>
+											</tr>
+										</thead>
+									<tbody>
+										<tr>
+											<td><img src="{ai9me::RES}/images/photo/menuplus1.png" align="absmiddle" style=" background-color:#CCC;width:32px;"></td>
+											<td>电话</td>
+											<td><input class="px" type="text" style="width:250px;" name="tel_url" value="{ai9me:$homeInfo.tel_url}"></td>
+											<td><input type="text" name="tel_sort" value="{ai9me:$homeInfo.tel_sort}" class="px" style="width:50px;"></td>
+										
+                                            <td>
+				  <input type="radio" class="radio" class="ipt" value="1" name="tel_display" id="status1" <if condition="($homeInfo.tel_display eq 1) OR ($homeInfo['tel_display'] eq '') ">checked=""</if> >
+							启用
+							<input type="radio" class="radio" class="ipt"  value="0" name="tel_display" id="status2" <eq name="homeInfo.tel_display" value="0">checked=""</eq> >
+							关闭
+                  </td>
+										</tr>
+										<tr>
+											<td><img src="{ai9me::RES}/images/photo/menuplus2.png" align="absmiddle" style=" background-color:#CCC;width:32px;"></td>
+											<td>会员资料</td>
+											<td><input class="px" type="text" style="width:250px;" name="memberinfo_url" value="{ai9me:$homeInfo.memberinfo_url}"></td>
+											<td><input type="text" name="memberinfo_sort" value="{ai9me:$homeInfo.memberinfo_sort}" class="px" style="width:50px;"></td>                                                                                        <td>
+				  <input type="radio" class="radio" class="ipt" value="1" name="memberinfo_display" id="status1" <if condition="($homeInfo.memberinfo_display eq 1) OR ($homeInfo['memberinfo_display'] eq '') ">checked=""</if> >
+							启用
+							<input type="radio" class="radio" class="ipt"  value="0" name="memberinfo_display" id="status2" <eq name="homeInfo.memberinfo_display" value="0">checked=""</eq> >
+							关闭
+                  </td>
+										</tr>
+										<tr>
+											<td><img src="{ai9me::RES}/images/photo/menuplus3.png" align="absmiddle" style=" background-color:#CCC;width:32px;"></td>
+											<td>导航</td>
+											<td><input class="px" type="text" style="width:250px;" name="guide_url" value="{ai9me:$homeInfo.guide_url}"></td>
+											<td><input type="text" name="guide_sort" value="{ai9me:$homeInfo.guide_sort}" class="px" style="width:50px;"></td>
+
+                                             <td>
+				  <input type="radio" class="radio" class="ipt" value="1" name="guide_display" id="status1" <if condition="($homeInfo.guide_display eq 1) OR ($homeInfo['guide_display'] eq '') ">checked=""</if> >
+							启用
+							<input type="radio" class="radio" class="ipt"  value="0" name="guide_display" id="status2" <eq name="homeInfo.guide_display" value="0">checked=""</eq> >
+							关闭
+                  </td>
+										</tr>
+										<tr>
+											<td><img src="{ai9me::RES}/images/photo/menuplus5.png" align="absmiddle" style=" background-color:#CCC;width:32px;"></td>
+											<td>分享</td>
+											<td><input class="px" type="text" style="width:250px;" name="share_url" value="{ai9me:$homeInfo.share_url}"></td>
+											<td><input type="text" name="share_sort" value="{ai9me:$homeInfo.share_sort}" class="px" style="width:50px;"></td>
+                                                   <td>
+				  <input type="radio" class="radio" class="ipt" value="1" name="share_display" id="status1" <if condition="($homeInfo.share_display eq 1) OR ($homeInfo['share_display'] eq '') ">checked=""</if> >
+							启用
+							<input type="radio" class="radio" class="ipt"  value="0" name="share_display" id="status2" <eq name="homeInfo.share_display" value="0">checked=""</eq> >
+							关闭
+                  </td>
+										</tr>									
+										<tr>
+											<td class="norightborder">&nbsp;</td>
+											<td colspan="4" class="norightborder">
+												<button type="submit" name="batchsubmit" value="true" class="btnGreen vm"><strong>保存</strong></button>
+											</td>
+										</tr>
+									</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="cLine">
+						<div class="clr"></div>
+					</div>
+				</div>
+				<script>
+				$(document).ready(function(){
+					$(".checkbox").click(function(){
+						var i=0; 
+						$("input:checked").each(function(){
+							i++;
+						});
+						if(i>4){
+							alert('最多只显示四项');
+						}
+					});
+				});
+				</script>
+			</div>
+			<div class="clr"></div>
+		</div>
+	</div>
+	<div class="clr"></div>
+<include file="Public:footer"/>

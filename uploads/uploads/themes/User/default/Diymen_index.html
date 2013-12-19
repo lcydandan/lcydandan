@@ -30,6 +30,7 @@ $(document).ready(function() {
 <thead>
 <tr>
 	<th style=" width:60px;">显示顺序</th>
+	<th style=" width:60px;">菜单类型</th>
 	<th style=" width:220px;">主菜单名称</th>
 	<th style=" width:170px;">关联关键词</th>
 	<th>外链URL</th>
@@ -41,6 +42,9 @@ $(document).ready(function() {
 	<tr class="hover">
         <td class="td25">
 			<span>{ai9me:$class.sort}</span>
+		</td>
+		<td>
+			<span><if condition="$class['type'] eq 'click'">关键词</if><if condition="$class['type'] eq 'view'">超链接</if></span>
 		</td>
         <td>
           <div>
@@ -59,6 +63,9 @@ $(document).ready(function() {
 			<td class="td25" colspan="1">
 				<span>{ai9me:$class1.sort}</span>
 			</td>
+			<td>
+				<span><if condition="$class1['type'] eq 'click'">关键词</if><if condition="$class1['type'] eq 'view'">超链接</if></span>
+			</td>
 			<td colspan="1">
 			  <div class="board">
 				<span>{ai9me:$class1.title}</span>
@@ -76,7 +83,7 @@ $(document).ready(function() {
 	</volist>
 	</volist>
 	<tr class="hover">
-        <td class="td25" colspan="5">
+        <td class="td25" colspan="6">
 		<if condition="$class neq false">
 		<a class="btnGreen " onclick="drop_confirm('自定义菜单最多勾选3个，每个菜单的子菜单最多5个，请确认!', '{ai9me::U('Diymen/class_send')}');" title="">生成自定义菜单</a>
 		</if>

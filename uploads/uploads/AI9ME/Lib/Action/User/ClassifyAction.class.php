@@ -34,7 +34,6 @@ class ClassifyAction extends UserAction{
 			$this->error('操作失败',U(MODULE_NAME.'/index'));
 		}
 	}
-		
 	public function insert(){
 // 		$this->all_insert();
 		$data['name'] = $this->_post('name');

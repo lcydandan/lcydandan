@@ -6,9 +6,8 @@ class ProductAction extends UserAction{
 	public $isDining;
 	public function _initialize() {
 		parent::_initialize();
-		//
-		$token_open=M('token_open')->field('queryname')->where(array('token'=>session('token')))->find();
-		if((!isset($_GET['dining'])&&!strpos($token_open['queryname'],'shop'))||(isset($_GET['dining'])&&!strpos($token_open['queryname'],'dx'))){
+		$token_open = M('token_open')->field('queryname')->where(array('token'=>session('token')))->find();
+		if(((!isset($_GET['dining']) || $_GET['dining'] == 0) && !strpos($token_open['queryname'],'shop')) || ((isset($_GET['dining']) && $_GET['dining'] == 1)&&!strpos($token_open['queryname'],'dx'))){
             $this->error('您还未开启该模块的使用权,请到功能模块中添加',U('Function/index',array('token'=>session('token'),'id'=>session('wxid'))));
 		}
 		//是否是餐饮

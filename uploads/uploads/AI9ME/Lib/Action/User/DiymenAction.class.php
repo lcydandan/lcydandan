@@ -66,41 +66,53 @@ class DiymenAction extends UserAction{
 	public function class_send(){
 		if(IS_GET){
 			$api = M('Diymen_set')->where(array('token'=>session('token')))->find();
+			if ($api['appid'] == false || $api['appsecret'] == false ){
+				$this->error('必须先填写【AppId】和【 AppSecret】');
+				exit;
+			}
 			$url_get = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$api['appid'].'&secret='.$api['appsecret'];
 			$result = file_get_contents($url_get);
 			if (empty($result)){
 				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 				curl_setopt ($ch, CURLOPT_URL, $url_get);
 				curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 				$result = curl_exec($ch);
 				curl_close($ch);
 			}
 			$json = json_decode($result);
-			if ($api['appid'] == false || $api['appsecret'] == false ){
-				$this->error('必须先填写【AppId】和【 AppSecret】');
-				exit;
-			}
 			$data = '{"button":[';
 			$class = M('Diymen_class')->where(array('token'=>session('token'),'pid'=>0))->limit(3)->order('sort desc')->select();
 			$i = 1;
 			foreach($class as $key=>$vo){
-				//主菜单
+				//main menu
 				$data .= '{"name":"'.$vo['title'].'",';
 				$c = M('Diymen_class')->where(array('token'=>session('token'),'pid'=>$vo['id']))->limit(5)->order('sort desc')->select();
 				$count = M('Diymen_class')->where(array('token'=>session('token'),'pid'=>$vo['id']))->limit(5)->order('sort desc')->count();
-				//子菜单
+				//sub menu
 				if($c != false){
 					$data .= '"sub_button":[';
 				}else{
-					$data .= '"type":"click","key":"'.$vo['title'].'","sub_button":[]';
+					if ($vo['type'] == "click") {
+						$data .= '"type":"click","key":"'.$vo['keyword'].'"';
+					} else {
+						$data .= '"type":"view","url":"'.$vo['url'].'"';
+					}
 				}
 				$i = 1;
 				foreach($c as $voo){
 					if($i == $count){
-						$data .= '{"type":"click","name":"'.$voo['title'].'","key":"'.$voo['keyword'].'"}';					
+						if ($voo['type'] == "click") {
+							$data .= '{"type":"click","name":"'.$voo['title'].'","key":"'.$voo['keyword'].'"}';
+						} else {
+							$data .= '{"type":"view","name":"'.$voo['title'].'","url":"'.$voo['url'].'"}';
+						}
 					}else{
-						$data .= '{"type":"click","name":"'.$voo['title'].'","key":"'.$voo['keyword'].'"},';
+						if ($voo['type'] == "click") {
+							$data .= '{"type":"click","name":"'.$voo['title'].'","key":"'.$voo['keyword'].'"},';
+						} else {
+							$data .= '{"type":"view","name":"'.$voo['title'].'","url":"'.$voo['url'].'"},';
+						}
 					}
 					$i++;
 				}
@@ -112,7 +124,7 @@ class DiymenAction extends UserAction{
 				}elseif($key == 2){
 					$data .= '}';
 				}
-			}	
+			}
 			$data .= ']}';
 			file_get_contents('https://api.weixin.qq.com/cgi-bin/menu/delete?access_token='.$json->access_token);
 			$url = 'https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$json->access_token;

@@ -32,7 +32,7 @@
        </tr> 
        <tr> 
         <th><span class="red">*</span>订单封面图片：</th> 
-        <td><input type="text" name="ppicurl" value="{ai9me:$set.ppicurl}" class="px" style="width:400px;" /> 填写图片外链地址，推荐大小为720x400</td> 
+        <td><input type="text" name="ppicurl" value="{ai9me:$set.ppicurl}" class="px" style="width:400px;" /><input class="btnFile btnGreen" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>ppicurl))}')" value="点击上传图片"> 填写图片外链地址，推荐大小为720x400</td> 
        </tr> 
        <tr> 
         <th><span class="red">*</span>订单页头部图片：</th> 

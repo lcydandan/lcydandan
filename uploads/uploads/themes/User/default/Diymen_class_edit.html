@@ -45,11 +45,21 @@ td{text-align: -webkit-left;}
 			</td>
 		</tr>
 		<tr>
-			<td align="right" height="42">显示：　</td>
+			<td align="right" height="42">显示：</td>
 			<td>
 				<div class="mr15 l">
-				<input type="radio" name="is_show" <if condition="$show['is_show'] eq 1">checked="checked"</if> value="1">是&nbsp;
-				<input type="radio" name="is_show" <if condition="$show['is_show'] eq 0">checked="checked"</if> value="0">否&nbsp;
+					<input type="radio" name="is_show"<if condition="$show['is_show'] eq 1"> checked="checked"</if> value="1">是&nbsp;
+					<input type="radio" name="is_show"<if condition="$show['is_show'] eq 0"> checked="checked"</if> value="0">否&nbsp;
+				</div>
+				<div class="system l"></div>
+			</td>
+		</tr>
+		<tr>
+			<td align="right" height="42">类型：</td>
+			<td>
+				<div class="mr15 l">
+					<input type="radio" name="type"<if condition="$show['type'] eq 'click'"> checked="checked"</if> value="click">关键词
+					<input type="radio" name="type"<if condition="$show['type'] eq 'view'"> checked="checked"</if> value="view">超链接
 				</div>
 				<div class="system l"></div>
 			</td>

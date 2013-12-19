@@ -47,6 +47,12 @@ class GrouponAction extends ProductAction{
 		$pageSize=isset($_POST['pagesize'])&&intval($_POST['pagesize'])>1?intval($_POST['pagesize']):5;
 		$start=($page-1)*$pageSize;
 		$products = $this->product_model->where($where)->order('id desc')->limit($start.','.$pageSize)->select();
+		foreach($products as $v){
+			$v['enddate'] = date('Y-m-d',$v['endtime']);
+			$v['membercount'] = $v['salecount'] + $v['fakemembercount'];
+			$p[] = $v;
+		}
+		$products = $p;
 		echo json_encode($products);
 	}
 }

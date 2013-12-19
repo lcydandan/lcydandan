@@ -16,10 +16,10 @@ class IndexAction extends BaseAction
     {
         parent::_initialize();
         $agent = $_SERVER['HTTP_USER_AGENT'];
-        if (!strpos($agent, "MicroMessenger")) {
-            echo '此功能只能在微信浏览器中使用';
-            exit;
-        }
+        //if (!strpos($agent, "MicroMessenger")) {
+           // echo '此功能只能在微信浏览器中使用';
+           // exit;
+        //}
         $this->token     = $this->_get('token', 'trim');
         $this->wecha_id  = $this->_get('wecha_id', 'trim');
         $where['token']  = $this->token;
@@ -42,6 +42,43 @@ class IndexAction extends BaseAction
         ))->find();
         $this->assign('company', $this->company);
         $this->assign('token', $this->token);
+		$home            = M('Home')->where($where)->select();
+		$homeInfo        = M('Menuplus')->where($where)->select();
+		$arr             = $homeInfo[0];
+		$arr = array_slice($arr,5);
+		$array = array_chunk($arr,3,true);
+		$arrayNew = array();
+		foreach($array as $k=>$v) {
+			foreach($v as $k2=>$v2) {
+				$b = explode('_',$k2);
+				break;
+			}
+			$a = array_values($v);
+			$arrayNew[$k]['url'] = $a[0];
+			$arrayNew[$k]['sort'] = $a[1];
+			$arrayNew[$k]['display'] = $a[2];
+			$arrayNew[$k]['name'] = $b[0];
+		}
+		foreach($arrayNew as $k=>$v) {
+			$newArray[$k]['url'] = $arrayNew[$k]['url'];
+			$newArray[$k]['sort'] = $arrayNew[$k]['sort'];
+			$newArray[$k]['display'] = $arrayNew[$k]['display'];
+			$newArray[$k]['name'] = $arrayNew[$k]['name'];
+			if ($k > 2) {
+				break;
+			}
+		}
+		$newArray = array_values(array_sort($newArray, 'sort', 'asc'));
+		$user_group = M('User_group')->where(array(
+            'id' => session('gid')
+        ))->find();
+        $this->assign('homebgurl', $home[0]['homebgurl']);
+        $this->assign('homeurl', $home[0]['homebgurl']);
+		$homeInfo[0]['plugmenucolor'] = $homeInfo[0]['menupluscolor'];
+        $this->assign('homeInfo', $homeInfo[0]);
+        $this->assign('menuPlus', $newArray);
+        $this->assign('plugmenus', $newArray);
+        $this->assign('iscopyright', $user_group['iscopyright']);
     }
     
     public function classify()

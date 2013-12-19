@@ -31,6 +31,12 @@ class CompanyAction extends UserAction{
 		}
 		$thisCompany=$this->company_model->where($where)->find();
 		if(IS_POST){
+			print_r($_FILES);
+	    	if($_FILES['file']['name']) {
+				$img = $this->_upload();
+				$_POST['logourl'] = $img[0]['savepath'].$img[0]['savename'];
+	    	}
+			die;
 			if (!$thisCompany){
 				if ($this->isBranch){
 					$this->insert('Company',U('Company/branches',array('token'=>$this->token,'isBranch'=>$this->isBranch)));
