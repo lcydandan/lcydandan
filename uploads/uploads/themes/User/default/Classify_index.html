@@ -21,23 +21,18 @@
     <th style=" width:150px;" class="norightborder">操作</th>
 </tr>
 </thead>
-<!-- 
+
 <volist name="info" id="vo">
 <tr>
 <td>{ai9me:$vo.name}</td>
-<td>{ai9me:$vo.info}</td>
-<td>{ai9me:$vo.sorts}</td>
-<td><div class="cateimg"><img src="{ai9me:$vo.img}" class="cateimg_small"  /><img src="{ai9me:$vo.img}" class="cateimg_big"  /></div></td>
-<td>{ai9me:$vo.url}</td>
-<td><eq name="vo.status" value="1">显示<else/>不显示</eq></td>
-<td class="norightborder">
-	
-	<a target="ddd" href="{ai9me::U('Classify/edit',array('id'=>$vo['id']))}">编辑</a>
-	<a href="{ai9me::U('Classify/del',array('id'=>$vo['id']))}">删除</a>
+<td>{ai9me:$vo.weburl}</td>
+<td class="norightborder">	
+	<a target="ddd" href="{ai9me::U('Classify/editNew',array('weburl'=>$vo['weburl']))}">编辑</a>
+	<a href="{ai9me::U('Classify/del',array('weburl'=>$vo['weburl']))}">删除</a>
 </td>
 </tr>
-</volist>
-              -->  
+</volist>             
+              
   </table>
 </div>
 </div>

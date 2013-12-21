@@ -7,11 +7,12 @@
 	</div>
 </TD>
 <TD>
-	选择网页模板： <select id="webmodel" onchange="modelChange(this.value)">
-		<option value="{ai9me::RES}/images/cate1.png" selected="selected">模板1</option>
-		<option value="{ai9me::RES}/images/cate2.png" >模板2</option>
-		<option value="{ai9me::RES}/images/cate3.png" >模板3</option>
-		<option value="{ai9me::RES}/images/cate4.png" >模板4</option>
+	<form class="form" method="post"   action="{ai9me::U('Classify/insertMany')}"  target="_top" enctype="multipart/form-data" >
+	选择网页模板： <select id="webmodel" name="webmodel" onchange="modelChange(this.value)">
+		<option value="tpl_101_index" selected="selected">模板1</option>
+		<option value="tpl_102_index" >模板2</option>
+		<option value="tpl_103_index" >模板3</option>
+		<option value="tpl_104_index" >模板4</option>
 		<option value="{ai9me::RES}/images/cate5.png" >模板5</option>
 	</select>
  	<div class="mycontent" >
@@ -20,7 +21,7 @@
          	<a href="javascript:history.go(-1);"  class="right btnGrayS vm" style="margin-top:-27px" >返回</a>
          </div> 
          <div class="msgWrap">
-  			<form class="form" method="post"   action="{ai9me::U('Classify/insertMany')}"  target="_top" enctype="multipart/form-data" >
+  			
          	<TABLE id="classifyTable" class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%" margin-top="5px">
 			<THEAD>
 			<TR>
@@ -104,7 +105,7 @@
 	var nameIndex = 0;
 	function modelChange(value)
 	{
-		document.getElementById("webpreview").src = value;
+		//document.getElementById("webpreview").src = value;
 	}
 	
 	function deleteImg(obj)
