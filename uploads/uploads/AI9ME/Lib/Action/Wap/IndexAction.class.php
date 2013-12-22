@@ -43,8 +43,8 @@ class IndexAction extends BaseAction
         $this->assign('company', $this->company);
         $this->assign('token', $this->token);
 		$home            = M('Home')->where($where)->select();
-		$homeInfo        = M('Menuplus')->where($where)->select();
-		$arr             = $homeInfo[0];
+		//$homeInfo        = M('Menuplus')->where($where)->select();
+		/*$arr             = $homeInfo[0];
 		$arr = array_slice($arr,5);
 		$array = array_chunk($arr,3,true);
 		$arrayNew = array();
@@ -58,6 +58,13 @@ class IndexAction extends BaseAction
 			$arrayNew[$k]['sort'] = $a[1];
 			$arrayNew[$k]['display'] = $a[2];
 			$arrayNew[$k]['name'] = $b[0];
+		}*/
+		$arrayNew = array();
+		foreach($info as $v) {
+			$arrayNew[$k]['url'] = $v['url'];
+			$arrayNew[$k]['sort'] = $v['sorts'];
+			$arrayNew[$k]['display'] = $v['status'];
+			$arrayNew[$k]['name'] = $v['name'];
 		}
 		foreach($arrayNew as $k=>$v) {
 			$newArray[$k]['url'] = $arrayNew[$k]['url'];
@@ -98,6 +105,7 @@ class IndexAction extends BaseAction
         $this->assign('info', $this->info);
         $this->assign('tpl', $this->tpl);
         $this->assign('copyright', $this->copyright);
+        //$this->buildHtml('aaaaaa', '', 'index');
         $this->display($this->tpl['tpltypename']);
     }
     

@@ -130,7 +130,7 @@ class ClassifyAction extends UserAction{
 		$weburl = $this->_post('weburl');
 		$db = M(MODULE_NAME);
 		//先删除原来的
-		$where['weburl']=$this->_post('weburl');
+		$where['weburl']=$weburl;
 		$db->where($where)->delete();
 		
 		$id = null;
