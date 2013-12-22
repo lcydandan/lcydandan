@@ -100,13 +100,20 @@ class IndexAction extends BaseAction
         $flash          = M('Flash')->where($where)->select();
         $count          = count($flash);
         $this->assign('flash', $flash);
-        $this->assign('info', $this->info);
+        
         $this->assign('num', $count);
         $this->assign('info', $this->info);
         $this->assign('tpl', $this->tpl);
         $this->assign('copyright', $this->copyright);
-        //$this->buildHtml('aaaaaa', '', 'index');
-        $this->display($this->tpl['tpltypename']);
+        
+        //获取url对应的图文信息
+        $where['weburl'] = $this->_get('weburl');
+        $info = M('Classify')->where($where)->order('sorts')->select();
+        
+        $this->assign('info', $info);
+        $this->display($info[0]['tpltypename']);
+//         $this->buildHtml('1',HTML_PATH.'/','index','utf-8');
+//         $this->display($this->tpl['tpltypename']);
     }
     
     public function lists()
