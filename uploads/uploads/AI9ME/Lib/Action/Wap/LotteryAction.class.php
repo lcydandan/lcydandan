@@ -16,7 +16,7 @@ class LotteryAction extends BaseAction{
 			$redata->add($where);
 			$record = $redata->where($where)->find();
 		}
-		$Lottery = M('Lottery')->where(array('id'=>$id,'token'=>$token,'type'=>1,'status'=>1))->find();
+		$Lottery 	= M('Lottery')->where(array('id'=>$id,'token'=>$token,'type'=>1,'status'=>1))->find();
 		
 		//1.活动过期,显示结束
 		  
@@ -36,16 +36,6 @@ class LotteryAction extends BaseAction{
 			$data['prize']	 = $record['prize'];
 			$data['tel'] 	 = $record['phone'];	
 		}
-//1.新增
-$click = $Lottery['click']+1;
-		$upsql="update ai9me_lottery set click='".$click."' where id='".$_GET["id"]."'";
-        mysql_query($upsql);
-		
-		$jsql="select * from ai9me_lottery_record where lid='".$_GET["id"]."'";
-        $jquery=mysql_query($jsql);
-		$jnum=mysql_num_rows($jquery);
-		$jupsql="update ai9me_lottery set joinnum='".$jnum."' where id='".$_GET["id"]."'";
-		mysql_query($jupsql);
 		
 		$data['On'] 		= 1;
 		$data['token'] 		= $token;
@@ -118,9 +108,9 @@ $click = $Lottery['click']+1;
 			'5' => array('id'=>6,'prize'=>'六等奖','v'=>$sixthNum,'start'=>$firstNum+$secondNum+$thirdNum+$fourthNum+$fifthNum,'end'=>$firstNum+$secondNum+$thirdNum+$fourthNum+$fifthNum+$sixthNum),
 			'6' => array('id'=>7,'prize'=>'谢谢参与','v'=>(intval($Lottery['allpeople']))*$multi-($firstNum+$secondNum+$thirdNum+$fourthNum+$fifthNum+$sixthNum),'start'=>$firstNum+$secondNum+$thirdNum+$fourthNum+$fifthNum+$sixthNum,'end'=>intval($Lottery['allpeople'])*$multi)
 		);
-		$Lottery 	= M('Lottery')->where(array('id'=>$id,'type'=>1,'status'=>1))->find();
+		//
 		foreach ($prize_arr as $key => $val) { 
-			$arr[$val['id']] = $val['v']; 
+			$arr[$val['id']] = $val; 
 		} 
 		//-------------------------------	 
 		//随机抽奖[如果预计活动的人数为1为各个奖项100%中奖]
@@ -216,7 +206,7 @@ $click = $Lottery['click']+1;
 			break;
 			
 			case 6:
-				if ($Lottery['sixlucknums'] >= $Lottery['sixnums']) {
+				if ($Lottery['sixlucknums'] >= $Lottery['sixenums']) {
 					 $prizetype =  ''; 
 					// $winprize = '谢谢参与';
 				}else{
@@ -282,11 +272,11 @@ $click = $Lottery['click']+1;
 			M('Lottery_record')->where(array('id'=>$rid))->setInc('usenums');
 			$record = M('Lottery_record')->where(array('id'=>$rid))->find();
 			$prizetype	=	$this->get_prize($id);			
-			if ($prizetype >= 1 || $prizetype <= 6) {				 
+			if ($prizetype >= 1 && $prizetype <= 6) {				 
 				$sn 	= uniqid();				
-				echo '{"success":"1","sn":"'.$sn.'","prizetype":"'.$prizetype.'","usenums":"'.$record['usenums'].'"}';
+				echo '{"success":1,"sn":"'.$sn.'","prizetype":"'.$prizetype.'","usenums":"'.$record['usenums'].'"}';
 			}else{
-				echo '{"success":"0","prizetype":"","usenums":"'.$record['usenums'].'"}';
+				echo '{"success":0,"prizetype":"","usenums":"'.$record['usenums'].'"}';
 			}			
 			exit;
 		} 

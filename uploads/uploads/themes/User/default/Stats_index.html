@@ -1,0 +1,78 @@
+<include file="Public:head"/>
+<script src="{ai9me::RES}/flash/FusionCharts.js" type="text/javascript"></script>      
+<div class="content">
+	<h4 class="cLineB">
+		帐号请求数详情选择月份
+		<select class="setting-period" name="period" id="period" onchange="doit(this.value)">
+			<volist name="time" id="ai9me">
+			<option <if condition="$ai9me == $now_m">selected="selected</if>"value="{ai9me:$ai9me}">{ai9me:$ai9me}月</option>
+			</volist>
+		</select>
+	</h4>
+	<script>
+	function doit(month){
+		$.get("{ai9me::U('User/Stats/getxmldata')}", { month: month}, function(result){
+			var iChart = new FusionCharts("{ai9me::RES}/flash/MSLine.swf", "ChartId", "996", "400", "0", "0");
+			iChart.setXMLData(result);
+			iChart.render("iChartwrap");
+		});
+		$.get("{ai9me::U('User/Stats/getajaxdata')}", { month: month}, function(res){
+			$("#ajaxmsgWrap").html(res);
+		});
+	}
+	</script>
+	<div class="msgWrap">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin:20px 0; ">
+			<tbody>
+				<tr>
+					<td align="center" bgcolor="#f9f9f9">
+						<div id="iChartwrap" align="center"></div>
+						<script type="text/javascript">
+							var iChart = new FusionCharts("{ai9me::RES}/flash/MSLine.swf", "ChartId", "996", "400", "0", "0");
+							iChart.setDataURL("{ai9me::U('User/Stats/getxmldata')}");
+							iChart.render("iChartwrap");
+						</script>
+					</td>
+				</tr>
+				<tr>
+					<td align="center" bgcolor="#f9f9f9">
+						<div id="chartdiv2" align="center"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div id="ajaxmsgWrap" class="msgWrap">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="ListProduct">
+			<thead>
+				<tr>
+					<th>日期</th>
+					<th>3G网站浏览量</th>
+					<th>文本请求数</th>
+					<th>图文请求数</th>
+					<th>语音请求数</th>
+					<th>营销/电商请求</th>
+					<th>关注人数</th>				
+					<th>取消关注人数</th> 
+					<th>总请求数/日</th>
+				</tr>
+			</thead>
+			<tfoot>
+				 <volist id="list" name="list">                
+					<tr>
+						<td>{ai9me:$list.time|date='Y-m-d',###}</td>
+						<td>{ai9me:$list.3g}</td>
+						<td>{ai9me:$list.textnum}</td>
+						<td>{ai9me:$list.imgnum}</td>
+						<td>{ai9me:$list.videonum}</td>
+						<td>{ai9me:$list.other}</td>					
+						<td>{ai9me:$list.follownum}</td>
+						<td>{ai9me:$list.unfollownum}</td>											 
+						<td><?php echo $list['3g']+$list['textnum']+$list['imgnum']+$list['videonum']+$list['other']?></td>
+					</tr>
+				</volist>
+			</tfoot> 			
+		</table>
+	</div>  
+</div>
+<include file="Public:footer"/>

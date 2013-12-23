@@ -37,7 +37,7 @@ class LotteryAction extends UserAction{
 			$this->error('vip0无法使用抽奖活动,请充值后再使用',U('Home/Index/price'));
 		}
 		if(IS_POST){
-			$data=D('lottery');
+			$data=D('Lottery');
 			$_POST['statdate']=strtotime($this->_post('statdate'));
 			$_POST['enddate']=strtotime($this->_post('enddate'));
 			$_POST['token']=session('token');
@@ -46,7 +46,7 @@ class LotteryAction extends UserAction{
 			$this->display();
 		}
 	}
-	public function setinc(){
+	public function start(){
 		if(session('gid')==1){
 			$this->error('vip0无法开启活动,请充值后再使用',U('Home/Index/price'));
 		}
@@ -68,12 +68,12 @@ class LotteryAction extends UserAction{
 		}
 
 	}
-	public function setdes(){
+	public function end(){
 		$id=$this->_get('id');
 		$where=array('id'=>$id,'token'=>session('token'));
 		$check=M('Lottery')->where($where)->find();
 		if($check==false)$this->error('非法操作');
-		$data=M('Lottery')->where($where)->setDec('status');
+		$data=M('Lottery')->where($where)->setInc('status');
 		if($data!=false){
 			$this->success('活动已经结束');
 		}else{
@@ -130,7 +130,7 @@ class LotteryAction extends UserAction{
 		if($check==false)$this->error('非法操作');
 		$back=$data->where($wehre)->delete();
 		if($back==true){
-			M('Keyword')->where(array('pid'=>$id,'token'=>session('token'),'module'=>'lottery'))->delete();
+			M('Keyword')->where(array('pid'=>$id,'token'=>session('token'),'module'=>'Lottery'))->delete();
 			$this->success('删除成功');
 		}else{
 			$this->error('操作失败');

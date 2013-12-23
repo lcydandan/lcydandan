@@ -4,7 +4,7 @@
 	bottom:0;
 	left:0px;
 	z-index:900;
-	display:none;
+	display:block;
 }
 .phone {
 	width:100%;

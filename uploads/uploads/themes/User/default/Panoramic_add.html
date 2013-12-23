@@ -1,0 +1,90 @@
+<include file="Public:head" />
+				<link rel="stylesheet" type="text/css" href="{ai9me::RES}/{ai9me::MODULE_NAME}/css/style.css" />
+				<script src="{ai9me::STATICS}/artDialog/jquery.artDialog.js"></script>
+				<script src="{ai9me::STATICS}/artDialog/plugins/iframeTools.js"></script>
+				<div id="{ai9me::MODULE_NAME}" class="content {ai9me::MODULE_NAME}">
+					<form class="form" method="post" action="" enctype="multipart/form-data" >
+						<div class="cLineB">
+							<h4>{ai9me:$activityname}设置</h4><a href="{ai9me::U(MODULE_NAME.'/index',array('token'=>$token))}" class="right btnGrayS vm">返回</a>
+							<div class="clr"></div>
+						</div>
+						<div class="cLine hide">
+							<div class="pageNavigator left"></div>
+							<div class="clr"></div>
+						</div>
+						<div class="msgWrap bgfc"> 
+							<table class="userinfoArea" cellSpacing="0" cellPadding="0">
+								<tbody>
+									<tr>
+										<th valign="top" class="f_l_r"><span class="red">*</span>关键词：</th>
+										<td>
+											<input type="input" class="px" id="keyword" value="<if condition="$vo['keyword'] eq ''">{ai9me:$activityname}<else/>{ai9me:$vo.keyword}</if>" name="keyword" style="width:420px" ><br /><span class="red">只能写一个关键词</span>，用户输入此关键词将会触发此活动。
+										</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r"><span class="red">*</span>名称：</span></th>
+										<td><input type="input" class="px" id="name" value="" name="name" style="width:420px;">&nbsp;&nbsp;例：我家的客厅</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r"><span class="red">*</span>微信回复标题：</span></th>
+										<td><input type="input" class="px" id="title" value="{ai9me:$set.title}" name="title" style="width:420px;">&nbsp;&nbsp;例：全景客厅展示</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r"><span class="red">*</span>微信回复图片：</th>
+										<td><input type="input" class="px" id="picurl" value="" name="picurl" style="width:420px;"><br />例：{ai9me::C('site_url')}/themes/Static/images/w720_h400_1.jpg</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">顺序数字：</th>
+										<td><input type="input" class="px" id="sort" value="1" name="sort" style="width:420px;">&nbsp;&nbsp;由小到大排列</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">前：</th>
+										<td><input type="input" class="px" id="frontpic" value="{ai9me::C('site_url')}/<?php echo str_replace("./","",RES);?>/Panoramic/sample/pano_f.jpg" name="frontpic" style="width:420px;">&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">右：</th>
+										<td><input type="input" class="px" id="rightpic" value="{ai9me::C('site_url')}/<?php echo str_replace("./","",RES);?>/Panoramic/sample/pano_r.jpg" name="rightpic" style="width:420px;">&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">后：</th>
+										<td><input type="input" class="px" id="backpic" value="{ai9me::C('site_url')}/<?php echo str_replace("./","",RES);?>/Panoramic/sample/pano_b.jpg" name="backpic" style="width:420px;">&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">左：</th>
+										<td><input type="input" class="px" id="leftpic" value="{ai9me::C('site_url')}/<?php echo str_replace("./","",RES);?>/Panoramic/sample/pano_l.jpg" name="leftpic" style="width:420px;">&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">顶部：</th>
+										<td><input type="input" class="px" id="toppic" value="{ai9me::C('site_url')}/<?php echo str_replace("./","",RES);?>/Panoramic/sample/pano_u.jpg" name="toppic" style="width:420px;">&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">底部：</th>
+										<td><input type="input" class="px" id="bottompic" value="{ai9me::C('site_url')}/<?php echo str_replace("./","",RES);?>/Panoramic/sample/pano_d.jpg" name="bottompic" style="width:420px;">&nbsp;&nbsp;</td>
+									</tr>
+									<tr>
+										<th valign="top" class="f_l_r">描述信息：</th>
+										<td><textarea name="intro" class="px" style="width:420px; height:150px"></textarea></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td colspan="3">
+											<button type="submit" name="button" class="btnGreen">保存</button>&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="{ai9me::U('Panoramic/index',array('token'=>$token))}" class="btnGray vm">取消</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="cLine hide">
+							<div class="pageNavigator right"></div>
+							<div class="clr"></div>
+						</div>
+						<input type="hidden" name="token" value="{ai9me:$token}" />
+					</form>
+				</div>
+			</div>
+			<div class="clr"></div>
+		</div>
+	</div>
+	<div class="clr"></div>
+<include file="Public:footer" />

@@ -1,0 +1,132 @@
+<include file="Public:head"/>
+<script src="{ai9me::RES}/js/date/WdatePicker.js"></script>
+<div class="content">
+<div class="cLineB">
+  <h4>微喜帖配置 </h4><a href="javascript:history.go(-1);" class="right btnGrayS vm" style="margin-top:-27px">返回</a>
+ </div>
+         
+    <div class="msgWrap bgfc">
+	  <form class="form" method="post" action="" target="_top" enctype="multipart/form-data">	 
+		<table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+			<tbody>
+				<tr>
+				  <th valign="top"><span class="red">*</span>关键词：</th>
+					<td>
+						<input type="hidden" class="px" value="1" name="type" style="width:400px" >
+						<input type="input" class="px" id="keyword" value="<if condition="$marrycard['keyword'] eq ''">微喜帖<else/>{ai9me:$marrycard.keyword}</if>" name="keyword" style="width:400px" ><br />
+						<span class="red">只能写一个关键词</span>，用户输入此关键词将会触发此活动。
+					</td>
+				</tr>
+				<tr>
+					<th width="120"><span class="red">*</span>回复标题：</th>
+					<td><input type="text" name="title" value="{ai9me:$marrycard.title}" class="px" style="width:550px;"></td>
+				</tr>
+				<tr>
+					<th width="120"><span class="red">*</span>内容介绍：</th>
+					<td><textarea style="width:560px;height:75px" name="info" id="info" class="px">{ai9me:$marrycard.info}</textarea><br/>最多填写120个字</td>
+				</tr>
+				<tr>
+					<th><span class="red">*</span>回复图片：</th>
+					<td><input type="text" name="picurl" value="{ai9me:$marrycard.picurl}" class="px" style="width:450px;"><input class="font-size:12px;color:red" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>picurl))}')" value="点击上传图片"><br/> 填写图片外链地址，大小为720x400</td>
+				</tr>
+
+				<tr>
+					<th><span class="red">*</span>想说的话：</th>
+					<td><textarea style="width:560px;height:75px" name="contents" id="contents" class="px">{ai9me:$marrycard.contents}</textarea><br/> 最多填写120个字</td>
+				</tr>
+				
+				<tr>
+					<th><span class="red">*</span>新郎：</th>
+					<td>
+						<input type="input" class="px w550" name="husband" id="partytime" value="<if condition="$marrycard['husband'] neq ''">{ai9me:$marrycard.husband}</if>" />
+					</td>
+				</tr>
+				
+				<tr>
+					<th><span class="red">*</span>新娘：</th>
+					<td>
+						<input type="input" class="px w550" name="wife" id="wife" value="<if condition="$marrycard['wife'] neq ''">{ai9me:$marrycard.wife}</if>" />
+					</td>
+				</tr>
+
+				<tr>
+					<th><span class="red">*</span>宴会时间：</th>
+					<td>
+						<input type="input" class="px w550" id="partytime" value="<if condition="$marrycard['partytime'] neq ''">{ai9me:$marrycard.partytime|date="Y-m-d H:i:s",###}</if>" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'})" name="partytime" /><br/> 请填写宴会时间
+					</td>
+				</tr>
+				
+				<tr>
+					<th><span class="red">*</span>活动时间：</th>
+					<td><input type="input" class="px" id="startdate" value="<if condition="$marrycard['startdate'] neq ''">{ai9me:$marrycard.startdate|date="Y-m-d",###}</if>" onClick="WdatePicker()" name="startdate" />                
+						到
+						<input type="input" class="px" id="enddate" value="<if condition="$marrycard['enddate'] neq ''">{ai9me:$marrycard.enddate|date="Y-m-d",###}</if>" name="enddate"  onClick="WdatePicker()"  /> 
+					</td>
+				</tr>
+
+				<tr>
+					<th><span class="red">*</span>宴会地址：</th>
+					<td><input type="text" name="partyaddress" value="{ai9me:$marrycard.partyaddress}" class="px" style="width:550px;"><br/> 请填写宴会地址</td>
+				</tr>
+
+				<tr>
+					<th><span class="red">*</span>接待电话：</th>
+					<td><input type="text" name="tel" value="{ai9me:$marrycard.tel}" class="px" style="width:550px;"><br/> 请填写宴会电话</td>
+				</tr>
+
+				<tr>
+					<th>婚礼视频：</th>
+					<td><input type="text" name="video" value="{ai9me:$marrycard.video}" class="px" style="width:550px;"><br/>例&lt;iframe width="480" height="405" src="<span style="color:#ff0000;">http://player.youku.com/embed/XNjQyMDIzOTYw</span>" frameborder="0" allowfullscreen=""&gt;&lt;/iframe&gt;(只复制红色部分)</td>
+				</tr>
+				
+				<tr>
+					<th>封面合照：</th>
+					<td><input type="text" name="thumbpic" value="{ai9me:$marrycard.thumbpic}" class="px" style="width:480px;"><input class="font-size:12px;color:red" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>thumbpic))}')" value="点击上传图片"><br/> 请填写照片外链地址</td>
+				</tr>
+				
+				<tr>
+					<th>背景音乐：</th>
+					<td><input type="text" name="bgmusic" value="{ai9me:$marrycard.bgmusic}" class="px w550"><br/> 请填写背景音乐外链地址</td>
+				</tr>
+
+				<tr>
+					<th>照片一：</th>
+					<td><input type="text" name="photo_1" value="{ai9me:$marrycard.photo_1}" class="px" style="width:480px;"><input class="font-size:12px;color:red" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>photo_1))}')" value="点击上传图片"><br/> 请填写照片外链地址</td>
+				</tr>
+
+
+				<tr>
+					<th>照片二：</th>
+					<td><input type="text" name="photo_2" value="{ai9me:$marrycard.photo_2}" class="px" style="width:480px;"><input class="font-size:12px;color:red" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>photo_2))}')" value="点击上传图片"><br/> 请填写照片外链地址</td>
+				</tr>
+				
+				<tr>
+					<th>照片三：</th>
+					<td><input type="text" name="photo_3" value="{ai9me:$marrycard.photo_3}" class="px" style="width:480px;"><input class="font-size:12px;color:red" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>photo_3))}')" value="点击上传图片"><br/> 请填写照片外链地址</td>
+				</tr>
+				
+				<tr>
+					<th>照片四：</th>
+					<td><input type="text" name="photo_4" value="{ai9me:$marrycard.photo_4}" class="px" style="width:480px;"><input class="font-size:12px;color:red" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>photo_4))}')" value="点击上传图片"><br/> 请填写照片外链地址</td>
+				</tr>
+				
+				<tr>
+					<th>照片五：</th>
+					<td><input type="text" name="photo_5" value="{ai9me:$marrycard.photo_5}" class="px" style="width:480px;"><input class="font-size:12px;color:red" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>photo_5))}')" value="点击上传图片"><br/> 请填写照片外链地址</td>
+				</tr>
+
+				<th>&nbsp;</th>
+					<td>
+						<button type="submit" name="button" class="btnGreen">保存</button>
+						<a href="javascript:history.go(-1);" class="btnGray vm">取消</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+  </div> 
+ 
+  
+        </div>
+         <div class="clr"></div>
+<include file="Public:footer"/>

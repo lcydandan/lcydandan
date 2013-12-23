@@ -1,5 +1,5 @@
 <?php
 return array (
-  'ver' => '2.3',
+  'ver' => '5.0',
 );
 ?>

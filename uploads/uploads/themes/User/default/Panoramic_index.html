@@ -1,0 +1,55 @@
+<include file="Public:head"/>
+				<link rel="stylesheet" type="text/css" href="{ai9me::RES}/{ai9me::MODULE_NAME}/css/style.css" />
+				<script src="{ai9me::STATICS}/artDialog/jquery.artDialog.js"></script>
+				<script src="{ai9me::STATICS}/artDialog/plugins/iframeTools.js"></script>
+				<div id="{ai9me::MODULE_NAME}" class="content {ai9me::MODULE_NAME}">
+					<div class="cLineB">
+						<h4 class="left">{ai9me:$activityname}活动信息 (<if condition="$count eq ''">0<else/>{ai9me:$count}</if>) 条<span class="FAQ">你本月有 {ai9me:$group.activitynum} 次机会可免收活动创建费，已经使用了 {ai9me:$activitynum} 次机会!</span></h4>
+						<div class="clr"></div>
+					</div>
+					<div class="cLine">
+						<div class="pageNavigator left">
+							<a href="{ai9me::U(MODULE_NAME.'/add',array('token'=>$token))}" title="新增{ai9me:$activityname}" class="btnGrayS vm bigbtn"><img src="{ai9me::RES}/{ai9me::MODULE_NAME}/images/add.png" class="vm" />新增{ai9me:$activityname}</a>
+						</div>
+						<div class="clr"></div>
+					</div>
+					<div class="msgWrap">
+						<form method="post" action="" id="info">
+							<table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+								<thead>
+									<tr>
+										<th>名称</th>
+										<th>关键词</th>
+										<th>总浏览数</th>
+										<th>外链代码</th>
+										<th class="norightborder">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr></tr>
+									<volist name="list" id="o"> 
+									<tr>
+										<td>{ai9me:$o.name}</td>
+										<td>{ai9me:$o.keyword}</td>
+										<td>{ai9me:$o.click}</td>
+										<td>{ai9me:$activityname} {ai9me:$o.id}</td>
+										<td class="norightborder"><a href="{ai9me::U('Wap/'.MODULE_NAME.'/item',array('id'=>$o['id'],'token'=>$o['token']))}" target="_blank">预览</a> <a href="{ai9me::U(MODULE_NAME.'/edit',array('token'=>$token,'id'=>$o['id']))}">修改</a> <a href="javascript:drop_confirm('您确定要删除吗?', '{ai9me::U(MODULE_NAME.'/delete',array('token'=>$token,'id'=>$o['id']))}');">删除</a></td>
+									</tr>
+									</volist>
+								</tbody>
+							</table>
+							<input type="hidden" name="token" value="{ai9me:$_GET['token']}" />
+						</form>
+					</div>
+					<div class="cLine">
+						<div class="pageNavigator right">
+							<div class="pages"></div>
+						</div>
+						<div class="clr"></div>
+					</div>
+				</div>
+			</div>	
+			<div class="clr"></div>
+		</div>
+	</div>
+<include file="Public:footer"/>

@@ -10,7 +10,10 @@ define('APPKEY', $APPKEY);//设置App Key
 define('APPSECRET', $APPSECRET);//设置App Secret
 define('SPACENAME', $SPACENAME);//空间名称
 
-include "nanoyun.class.php";
+//include "nanoyun.class.php";
+require_once('upyun.class.php');
+//$upyun = new UpYun('ai9me', 'ai9', 'shangxin521');
+$upyun = new UpYun($SPACENAME, $APPKEY, $APPSECRET);
 
 $picname = $_FILES['mypic']['name'];
 $picsize = $_FILES['mypic']['size'];
@@ -32,13 +35,19 @@ if ($picname != "") {
 		$picurl = 'http://'.$_SERVER['SERVER_NAME'].'/uploads/file/'.$pics;
 	}else{
 		@move_uploaded_file($_FILES['mypic']['tmp_name'], $pic_path); //传到本地
-		$nanoyun = new Nanoyun(APPKEY, APPSECRET);
+		/*$nanoyun = new Nanoyun(APPKEY, APPSECRET);
         $filehandle = fopen($pic_path, 'rb');
         $filename = $pics;//指定在云存储中的写入位置
         $rsp = $nanoyun->write_file(SPACENAME, $filename, $filehandle);
-        fclose($filehandle);
+        fclose($filehandle);*/
+
+		$fh = fopen($pic_path, 'rb');
+        $rsp = $upyun->writeFile('/'.$pic_path, $fh, True);   // 上传图片，自动创建目录
+        fclose($fh);
+		//var_dump($rsp);
+
 		unlink($pic_path);
-		$picurl = 'http://'.$domain.'/'.$pics;
+		$picurl = 'http://'.$domain.'/'.$pic_path;
 	}
 }
 $size = round($picsize/1024,2);

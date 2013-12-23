@@ -19,7 +19,7 @@ defined('THINK_PATH') or exit();
  */
 class ReadHtmlCacheBehavior extends Behavior {
     protected $options   =  array(
-            'HTML_CACHE_ON'     =>  false,
+            'HTML_CACHE_ON'     =>  true,
             'HTML_CACHE_TIME'   =>  60,
             'HTML_CACHE_RULES'  =>  array(),
             'HTML_FILE_SUFFIX'  =>  '.html',

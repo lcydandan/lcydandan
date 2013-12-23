@@ -46,7 +46,7 @@
 				<if condition="$_SESSION['uid']==false"><a href="{ai9me::U('Index/login')}">登录</a>&nbsp;&nbsp;|&nbsp;&nbsp;
 				<a href="{ai9me::U('Index/login')}">注册</a>
 				<else/>你好,<a href="{ai9me::U('User/Index/index')}" hidefocus="true"  ><span style="color:red">{ai9me:$Think.session.uname}</span></a>（uid:{ai9me:$Think.session.uid}）
-				<a href="javascript:void(0)" onclick="Javascript:window.open('{ai9me::U('System/Admin/logout')}','_blank')" >退出</a></if>
+				<a href="javascript:void(0)" onclick="Javascript:window.open('{ai9me::U('Admin/Admin/logout')}','_blank')" >退出</a></if>
 				
 			</div>
 		</div>
@@ -158,12 +158,12 @@
 								<a href="{ai9me::U('Flash/index',array('token'=>$token))}">首页幻灯片<span class="new"></span></a>
 							</li>
 							<li <if condition="MODULE_NAME eq 'Yulan'">class="selected" <else/>class="subCatalogList"</if>>
-								<a href="{ai9me::U('Yulan/index',array('token'=>$token))}">微网站预览<span class="new"></span></a>
+								<a href="{ai9me::U('Yulan/index',array('token'=>$token))}" target="_blank">微网站预览<span class="new"></span></a>
 							</li>
 							<li <if condition="MODULE_NAME eq 'Diymen'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Diymen/index',array('token'=>$token))}">自定义菜单<span class="new"></span></a>
 							</li>
-                           <li <if condition="MODULE_NAME eq 'Home'">class="selected" <else/>class="subCatalogList"</if>>
+                         <li <if condition="MODULE_NAME eq 'Home'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Home/menuplus',array('token'=>$token))}">一键导航<span class="new"></span></a>
 							</li>
 						</ul>
@@ -171,8 +171,6 @@
 							<div class="nav-header">电商系统</div>
 							<li <if condition="MODULE_NAME eq 'Taobao'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Taobao/index',array('token'=>$token))}">淘宝天猫店铺配置</a></li>
-							<li <if condition="MODULE_NAME eq 'apilist'">class="selected"<else/>class="subCatalogList"</if>>
-								<a href="{ai9me::U('Api/index',array('token'=>$token))}">融合第三方</a></li>
 							<li <if condition="MODULE_NAME eq 'Adma'">class="selected"<else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Adma/index',array('token'=>$token))}">DIY宣传页</a></li>
 							<li <if condition="MODULE_NAME eq 'Photo'">class="selected"<else/>class="subCatalogList"</if>>
@@ -186,21 +184,15 @@
 							 <li <if condition="(MODULE_NAME eq 'Product') and (ACTION_NAME eq 'index')">class="selected"<else/>class="subCatalogList"</if> >
 								<a href="{ai9me::U('Product/index',array('token'=>$token))}">微商城</a>
 							</li> 
+                           <li <if condition="MODULE_NAME eq 'Panoramic'">class="selected"<else/>class="subCatalogList"</if>>
+									<a href="{ai9me::U('Panoramic/index',array('token'=>$token))}">全景相册</a>
+								</li>
 							<li <if condition="ACTION_NAME eq 'orders'">class="selected"<else/>class="subCatalogList"</if> >
 								<a href="{ai9me::U('Product/orders',array('token'=>$token,'dining'=>1))}">无线订餐（网络打印）</a>
 							</li>
 							<li <if condition="MODULE_NAME eq 'Selfform'">class="selected"<else/>class="subCatalogList"</if> >
 								<a href="{ai9me::U('Selfform/index',array('token'=>$token))}">万能表单,报名,留言,预约</a>
 							</li>
-							<!--li <if condition="MODULE_NAME eq 'Vote'">class="selected"<else/>class="subCatalogList"</if>>
-								<a href="{ai9me::U('Vote/index',array('token'=>$token))}">3G投票活动</a><span class="new"></span>
-							</li>
-							<li <if condition="MODULE_NAME eq 'Question'">class="selected"<else/>class="subCatalogList"</if>>
-								<a href="{ai9me::U('Question/index',array('token'=>$token))}">一站到底</a><span class="new"></span>
-							</li>
-							<li <if condition="MODULE_NAME eq 'Ordering'">class="selected"<else/>class="subCatalogList"</if> >
-								<a href="{ai9me::U('Ordering/index',array('token'=>$token))}">在线订餐</a><span class="new"></span>
-							</li-->
 						</ul>
 						<ul>
 							<div class="nav-header">推广活动</div>
@@ -213,14 +205,17 @@
 							<li <if condition="MODULE_NAME eq 'Guajiang'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Guajiang/index',array('token'=>$token))}">刮刮卡</a>
 							</li>
+                           <li <if condition="MODULE_NAME eq 'Marrycard'">class="selected" <else/>class="subCatalogList"</if>>
+								<a href="{ai9me::U('Marrycard/index',array('token'=>$token))}">微喜帖<span class="new"></span></a>
+							</li>
+							<li <if condition="MODULE_NAME eq 'Goldegg'">class="selected" <else/>class="subCatalogList"</if>>
+								<a href="{ai9me::U('Goldegg/index',array('token'=>$token))}">砸金蛋</a>
+							</li>
 						</ul>
 						<ul>
 						<div class="nav-header">会员卡<span class="new"></span></div>
 							<li <if condition="ACTION_NAME eq ''">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Member_card/index',array('token'=>$token))}">会员卡设计</a>
-							</li>
-							<li>
-								<a href="{ai9me::U('Member_card/privilege',array('token'=>$token))}">最新通知</a>
 							</li>
 							<li <if condition="ACTION_NAME eq 'privilege'">class="selected" <else/>class="subCatalogList"</if>>
 								<a href="{ai9me::U('Member_card/privilege',array('token'=>$token))}">会员特权</a>
@@ -238,10 +233,13 @@
 								<a href="{ai9me::U('Member/index',array('token'=>$token))}">会员资料管理</a><span class="new"></span>
 							</li>
 						</ul>
+						
+						
+						
 						<ul>
 							<div class="nav-header">统计分析</div>
 							<li <if condition="MODULE_NAME eq 'index'">class="selected" <else/>class="subCatalogList"</if>>
-								<a href="javascript:alert('即将发布')">请求数详情</a>
+								<a href="{ai9me::U('Stats/index',array('token'=>$token))}">请求数详情</a>
 							</li>
 						</ul>
 					</div>

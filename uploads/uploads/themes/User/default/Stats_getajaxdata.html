@@ -1,0 +1,30 @@
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="ListProduct">
+	<thead>
+		<tr>
+			<th>日期</th>
+			<th>3G网站浏览量</th>
+			<th>文本请求数</th>
+			<th>图文请求数</th>
+			<th>语音请求数</th>
+			<th>营销/电商请求</th>
+			<th>关注人数</th>				
+			<th>取消关注人数</th> 
+			<th>总请求数/日</th>
+		</tr>
+	</thead>
+	<tfoot>
+		 <volist id="list" name="list">                
+			<tr>
+				<td>{ai9me:$list.time|date='Y-m-d',###}</td>
+				<td>{ai9me:$list.3g}</td>
+				<td>{ai9me:$list.textnum}</td>
+				<td>{ai9me:$list.imgnum}</td>
+				<td>{ai9me:$list.videonum}</td>
+				<td>{ai9me:$list.other}</td>					
+				<td>{ai9me:$list.follownum}</td>
+				<td>{ai9me:$list.unfollownum}</td>											 
+				<td><?php echo $list['3g']+$list['textnum']+$list['imgnum']+$list['videonum']+$list['other']?></td>
+			</tr>
+		</volist>
+	</tfoot> 			
+</table>

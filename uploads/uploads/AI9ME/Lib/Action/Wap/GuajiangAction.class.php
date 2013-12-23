@@ -13,7 +13,7 @@ class GuajiangAction extends BaseAction{
 		}
 		$id 	  = $this->_get('id');
 		$redata	  = M('Lottery_record');
-		$where	  = array('token'=>$token,'wecha_id'=>$wecha_id,'lid'=>$id,'type'=>2);
+		$where	  = array('token'=>$token,'wecha_id'=>$wecha_id,'lid'=>$id);
 		$record   = $redata->where($where)->find();		
 		if($record == Null){
 			$redata->add($where);
@@ -21,7 +21,7 @@ class GuajiangAction extends BaseAction{
 			$record =$redata->where($where)->find();
 		} 
 
-		$Lottery =	M('Lottery')->where(array('id'=>$id,'token'=>$token,'type'=>2,'status'=>1))->find(); 
+		$Lottery =	M('Lottery')->where(array('id'=>$id,'token'=>$token,'type'=>2))->find(); 
 		$data = array();
 
 		if ($Lottery['enddate'] < time()) {
@@ -63,7 +63,7 @@ class GuajiangAction extends BaseAction{
 
 
 					foreach ($prize_arr as $key => $val) { 
-					    $arr[$val['id']] = $val['v']; 
+					    $arr[$val['id']] = $val; 
 					} 
 			 		if ($Lottery['allpeople'] == 1) {
 	 
@@ -141,17 +141,7 @@ class GuajiangAction extends BaseAction{
 			} //end if;
 		} // end first if; 
 		
-		$click = $Lottery['click']+1;
-		$upsql="update ai9me_lottery set click='".$click."' where id='".$_GET["id"]."'";
-        mysql_query($upsql);
-		
-		$jsql="select * from ai9me_lottery_record where lid='".$_GET["id"]."'";
-        $jquery=mysql_query($jsql);
-		$jnum=mysql_num_rows($jquery);
-		$jupsql="update ai9me_lottery set joinnum='".$jnum."' where id='".$_GET["id"]."'";
-		mysql_query($jupsql);
-		
-		$data['usecout'] 	= $record['usenums'];
+		$data['usecout'] 	= intval($record['usenums']);
 		$data['canrqnums']	= $Lottery['canrqnums'];
 		$data['fist'] 		= $Lottery['fist'];
 		$data['second'] 	= $Lottery['second'];
@@ -224,7 +214,7 @@ class GuajiangAction extends BaseAction{
 			echo'{"success":1,"msg":"恭喜！尊敬的'.$data['wecha_name'].'请您保持手机通畅！请您牢记的领奖号:'.$data['sn'].'"}';
 			exit;
 		}
-
+/*
 		$record = M('Lottery_record');
 		$data['phone'] 		= $this->_post('tel');
 		$data['wecha_name'] = $this->_post('wxname');
@@ -233,6 +223,8 @@ class GuajiangAction extends BaseAction{
 		$data['sn']			= uniqid();
 		$rollback = $record->where(array('lid'=>$this->_post('lid') ,
 				'wecha_id'=>$this->_post('wechaid') ))->save($data);
+				
+				*/
 	}
 	
 }

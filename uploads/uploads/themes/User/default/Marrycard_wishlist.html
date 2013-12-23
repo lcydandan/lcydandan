@@ -1,0 +1,56 @@
+<include file="Public:head"/>  
+        <div class="content">
+          <div class="cLineB">
+              <h4 class="left">{ai9me:$item.title}赴宴列表</h4><a href="{ai9me::U('Marrycard/index',array('token'=>$token))}" class="right btnGrayS vm">返回</a>
+              <div class="clr"></div>
+          </div>
+          <div class="cLine">
+				<div class="clr"></div>
+          </div>
+          <div class="msgWrap">
+          <form method="post"  action="" id="info" >
+          <input name="delall"  type="hidden" value="" />
+           <input name="wxid"  type="hidden" value="" />
+            <TABLE class="ListProduct" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <THEAD>
+                <TR>
+					<TH>微信ID</TH>
+					<TH>微信号</TH>
+					<TH>祝福人</TH>
+					<TH>祝福语</TH>
+					<TH>联系电话</TH>
+                </TR>
+              </THEAD>
+              <TBODY>
+                <TR></TR>
+                  <volist id="list" name="list">
+                <TR>
+                  <TD>{ai9me:$list.wecha_id}</TD>
+                  <TD>{ai9me:$list.wecha_name}</TD> 
+				  <TD>{ai9me:$list.guestname}</TD>
+				  <TD>{ai9me:$list.wishcontent}</TD>
+                  <TD>{ai9me:$list.mobilephone}</TD>
+                </TR>
+				</volist>
+                         
+              </TBODY>
+            </TABLE>
+           </form>
+          </div>
+            
+ 
+          <div class="cLine">
+            <div class="pageNavigator right">
+                 <div class="pages"></div>
+              </div>
+            <div class="clr"></div>
+          </div>
+        </div>
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+<include file="Public:footer"/>

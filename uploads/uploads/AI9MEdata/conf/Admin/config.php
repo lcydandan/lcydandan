@@ -13,9 +13,14 @@ return array(
     'REQUIRE_AUTH_ACTION'       =>  '',		// 默认需要认证操作
     'GUEST_AUTH_ON'             =>  false,    // 是否开启游客授权访问
     'GUEST_AUTH_ID'             =>  0,        // 游客的用户ID
-	'RBAC_ROLE_TABLE'			=>	'tp_role',
-	'RBAC_USER_TABLE'			=>	'tp_role_user',
-	'RBAC_ACCESS_TABLE'			=>	'tp_access',
-	'RBAC_NODE_TABLE'			=>	'tp_node',
+
+	'RBAC_ROLE_TABLE'			=>	'ai9me_role',
+
+	'RBAC_USER_TABLE'			=>	'ai9me_role_user',
+
+	'RBAC_ACCESS_TABLE'			=>	'ai9me_access',
+
+	'RBAC_NODE_TABLE'			=>	'ai9me_node',
+
 	'SPECIAL_USER'				=>	'admin',
 );

@@ -7,47 +7,43 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
 <link href="{ai9me::RES}/css/userinfo/fans.css" rel="stylesheet" type="text/css"> 
-
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript">window.jQuery || document.write('<script type="text/javascript" src="{ai9me::RES}/css/guajiang/js/jquery.js">\x3C/script>')</script>
-
-
 <style>
-
-.footFix{width:100%;text-align:center;position:fixed;left:0;bottom:0;z-index:99;}
+.footFix{width:100%;text-align:center;position:absolute;left:0;bottom:0;z-index:99;}
 #footReturn a, #footReturn2 a {
-display: block;
-line-height: 41px;
-color: #fff;
-text-shadow: 1px 1px #282828;
-font-size: 14px;
-font-weight: bold;
+	display: block;
+	line-height: 41px;
+	color: #fff;
+	text-shadow: 1px 1px #282828;
+	font-size: 14px;
+	font-weight: bold;
 }
 #footReturn, #footReturn2 {
-z-index: 89;
-display: inline-block;
-text-align: center;
-text-decoration: none;
-vertical-align: middle;
-cursor: pointer;
-width: 100%;
-outline: 0 none;
-overflow: visible;
-Unknown property name.-moz-box-sizing: border-box;
-box-sizing: border-box;
-padding: 0;
-height: 41px;
-opacity: .95;
-border-top: 1px solid #181818;
-box-shadow: inset 0 1px 2px #b6b6b6;
-background-color: #515151;
-Invalid property value.background-image: -ms-linear-gradient(top,#838383,#202020);
-background-image: -webkit-linear-gradient(top,#838383,#202020);
-Invalid property value.background-image: -moz-linear-gradient(top,#838383,#202020);
-Invalid property value.background-image: -o-linear-gradient(top,#838383,#202020);
-background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#838383),to(#202020));
-Invalid property value.filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
-Unknown property name.-ms-filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
+	z-index: 89;
+	display: inline-block;
+	text-align: center;
+	text-decoration: none;
+	vertical-align: middle;
+	cursor: pointer;
+	width: 100%;
+	outline: 0 none;
+	overflow: visible;
+	Unknown property name.-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0;
+	height: 41px;
+	opacity: .95;
+	border-top: 1px solid #181818;
+	box-shadow: inset 0 1px 2px #b6b6b6;
+	background-color: #515151;
+	Invalid property value.background-image: -ms-linear-gradient(top,#838383,#202020);
+	background-image: -webkit-linear-gradient(top,#838383,#202020);
+	Invalid property value.background-image: -moz-linear-gradient(top,#838383,#202020);
+	Invalid property value.background-image: -o-linear-gradient(top,#838383,#202020);
+	background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#838383),to(#202020));
+	Invalid property value.filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
+	Unknown property name.-ms-filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#838383',endColorstr='#202020');
 }
 </style>
 </head>
@@ -128,7 +124,7 @@ onblur="check3(this)" name="tel"  class="px" id="tel" value="{ai9me:$info.tel}" 
 </ul>
 
 <div class="footReturn">
-<a id="showcard"  class="submit" ><if condition="$info['wechaname'] neq false">保 存<else/>领取会员卡</if></a>
+<a id="showcard" class="submit" ><if condition="$info['wechaname'] neq false">保 存<else/>领取会员卡</if></a>
 <div class="window" id="windowcenter" >
 <div id="title" class="wtitle"><span class="close" id="alertclose"></span></div>
 <div class="content">
@@ -137,11 +133,15 @@ onblur="check3(this)" name="tel"  class="px" id="tel" value="{ai9me:$info.tel}" 
 </div>
 </div>
 <div style="height:60px;" id="msg">&nbsp;</div>
-<div class="footFix" id="footReturn"><a href="javascript:void(0)" onClick="location.href='{ai9me::U('Card/vip',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}';"><span>返回会员卡页</span></a></div>
 <script type="text/javascript">
-
-$("#showcard").bind("click",
-function() {
+$(document).ready(function(){
+	$("#footReturn").css({
+		top: function(index, value){
+			return $(document).height() - $("#footReturn").height();
+		}
+	});
+});
+$("#showcard").bind("click",function() {
     var btn = $(this);
     var wechaname = $("#wechaname").val();
 	var tel 	  = $("#tel").val();
@@ -210,7 +210,7 @@ function check3(obj){
 		document.getElementById(obj.id).style.background="red";
 		return;
 	}
-	reg=/^0{0,1}(13[0-9]|145|15[7-9]|153|156|18[0-9])[0-9]{8}$/i;
+	reg=/^0{0,1}(13[0-9]|145|15[0-9]|153|156|18[0-9])[0-9]{8}$/i;
 	  if(!reg.test(obj.value)){   
 			alert("错误,请输入11位的手机号！");
 			document.getElementById(obj.id).style.background="red";
@@ -220,6 +220,7 @@ function check3(obj){
 
 </script>
 </div>
+<div class="footFix" id="footReturn"><a href="javascript:void(0)" onClick="location.href='{ai9me::U('Card/vip',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}';"><span>返回会员卡页</span></a></div>
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN" manifest="/misc/wei_cache_new.manifest">
 <head>
@@ -12,16 +13,16 @@
 <!--/门店地址/-->
 <div id="mappContainer">
   <div class="footFix" id="topCity" data-ffix-top="0" data-hidden-when-lost="门店特权">
-    <div class="inner"><span class="cityname">门店特权</span></div>
+    <div class="inner"><span class="cityname">门店特权</span><a class="toggle" href="javascript:void(0)" hidden="">{#toggleCityLink.label#}</a></div>
   </div>
   <div class="inner root" style="height: 3576px;">
-<volist>
-    <h2>{ai9me:$contact.cname}</h2>
+	<volist id="addr" name="addr">
+    <h2>{ai9me:$addr.cname}</h2>
     <ul class="round">
-      <li class="addr" >{ai9me:$contact.info}</li>
-      <li class="tel" data-hidden-when-lost="{ai9me:$contact.tel}"><a class="autotel" href="tel:{ai9me:$contact.tel}" data-telnum="tel:{ai9me:$addr.tel}">{ai9me:$contact.tel}</a></li>
+      <li class="addr" data-hidden-when-lost="{ai9me:$addr.info}">{ai9me:$addr.info}</li>
+      <li class="tel" data-hidden-when-lost="{ai9me:$addr.tel}"><a class="autotel" href="http://site.tg.qq.com/forwardToPhonePage?siteId=1&phone={ai9me:$addr.tel}" data-telnum="tel:{ai9me:$addr.tel}">{ai9me:$addr.tel}</a></li>
     </ul>
-</volist>
+ </volist>
   </div>
   <div class="footFix" id="footReturn"><a href="javascript:void(0)" onClick="location.href='{ai9me::U('Card/vip',array('token'=>$_GET['token'],'wecha_id'=>$_GET['wecha_id']))}';"><span>返回会员卡页</span></a></div>
 </div>

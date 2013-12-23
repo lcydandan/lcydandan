@@ -166,6 +166,7 @@ class WeixinAction extends Action
                 case '相册':
                     return $this->xiangce();
                     break;
+
                 case '商城':
                     $pro = M('reply_info')->where(array(
                         'infotype' => 'Shop',
@@ -243,6 +244,12 @@ class WeixinAction extends Action
             }
         }
     }
+	
+	
+	
+
+	
+	
     function xiangce()
     {
         $photo           = M('Photo')->where(array(
@@ -440,7 +447,14 @@ class WeixinAction extends Action
                                             'wecha_id' => $this->data['FromUserName'],
                                             'id' => $urlInfos[1]
                                         ));
-                                        break;
+                                    break;
+									case '砸金蛋':
+                                        $url = C('site_url') . U('Wap/Goldegg/index', array(
+                                            'token' => $this->token,
+                                            'wecha_id' => $this->data['FromUserName'],
+                                            'id' => $urlInfos[1]
+                                        ));
+                                    break;
                                     case '商家订单':
                                         $url = C('site_url') . '/index.php?g=Wap&m=Host&a=index&token=' . $this->token . '&wecha_id=' . $this->data['FromUserName'] . '&hid=' . $urlInfos[1];
                                         break;
@@ -480,6 +494,11 @@ class WeixinAction extends Action
                     $host = M('Host')->where(array(
                         'id' => $data['pid']
                     ))->find();
+                    $url = C('site_url') . U('Wap/Host/index', array(
+                        'token' => $this->token,
+                        'wecha_id' => $this->data['FromUserName'],
+                        'id' => $data['pid']
+                    ));
                     return array(
                         array(
                             array(
@@ -505,6 +524,11 @@ class WeixinAction extends Action
                     $pro = M('Product')->where(array(
                         'id' => $data['pid']
                     ))->find();
+                    $url = C('site_url') . U('Wap/Product/product', array(
+                        'token' => $this->token,
+                        'wecha_id' => $this->data['FromUserName'],
+                        'id' => $data['pid']
+                    ));
                     return array(
                         array(
                             array(
@@ -522,6 +546,11 @@ class WeixinAction extends Action
                     $pro = M('Selfform')->where(array(
                         'id' => $data['pid']
                     ))->find();
+                    $url = C('site_url') . U('Wap/Selfform/index', array(
+                        'token' => $this->token,
+                        'wecha_id' => $this->data['FromUserName'],
+                        'id' => $data['pid']
+                    ));
                     return array(
                         array(
                             array(
@@ -572,17 +601,112 @@ class WeixinAction extends Action
                         'id' => $id,
                         'type' => $type
                     ));
+					M('Lottery')->where($id)->setInc('click');
                     return array(
                         array(
                             array(
                                 $title,
                                 $info,
                                 $picurl,
-                                $url
+                                $url.'#ai9.me'
                             )
                         ),
                         'news'
                     );
+					break;
+                case 'Marrycard':
+                    $this->requestdata('other');
+					$id = $data['pid'];
+                    $pro = M('Marrycard')->where(array(
+                        'id' => $data['pid']
+                    ))->find();
+                    $url = C('site_url') . U('Wap/Marrycard/index', array(
+                        'token' => $this->token,
+                        'wecha_id' => $this->data['FromUserName'],
+                        'id' => $id,
+                    ));
+					M('Marrycard')->where(array('id'=>$id))->setInc('click');
+                    return array(
+                        array(
+                            array(
+                                $pro['title'],
+                                strip_tags(htmlspecialchars_decode($pro['info'])),
+                                $pro['picurl'],
+								$url.'#api.ai9.me'
+                            )
+                        ),
+                        'news'
+                    );
+                    break;
+                case 'Goldegg':
+                    $this->requestdata('other');
+                    $info = M('Goldegg')->find($data['pid']);
+                    if ($info == false || $info['status'] == 2) {
+                        return array(
+                            '活动可能已经结束或者被删除了',
+                            'text'
+                        );
+                    }
+					if ($info['status'] == 0) {
+                        return array(
+                            '活动还未开始，请'.date("Y-m-d",$info['startdate']).'再来或者联系工作人员',
+                            'text'
+                        );
+                    }
+                    $id   = $info['id'];
+                    if ($info['status'] == 1) {
+                        $picurl = $info['startpicurl'];
+                        $title  = $info['title'];
+                        $id     = $info['id'];
+                        $info   = $info['info'];
+                    } else {
+                        $picurl = $info['endpicurl'];
+                        $title  = $info['endtite'];
+                        $info   = $info['endinfo'];
+                    }
+                    $url = C('site_url') . U('Wap/Goldegg/index', array(
+                        'token' => $this->token,
+                        'wecha_id' => $this->data['FromUserName'],
+                        'id' => $id,
+                        'type' => $type
+                    ));
+					M('Goldegg')->where($id)->setInc('click');
+                    return array(
+                        array(
+                            array(
+                                $title,
+                                $info,
+                                $picurl,
+                                $url . '#wx.ai9.me'
+                            )
+                        ),
+                        'news'
+                    );
+                    break;
+                case 'Panoramic':
+                    $this->requestdata('other');
+					$id = $data['pid'];
+                    $pro = M('Panoramic')->where(array(
+                        'id' => $data['pid']
+                    ))->find();
+                    $url = C('site_url') . U('Wap/Panoramic/item', array(
+                        'token' => $this->token,
+                        'wecha_id' => $this->data['FromUserName'],
+                        'id' => $id,
+                    ));
+					M('Panoramic')->where(array('id'=>$id))->setInc('click');
+                    return array(
+                        array(
+                            array(
+                                $pro['title'],
+                                strip_tags(htmlspecialchars_decode($pro['intro'])),
+                                $pro['picurl'],
+								$url . '#wx.ai9.me'
+                            )
+                        ),
+                        'news'
+                    );
+                    break;
                 default:
                     $this->requestdata('videonum');
                     $info = M($data['module'])->order('id desc')->find($data['pid']);
@@ -670,9 +794,13 @@ class WeixinAction extends Action
                 'text'
             );
         } else {
+			$this->requestdata('3g');
             $imgurl = $home['picurl'];
             if ($home['apiurl'] == false) {
-                $url = rtrim(C('site_url'), '/') . '/index.php?g=Wap&m=Index&a=index&token=' . $this->token . '&wecha_id=' . $this->data['FromUserName'];
+				$url = rtrim(C('site_url'), '/') . U('Wap/Index/index', array(
+					'token' => $this->token,
+					'wecha_id' => $this->data['FromUserName']
+				));
             } else {
                 $url = $home['apiurl'];
             }

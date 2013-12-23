@@ -8,6 +8,10 @@
 				<div class="content">
 					<div class="cLineB">
 						<h4>快捷菜单 <span class="FAQ">提供一键拨号，一键导航，一键email等等快捷功能</span></h4>
+                          <p><span class="bold">一键拨号填写范例：</span>http://site.tg.qq.com/forwardToPhonePage?siteId=1&phone=手机 请拷贝网址粘帖到输入框，修改电话号码。</p>
+                <p><span class="bold">一键Email填写范例：</span>mailto:邮箱</p>
+                <p><span class="bold">一键导航生成完成：</span><a href="{ai9me::C('site_url')}/index.php?g=Wap&m=Company&a=map&token=<php>echo $_GET['token'];</php>" target="_blank" class="red">{ai9me::C('site_url')}/index.php?g=Wap&m=Company&a=map&token=<php>echo $_GET['token'];</php></a>，需要到LBS回复配置自己公司位置→复制网址到下面一键导航输入框。</p>
+                <p><span class="bold">一键分享生成完成：</span><a href="{ai9me::C('site_url')}/index.php/show/{ai9me:$Think.session.token}" target="_blank" class="red">{ai9me::C('site_url')}/index.php/show/{ai9me:$Think.session.token}</a>，需要到DIY宣传页配置自己相关信息。</p>
 					</div>
 					<form method="post" action="" enctype="multipart/form-data">
 						<input type="hidden" name="formhash" id="formhash" value="<php> echo substr(str_shuffle(session(token)), 8);</php>">

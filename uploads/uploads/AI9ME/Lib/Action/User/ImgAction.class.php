@@ -51,19 +51,16 @@ class ImgAction extends UserAction{
 		$_POST['info'] = preg_replace($pat,"",$_POST['info']);
     	if($_FILES['upfile']['name']){
 			$img = $this->_upload();
-			$_POST['pic'] = $img[0]['savepath'].$img[0]['savename'];
+			$_POST['pic'] = C('site_url')."/".str_replace("./","",$img[0]['savepath'].$img[0]['savename']);
     	}
 		$this->all_insert();
 	}
 	public function upsave(){
 		$pat = "/<(\/?)(script|i?frame|style|html|body|title|font|strong|span|div|marquee|link|meta|\?|\%)([^>]*?)>/isU";
 		$_POST['info'] = preg_replace($pat,"",$_POST['info']);
-		$n_arr = explode(',', $_POST['classid']);
-		$_POST['classid'] = intval($n_arr[0]);
-		$_POST['classname'] = $n_arr[1];
     	if($_FILES['upfile']['name']){
 			$img = $this->_upload();
-			$_POST['pic'] = $img[0]['savepath'].$img[0]['savename'];
+			$_POST['pic'] = C('site_url')."/".str_replace("./","",$img[0]['savepath'].$img[0]['savename']);
     	}
 		$this->all_save();
 	}

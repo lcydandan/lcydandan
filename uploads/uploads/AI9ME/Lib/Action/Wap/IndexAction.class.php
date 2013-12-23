@@ -43,8 +43,8 @@ class IndexAction extends BaseAction
         $this->assign('company', $this->company);
         $this->assign('token', $this->token);
 		$home            = M('Home')->where($where)->select();
-		//$homeInfo        = M('Menuplus')->where($where)->select();
-		/*$arr             = $homeInfo[0];
+		/*$homeInfo        = M('Menuplus')->where($where)->select();
+		$arr             = $homeInfo[0];
 		$arr = array_slice($arr,5);
 		$array = array_chunk($arr,3,true);
 		$arrayNew = array();
@@ -66,6 +66,7 @@ class IndexAction extends BaseAction
 			$arrayNew[$k]['display'] = $v['status'];
 			$arrayNew[$k]['name'] = $v['name'];
 		}
+		
 		foreach($arrayNew as $k=>$v) {
 			$newArray[$k]['url'] = $arrayNew[$k]['url'];
 			$newArray[$k]['sort'] = $arrayNew[$k]['sort'];
@@ -100,20 +101,12 @@ class IndexAction extends BaseAction
         $flash          = M('Flash')->where($where)->select();
         $count          = count($flash);
         $this->assign('flash', $flash);
-        
+        $this->assign('info', $this->info);
         $this->assign('num', $count);
         $this->assign('info', $this->info);
         $this->assign('tpl', $this->tpl);
         $this->assign('copyright', $this->copyright);
-        
-        //获取url对应的图文信息
-        $where['weburl'] = $this->_get('weburl');
-        $info = M('Classify')->where($where)->order('sorts')->select();
-        
-        $this->assign('info', $info);
-        $this->display($info[0]['tpltypename']);
-//         $this->buildHtml('1',HTML_PATH.'/','index','utf-8');
-//         $this->display($this->tpl['tpltypename']);
+        $this->display($this->tpl['tpltypename']);
     }
     
     public function lists()
@@ -137,7 +130,7 @@ class IndexAction extends BaseAction
         if ($p == false) {
             $p = 0;
         }
-        $res = $db->where($where)->limit("{$p},5")->select();
+        $res = $db->where($where)->order('id desc')->limit("{$p},5")->select();
         $res = $this->convertLinks($res);
         $this->assign('page', $pagecount);
         $this->assign('p', $page);
@@ -206,11 +199,27 @@ class IndexAction extends BaseAction
             if ($itemid) {
                 $link .= '&id=' . $itemid;
             }
+		} elseif (strExists($url, '微喜帖')) {
+            $link = '/index.php?g=Wap&m=Marrycard&a=index&token=' . $this->token . '&wecha_id=' . $this->wecha_id;
+            if ($itemid) {
+                $link .= '&id=' . $itemid;
+            }
+		} elseif (strExists($url, '砸金蛋')) {
+            $link = '/index.php?g=Wap&m=Goldegg&a=index&token=' . $this->token . '&wecha_id=' . $this->wecha_id;
+            if ($itemid) {
+                $link .= '&id=' . $itemid;
+            }	
         } elseif (strExists($url, '商家订单')) {
             if ($itemid) {
                 $link = $link = '/index.php?g=Wap&m=Host&a=index&token=' . $this->token . '&wecha_id=' . $this->wecha_id . '&hid=' . $itemid;
             } else {
                 $link = '/index.php?g=Wap&m=Host&a=Detail&token=' . $this->token . '&wecha_id=' . $this->wecha_id;
+            }
+		} elseif (strExists($url, '万能表单')) {
+            if ($itemid) {
+                $link = $link = '/index.php?g=Wap&m=Selfform&a=index&token=' . $this->token . '&wecha_id=' . $this->wecha_id . '&id=' . $itemid;
+            } else {
+                $link = '/index.php?g=Wap&m=Selfform&a=Detail&token=' . $this->token . '&wecha_id=' . $this->wecha_id;
             }
         } elseif (strExists($url, '会员卡')) {
             $link = '/index.php?g=Wap&m=Card&a=vip&token=' . $this->token . '&wecha_id=' . $this->wecha_id;

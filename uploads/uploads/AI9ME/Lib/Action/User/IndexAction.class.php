@@ -201,11 +201,11 @@ class IndexAction extends UserAction{
 		$price = intval($_POST['price']);
 		$num = intval($_POST['num']);
 		$vip = strtotime("+".$num." month", $viptime);
-		$mback = M('Users')->where(array('id'=>session('uid')))->setDec('money',$price);
-		$vback = M('Users')->where(array('id'=>session('uid')))->setField('viptime',$vip);
 		if ($money < $price){
 			$this->error("余额不足，请充值！", U('Alipay/index'));
 		}else{
+			$mback = M('Users')->where(array('id'=>session('uid')))->setDec('money',$price);
+			$vback = M('Users')->where(array('id'=>session('uid')))->setField('viptime',$vip);
 			if ($mback != false && $vback != false){
 				$this->success('续费成功！', U('Index/index'));
 			}else{

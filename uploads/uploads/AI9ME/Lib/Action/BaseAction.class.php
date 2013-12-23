@@ -5,59 +5,52 @@ class BaseAction extends Action
     {
         define('RES', THEME_PATH . 'common');
         define('STATICS', TMPL_PATH . 'Static');
-        //Input::noGPC();
         $this->assign('action', $this->getActionName());
+		import("@.ORG.Input");
     }
     
-    /**
-     * 上传文件默认规则定义
-     */
-    /*
-    protected function _upload_init($upload) {
-    $allow_max = C('up_size'); //读取配置
-    $allow_exts = explode(',', C('up_exts')); //读取配置
-    $allow_max && $upload->maxSize = $allow_max * 1024;   //文件大小限制
-    $allow_exts && $upload->allowExts = $allow_exts;  //文件类型限制
-    $upload->saveRule = 'uniqid';
-    return $upload;
-    }
-    */
+	protected function _upload($name = '')
+	{
+		$name = $name ? $name : MODULE_NAME;
+		$savePath = './AI9MEdata/attachments/'.$name.'/';
+		if(!is_dir($savePath))
+		{
+            if(is_dir(base64_decode($savePath)))
+			{
+                $savePath =	base64_decode($savePath);
+            }
+			else
+			{
+                if(!mkdir($savePath))
+				{
+                    $this->error  =  '上传目录'.$savePath.'不存在';
+                    return false;
+                }
+            }
+		}
+		import("@.ORG.UploadFile");
+		$upload = new UploadFile();
+		$upload->maxSize = 3292200;
+		$upload->allowExts = explode(',', 'jpg,gif,png,jpeg');
+		$upload->savePath = $savePath.date("Ymd",time()).'/';
+		$upload->thumb = true;
+		$upload->imageClassPath = '@.ORG.Image';
+		$upload->thumbPrefix = 'm_';
+		$upload->thumbMaxWidth = '720';
+		$upload->thumbMaxHeight = '400';
+		$upload->saveRule = uniqid;
+		$upload->thumbRemoveOrigin = false;
+		if (!$upload->upload())
+		{
+			$this->error($upload->getErrorMsg());
+		}
+		else
+		{
+			$uploadList = $upload->getUploadFileInfo();
+			return $uploadList;
+		}
+	}
     
-    /**
-     * 上传文件
-     */
-    /*
-    protected function _upload($file, $dir = '', $thumb = array(), $save_rule='uniqid') {
-    import("@.ORG.UploadFile");
-    $upload = new UploadFile();
-    if ($dir==false) {
-    $upload_path = C('up_path') . $dir . '/';
-    $upload->savePath = $upload_path;
-    }
-    if ($thumb) {
-    $upload->thumb = true;
-    $upload->thumbMaxWidth = $thumb['width'];
-    $upload->thumbMaxHeight = $thumb['height'];
-    $upload->thumbPrefix = '';
-    $upload->thumbSuffix = isset($thumb['suffix']) ? $thumb['suffix'] : '_thumb';
-    $upload->thumbExt = isset($thumb['ext']) ? $thumb['ext'] : '';
-    $upload->thumbRemoveOrigin = isset($thumb['remove_origin']) ? true : false;
-    }
-    
-    //自定义上传规则
-    $upload = $this->_upload_init($upload);
-    if( $save_rule!='uniqid' ){
-    $upload->saveRule = $save_rule;
-    }
-    if ($result = $upload->uploadOne($file)) {
-    return array('error'=>0, 'info'=>$result);
-    } else {
-    return array('error'=>1, 'info'=>$upload->getErrorMsg());
-    }
-    }
-    */
-    
-    //添加所有内容,包含关键词
     protected function all_insert($name = '', $back = '/index')
     {
         $name = $name ? $name : MODULE_NAME;
@@ -75,7 +68,10 @@ class BaseAction extends Action
                     'Lottery',
                     'Host',
 					'Product',
-					'Selfform'
+					'Selfform',
+					'Marrycard',
+					'Goldegg',
+					'Panoramic'
                 );
                 if (in_array($name, $m_arr)) {
                     $data['pid']     = $id;
@@ -84,13 +80,19 @@ class BaseAction extends Action
                     $data['keyword'] = $_POST['keyword'];
                     M('Keyword')->add($data);
                 }
+				if ($name == "Img")
+				{
+					$data['id']    = $_POST['id'];
+					$da['classname'] = $_POST['classname'];
+					M('Img')->where($data)->save($da);
+				}
                 $this->success('操作成功', U(MODULE_NAME . $back));
             } else {
                 $this->error('操作失败', U(MODULE_NAME . $back));
             }
         }
     }
-    //单一信息添加
+
     protected function insert($name = '', $back = '/index')
     {
         $name = $name ? $name : MODULE_NAME;
@@ -106,7 +108,7 @@ class BaseAction extends Action
             }
         }
     }
-    //单子信息修改
+
     protected function save($name = '', $back = '/index')
     {
         $name = $name ? $name : MODULE_NAME;
@@ -122,7 +124,7 @@ class BaseAction extends Action
             }
         }
     }
-    //修改所有内容,包含关键词
+
     protected function all_save($name = '', $back = '/index')
     {
         $name = $name ? $name : MODULE_NAME;
@@ -140,7 +142,10 @@ class BaseAction extends Action
                     'Lottery',
                     'Host',
 					'Product',
-					'Selfform'
+					'Selfform',
+					'Marrycard',
+					'Goldegg',
+					'Panoramic'
                 );
                 if (in_array($name, $m_arr)) {
                     $data['pid']    = $_POST['id'];
@@ -166,5 +171,5 @@ class BaseAction extends Action
             $this->ajaxReturn('操作失败', U(MODULE_NAME . $back));
         }
     }
-    
 }
+?>

@@ -2,15 +2,6 @@
         <div class="content">
           <div class="cLineB">
               <h4 class="left">幸运大转盘活动信息 ({ai9me:$count}) 条<span class="FAQ">你本月有 {ai9me:$group.activitynum} 次机会可免收活动创建费，已经使用了 {ai9me:$activitynum} 次机会!</span></h4>
-                  <div class="searchbar right">  <form method="get"  action="index.php"  >
-                  <input type="text" id="msgSearchInput" class="txt left" placeholder="输入关键词搜索"  name="keyz" value="">
-                  <input type="hidden" name="ac" value="activity-lottery-list"  />
-                  <input type="hidden" name="id" value="9878"  />
-                  <input type="hidden" name="wxid" value="gh_423dwjkewad"  />
-                 
-                  <input type="submit" value="搜索" id="msgSearchBtn" href="" class="btnGrayS" title="搜索">
-                  </form>
-                  </div>
               <div class="clr"></div>
           </div>
           <div class="cLine">
@@ -58,8 +49,8 @@
 				   <a href="index.php?g=User&m=Lottery&a=sn&id={ai9me:$list.id}">SN码管理</a> 
 				   <a href="index.php?g=User&m=Lottery&a=edit&id={ai9me:$list.id}">编辑</a>  
 				   <a href="
-				   <if condition="$list['status'] lt 0">				   
-				   javascript:drop_confirm('你确定要结束活动吗，结束后不可再开启本活动!', 'index.php?g=User&m=Lottery&a=setdes&id={ai9me:$list.id}');<else/>index.php?g=User&m=Lottery&a=setinc&id={ai9me:$list.id}   
+				   <if condition="$list['status'] eq '1'">				   
+				   javascript:drop_confirm('你确定要结束活动吗，结束后不可再开启本活动!', '{ai9me::U('Lottery/end',array("id"=>$list['id']))}');<elseif condition="$list['status'] eq '2'"/> javascript:alert('活动已被手动结束无法再次开启，请联系QQ{ai9me::C('site_qq')}！');<else/>{ai9me::U('Lottery/start',array('id'=>$list['id']))}   
 				   </if>">
 				   <if condition="$list['status'] eq 0">开始<elseif condition="$list['status'] eq 2"/>打开<else/>结束</if>				   
 				   </a>

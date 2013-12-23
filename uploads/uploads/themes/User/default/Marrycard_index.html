@@ -1,0 +1,83 @@
+<include file="Public:head"/>  
+        <div class="content">
+          <div class="cLineB">
+              <h4 class="left">微喜帖活动信息 ({ai9me:$count}) 条<span class="FAQ">你本月有 {ai9me:$group.activitynum} 次机会可免收活动创建费，已经使用了 {ai9me:$activitynum} 次机会!</span></h4>
+              <div class="clr"></div>
+          </div>
+          <div class="cLine">
+            <div class="pageNavigator left">
+			<a href="{ai9me::U('Marrycard/add',array('token'=>$token))}" title='新增微喜帖' class='btnGrayS vm bigbtn'>新增微喜帖</a>
+            </div>
+          
+            <div class="clr"></div>
+          </div>
+          <div class="msgWrap">
+          <form method="post"  action="" id="info" >
+          <input name="delall"  type="hidden" value="" />
+           <input name="wxid"  type="hidden" value="" />
+            <TABLE class="ListProduct" border="0" cellSpacing="0" cellPadding="0" width="100%">
+              <THEAD>
+                <TR>
+<!--TH class="select">选择</TH-->
+<TH>活动名称</TH>
+<TH>关键字</TH>
+<TH>参与人数</TH>
+<TH>总浏览数</TH>
+<TH>开始/结束</TH>
+<TH>宴会时间</TH>
+<TH>状态</TH>
+<TH>外链代码</TH>
+<TH class="norightborder">操作</TH>
+                </TR>
+              </THEAD>
+              <TBODY>
+                <TR></TR>
+                  <volist id="list" name="list">
+                <TR>
+                  <!--TD><input type="checkbox" name='del_id[]' value="842" class="checkitem"></TD-->
+                  <TD>{ai9me:$list.title}</TD>
+                  <TD>{ai9me:$list.keyword}</TD> 
+				  <TD>{ai9me:$list.joinnum}</TD>
+                  <TD>{ai9me:$list.click}</TD>
+                  <TD>{ai9me:$list.startdate|date='Y-m-d',###}<br />{ai9me:$list.enddate|date='Y-m-d',###}</TD>
+				  <TD>{ai9me:$list.partytime|date='Y-m-d H:i',###}</TD>
+                  <TD>
+				  <if condition="$list['status'] eq 0">未开始<elseif condition="$list['status'] eq 2"/>已结束<else/>已开始</if>
+				 </TD>
+                  <TD>微喜帖 {ai9me:$list.id}</TD>
+                   <TD class="norightborder">
+				   <a href="{ai9me::U('Marrycard/wishlist',array('id'=>$list['id']))}">祝福</a>
+				   <a href="{ai9me::U('Marrycard/joinlist',array('id'=>$list['id']))}">赴宴</a>
+				   <a href="{ai9me::U('Marrycard/edit',array('id'=>$list['id']))}">编辑</a>
+				   <a href="
+				   <if condition="$list['status'] eq 1">
+				   javascript:drop_confirm('你确定要结束活动吗，结束后不可再开启本活动!','{ai9me::U('Marrycard/end',array('id'=>$list['id']))}');<else/>{ai9me::U('Marrycard/start',array('id'=>$list['id']))}   
+				   </if>">
+				   <if condition="$list['status'] eq 0">开始<elseif condition="$list['status'] eq 2"/>打开<else/>结束</if>				   
+				   </a>
+				   <a href="{ai9me::U('Marrycard/delete',array('id'=>$list['id']))}">删除</a>
+				   </TD>
+                </TR>
+				</volist>
+                         
+              </TBODY>
+            </TABLE>
+           </form>
+          </div>
+            
+ 
+          <div class="cLine">
+            <div class="pageNavigator right">
+                 <div class="pages"></div>
+              </div>
+            <div class="clr"></div>
+          </div>
+        </div>
+
+        <div class="clr"></div>
+      </div>
+    </div>
+  </div>
+  <!--底部-->
+  	</div>
+<include file="Public:footer"/>

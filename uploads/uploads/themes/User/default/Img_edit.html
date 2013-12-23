@@ -59,9 +59,10 @@ items : [
                    <select name="classid"   > 
                     <option  value="0">请选择</option>
                       <volist name="res" id="vo">
-                     <option   value="{ai9me:$vo.id},{ai9me:$vo.name}">{ai9me:$vo.name}</option>
-                      </volist>      
-                    </select><a href="{ai9me::U('Classify/add')}"  target="ddd" >添加分类</a>
+						<option value="{ai9me:$vo.id},{ai9me:$vo.name}"<eq name="info.classid" value="$vo.id"> selected="selected"</eq>>{ai9me:$vo.name}</option>
+                      </volist>
+                    </select>
+					<a href="{ai9me::U('Classify/add')}">添加分类</a>
                   </TD>
                 </TR> 
 				<TR>
