@@ -12,28 +12,33 @@ class IndexAction extends BaseAction
     public $company;
     public $token;
     
+    
     public function _initialize()
     {
         parent::_initialize();
         $agent = $_SERVER['HTTP_USER_AGENT'];
-        //if (!strpos($agent, "MicroMessenger")) {
-           // echo '此功能只能在微信浏览器中使用';
-           // exit;
-        //}
-        $this->token     = $this->_get('token', 'trim');
+
+        $this->token     = $this->_get('token', 'trim');        
+        if ($this->token == null)
+        {
+        	return;
+        }
+        $weburl = $this->_get('weburl', 'trim');        
         $this->wecha_id  = $this->_get('wecha_id', 'trim');
+        
         $where['token']  = $this->token;
         $tpl             = D('Wxuser')->where($where)->find();
         $tpl['color_id'] = 0;
         $info            = M('Classify')->where(array(
             'token' => $this->_get('token'),
-            'status' => 1
+            'weburl' => $weburl
         ))->order('sorts desc')->select();
         $info            = $this->convertLinks($info); //加外链等信息
         $gid             = D('Users')->field('gid')->find($tpl['uid']);
         $copy            = D('user_group')->field('iscopyright')->find($gid['gid']); //查询用户所属组
         $this->copyright = $copy['iscopyright'];
         $this->info      = $info;
+        $tpl['tpltypename'] = $info[0]['tpltypename'];
         $this->tpl       = $tpl;
         $company_db      = M('company');
         $this->company   = $company_db->where(array(
@@ -43,22 +48,6 @@ class IndexAction extends BaseAction
         $this->assign('company', $this->company);
         $this->assign('token', $this->token);
 		$home            = M('Home')->where($where)->select();
-		/*$homeInfo        = M('Menuplus')->where($where)->select();
-		$arr             = $homeInfo[0];
-		$arr = array_slice($arr,5);
-		$array = array_chunk($arr,3,true);
-		$arrayNew = array();
-		foreach($array as $k=>$v) {
-			foreach($v as $k2=>$v2) {
-				$b = explode('_',$k2);
-				break;
-			}
-			$a = array_values($v);
-			$arrayNew[$k]['url'] = $a[0];
-			$arrayNew[$k]['sort'] = $a[1];
-			$arrayNew[$k]['display'] = $a[2];
-			$arrayNew[$k]['name'] = $b[0];
-		}*/
 		$arrayNew = array();
 		foreach($info as $v) {
 			$arrayNew[$k]['url'] = $v['url'];
@@ -89,15 +78,87 @@ class IndexAction extends BaseAction
         $this->assign('iscopyright', $user_group['iscopyright']);
     }
     
+    public function common($token='', $weburl='')
+    {
+    	if ($token == '')
+    	{
+    		$this->token     = $this->_get('token', 'trim');
+    	}
+    	else 
+    	{
+    		$this->token = $token;
+    	}
+    	if ($weburl == '')
+    	{
+    		$weburl = $this->_get('weburl', 'trim');
+    	}
+    	$this->wecha_id  = $this->_get('wecha_id', 'trim');
+    	
+    	$where['token']  = $this->token;
+    	$tpl             = D('Wxuser')->where($where)->find();
+    	$tpl['color_id'] = 0;
+    	$info            = M('Classify')->where(array(
+    			'token' => $this->token,
+    			'weburl' => $weburl
+    	))->order('sorts desc')->select();
+    	$info            = $this->convertLinks($info); //加外链等信息
+    	$gid             = D('Users')->field('gid')->find($tpl['uid']);
+    	$copy            = D('user_group')->field('iscopyright')->find($gid['gid']); //查询用户所属组
+    	$this->copyright = $copy['iscopyright'];
+    	$this->info      = $info;
+    	$tpl['tpltypename'] = $info[0]['tpltypename'];
+    	$this->tpl       = $tpl;
+    	$company_db      = M('company');
+    	$this->company   = $company_db->where(array(
+    			'token' => $this->token,
+    			'isbranch' => 0
+    	))->find();
+    	$this->assign('company', $this->company);
+    	$this->assign('token', $this->token);
+    	$home            = M('Home')->where($where)->select();
+    	$arrayNew = array();
+    	foreach($info as $v) {
+    		$arrayNew[$k]['url'] = $v['url'];
+    		$arrayNew[$k]['sort'] = $v['sorts'];
+    		$arrayNew[$k]['display'] = $v['status'];
+    		$arrayNew[$k]['name'] = $v['name'];
+    	}
+    	
+    	foreach($arrayNew as $k=>$v) {
+    		$newArray[$k]['url'] = $arrayNew[$k]['url'];
+    		$newArray[$k]['sort'] = $arrayNew[$k]['sort'];
+    		$newArray[$k]['display'] = $arrayNew[$k]['display'];
+    		$newArray[$k]['name'] = $arrayNew[$k]['name'];
+    		if ($k > 2) {
+    			break;
+    		}
+    	}
+    	$newArray = array_values(array_sort($newArray, 'sort', 'asc'));
+    	$user_group = M('User_group')->where(array(
+    			'id' => session('gid')
+    	))->find();
+    	$this->assign('homebgurl', $home[0]['homebgurl']);
+    	$this->assign('homeurl', $home[0]['homebgurl']);
+    	$homeInfo[0]['plugmenucolor'] = $homeInfo[0]['menupluscolor'];
+    	$this->assign('homeInfo', $homeInfo[0]);
+    	$this->assign('menuPlus', $newArray);
+    	$this->assign('plugmenus', $newArray);
+    	$this->assign('iscopyright', $user_group['iscopyright']);
+    }
+    
     public function classify()
     {
         $this->assign('info', $this->info);
         $this->display($this->tpl['tpltypename']);
     }
     
-    public function index()
+    public function index($token='', $weburl='', $generatehtml='')
     {
-        $where['token'] = $this->_get('token');
+    	$this->common($token, $weburl);
+    	if ($token == '')
+    	{
+    		$where['token'] = $this->_get('token');
+    	}
         $flash          = M('Flash')->where($where)->select();
         $count          = count($flash);
         $this->assign('flash', $flash);
@@ -106,7 +167,15 @@ class IndexAction extends BaseAction
         $this->assign('info', $this->info);
         $this->assign('tpl', $this->tpl);
         $this->assign('copyright', $this->copyright);
-        $this->display($this->tpl['tpltypename']);
+                
+        if ($generatehtml == '')
+        {
+        	$this->display($this->tpl['tpltypename']);        	
+        }
+        else 
+        {
+        	$this->buildHtml($generatehtml,'', $this->tpl['tpltypename']);
+        }
     }
     
     public function lists()

@@ -86,6 +86,9 @@ class ClassifyAction extends UserAction{
 		$id = null;
 		$name = $this->_post('name');
 		$tpl = $this->_post('webmodel');
+		$classifyData = array();
+		$current = 0;
+		$weburl = 'http://tmp'.date('YmdHis').'html';
 		for ($i=0; $i<20; $i++)
 		{
 			$data['name'] = $name;
@@ -94,7 +97,6 @@ class ClassifyAction extends UserAction{
 			{
 				continue;
 			}
-			$id = null;
 			$data['img'] = $img;
 			$data['url'] = str_replace('&amp;', "&", $this->_post('url'.$i));
 			$data['info'] = $this->_post('info'.$i);
@@ -102,22 +104,71 @@ class ClassifyAction extends UserAction{
 			$data['status'] = '1';
 			$data['sorts'] = strval($i);
 			$data['token'] = $token;
-			$data['weburl'] = 'http://baidu'.date('YmdHis').'.com' ;
+ 			$data['weburl'] = $weburl;
 			$data['tpltypename'] = $tpl;
-			$id = $db->add($data);
-			if ($id == null)
+			$classifyData[$current] = $data;
+			$current++;
+		}
+
+		foreach ($classifyData as $currentData)
+		{
+			$id = $db->add($currentData);
+			if ($id == false)
 			{
 				break;
 			}
 		}
+
+		$where['token'] = $token;
+		$where['weburl'] = $weburl;
 		if ($id)
 		{
-			$this->success('操作成功',U(MODULE_NAME.'/index'));
+			//根据添加的信息生成静态网页
+			$generatehtml = date('YmdHis').rand(100, 999);
+			R('Wap/Index/index', array('token'=>$token, 'weburl'=>$weburl, 'generatehtml'=>$generatehtml));
+			$finalweburl = 'http://'.$_SERVER['SERVER_NAME'].'/AI9MEdata/html/'.$generatehtml.'.html';
+			
+			$db->where($where)->setField('weburl', $finalweburl);		
+			$this->success('操作成功',U(MODULE_NAME.'/index'));	
 		}
 		else
 		{
 			$this->error('操作失败',U(MODULE_NAME.'/index'));
+			//失败删除已保存的记录
+			$db->where($where)->delete();
 		}
+	}
+	
+	public function generateHtml($token, $weburl)
+	{
+		$where['token'] = $token;
+		$flash          = M('Flash')->where($where)->select();
+		$count          = count($flash);
+		$this->assign('flash', $flash);
+		$info = M('Classify')->where(array(
+				'token' => $token,
+				'weburl' => $weburl
+			))->order('sorts desc')->select();
+		$info = $this->convertLinks($info); //加外链等信息
+		$this->assign('num', $count);
+		$this->assign('info', $info);
+		echo count($info);
+// 		$this->assign('tpl', $this->tpl);
+// 		$this->assign('copyright', $this->copyright);
+// 		$this->display($info[0]['tpltypename']);
+		$this->buildHtml('tmp_tmp3.html','', $info[0]['tpltypename']);
+	}
+	
+	public function convertLinks($arr)
+	{
+		$i = 0;
+		foreach ($arr as $a) {
+			if ($a['url']) {
+				$arr[$i]['url'] = $this->getLink($a['url']);
+			}
+			$i++;
+		}
+		return $arr;
 	}
 	
 	public function deleteMany()
@@ -132,7 +183,7 @@ class ClassifyAction extends UserAction{
 		$db = M(MODULE_NAME);
 		//先删除原来的
 		$where['weburl']=$weburl;
-		$db->where($where)->delete();
+		$olddata = $db->where($where)->select();
 		
 		$id = null;
 		$name = $this->_post('name');
@@ -141,28 +192,35 @@ class ClassifyAction extends UserAction{
 		{
 			$data['name'] = $name;
 			$img = $this->_post('img'.$i);
-			if ($img == null)
+			$info = $this->_post('info'.$i);
+			if ($img == null && $info == null)
 			{
 				continue;
 			}
 			$id = null;
 			$data['img'] = $img;
 			$data['url'] = str_replace('&amp;', "&", $this->_post('url'.$i));
-			$data['info'] = $this->_post('info'.$i);
 			$data['name'] = $this->_post('name');
+			$data['info'] = $info;
 			$data['status'] = '1';
 			$data['sorts'] = strval($i);
 			$data['token'] = $token;
 			$data['weburl'] = $weburl;
 			$data['tpltypename'] = $tpl;
 			$id = $db->add($data);
-			if ($id == null)
+			if ($id == false)
 			{
 				break;
 			}
 		}
 		if ($id)
 		{
+			//删除原有的数据
+			foreach ($olddata as $old)
+			{
+				$oldwhere['id'] = $old['id'];
+				$db->where($oldwhere)->delete();
+			}
 			$this->success('操作成功',U(MODULE_NAME.'/index'));
 		}
 		else
