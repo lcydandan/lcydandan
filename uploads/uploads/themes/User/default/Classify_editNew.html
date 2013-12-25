@@ -1,16 +1,14 @@
 <include file="Public:head"/>
 <TABLE>
 <TR>
-<TD width="550px" height="900px" margin-left="10px">
-	<!-- <div id="webpreview" name="weburl" class="mask">
-	<div class="phone">
-		  <iframe class="preview" src="{ai9me::U('Wap/Index/index',array('token'=>$token,'weburl'=>$weburl))}" width="337" height="454" frameborder="0" scrolling="auto"></iframe>
+<TD width="450px" height="900px" margin-left="10px">
+<div class="mask">
+    <div class="phone">
+    	<div class="phone_right"></div>
+        <div class="close"></div>
+        <iframe class="preview" id="webpreview"></iframe>
 	</div>
-	</div>	-->
-	<div bgcolor="0xffff">
-		<img id="webpreview" class="webpreview">
-	</div>
-	
+</div>
 </TD>
 <TD>
 	<form class="form" method="post"   action="{ai9me::U('Classify/upsaveMany')}"  target="_top" enctype="multipart/form-data" >

@@ -2,10 +2,13 @@
 <TABLE>
 <TR>
 <TD width="450px" height="900px" margin-left="10px">
-	<div bgcolor="0xffff">
-		<img id="webpreview" class="webpreview" src="{ai9me::RES}/images/cate101.png">
+<div class="mask">
+    <div class="phone">
+    	<div class="phone_right"></div>
+        <div class="close"></div>
+        <iframe class="preview" id="webpreview" src="{ai9me::RES}/images/cate101.png"></iframe>
 	</div>
-</TD>
+</div>
 <TD>
 	<form class="form" method="post"   action="{ai9me::U('Classify/insertMany')}"  target="_top" enctype="multipart/form-data" >
 	选择网页模板： <select id="webmodel" name="webmodel" onchange="modelChange(this)">
