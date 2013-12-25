@@ -29,7 +29,7 @@
 <td><a href="{ai9me:$vo.weburl}" target="_blank">{ai9me:$vo.weburl}</a></td>
 <td><a href="{ai9me::U('Yulan/index',array('token'=>$token,'weburl'=>$vo['weburl']))}" target="_blank">预览</a></td>
 <td class="norightborder">		
-	<a target="ddd" href="{ai9me::U('Classify/editNew',array('weburl'=>$vo['weburl']))}">编辑</a>
+	<a target="ddd" href="{ai9me::U('Classify/editNew',array('token'=>$token,'weburl'=>$vo['weburl']))}">编辑</a>
 	<a href="{ai9me::U('Classify/del',array('weburl'=>$vo['weburl']))}">删除</a>
 </td>
 </tr>

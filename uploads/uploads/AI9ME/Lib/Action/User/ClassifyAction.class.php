@@ -44,6 +44,7 @@ class ClassifyAction extends UserAction{
 		$weburl['weburl'] =$this->_get('weburl');
 		
 		$info=M('Classify')->where($weburl)->order('sorts')->select();
+		
 		$this->assign('info',$info);
 		$this->assign('weburl', $info[0]['weburl']);
 		$this->display();
