@@ -39,46 +39,55 @@ items : [
 </TR>
               </THEAD>
               <TBODY>
-               <TR>
-                  <TH><span class="red">*</span><label for="title">标题：</label></TH>
-                  <TD><input type="input" class="px" id="title" value=""    name="title" style="width:580px;"> </TD>
+              <TR>
+              	<TH></TH>
+              	<TD style="font-size:16px;color:red;">最多可添加9条图文信息</TD>
+              </TR>
+              <TR>
+              <TH valign="top">图文信息</TH>
+              <TD>
+              <div style="border:1px solid #ccc;width:700px;padding:0px 0px 0px 20px;">
+              <TABLE>
+              <TR>
+                  <TH valign="top"><span class="red">*</span><label for="title">标题：</label></TH>
+                  <TD><input type="input" class="px" id="title" value="" name="title1" style="width:580px;"> 
+                 	<br /><span> 默认第一条图文信息为主标题</span>
+                  </TD>
+                  
                 </TR>
                 <TR>
                   <TH valign="top"><label for="text">简介：</label></TH>
-                  <TD><textarea  class="px" id="Hfcontent"     name="text" style="width:580px;  height:100px"></textarea><br />限制200字内
-                   
-
-</TD>
+                  <TD><textarea  class="px" id="Hfcontent"     name="text1" style="width:580px;  height:60px"></textarea><br />限制200字内
+                  </TD> 
                 </TR>
-                <TR>
-                  <TH valign="top"><label for="classid">文章所属类别：</label></TH>
-                  <TD>
-                   <select name="classid">
-                      <volist name="info" id="vo">
-                     <option   value="{ai9me:$vo.id},{ai9me:$vo.name}">{ai9me:$vo.name}</option>
-                      </volist>  
-                    </select><a href="{ai9me::U('Classify/add')}"  target="ddd" >添加分类</a>
-                  </TD>
-                </TR>
-                  <TH valign="top"><label for="pic">封面图片地址：</label></TH>
-                  <TD><input class="text textMiddle inputQ"  name="pic" value="" style="width:480px;"  /><input class="btnFile btnGreen" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>pic))}')" value="点击上传图片"><br />
-                  支持外链和上传到本地或者云相册 
-</TD>
-                </TR>
-               <TR>
-                  <TH valign="top"><label for="showpic">详细页是否显示封面：</label></TH>
-                  <TD>是<input class="radio" type="radio" name="showpic" value="1"  checked="checked"   > 否<input class="radio" type="radio" name="showpic" value="0"   >
-                  
+                  <TH valign="top"><label for="pic">图片地址：</label></TH>
+                  <TD><input class="text textMiddle inputQ"  name="pic1" value="" style="width:450px;"  /><input class="btnFile btnGreen" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>pic))}')" value="上传图片"><br />
 </TD>
                 </TR>
                 <TR>
                   <TH valign="top"><label for="info">图文详细页内容：</label></TH>
-                  <TD><textarea name="info" id="info"  rows="5" style="width:590px;height:360px"   >   </textarea></TD>
+                  <TD><textarea name="info1" id="info"  rows="5" style="width:590px;height:300px"   >   </textarea></TD>
                 </TR>  
                  <TR>
-                  <TH valign="top"><label for="url">URL或活动外链代码：</label></TH>
-                  <TD><input type="input" class="px" id="url" value="" name="url" style="width:580px;"><br /><span class="red">如需跳转到其他网址，请在这里填写网址(例如：http://baidu.com，记住必须有http://)</span>如果填写了图文详细内容，这里请留空，不要设置！</TD>
+                  <TH valign="top"><label for="url">二次链接地址：</label></TH>
+                  <TD><input type="input" class="px" id="url" value="" name="url1" style="width:580px;"><br /><span class="red">点击图片后跳转的链接，可使用3G网站素材，必须以http://开头</span>如果已填写了图文详细页内容，那么此链接不生效</TD>
                 </TR>
+                <TR>
+                <TH></TH>
+                <TD>
+                	<input type="button" value="删除本图文" class="btndelete right" onclick="deleteImg(this)">
+                </TD>
+                </TR>
+                </TABLE>
+                </div>
+              </TD>
+              </TR>
+              <TR>
+					<TH></TH>
+					<TD>
+						<input type="button" value="增加图文描述" class="btnadd left" onclick="addImg(this)">
+					</TD>
+				</TR>
                 <TR>
                   <TH></TH>
                   <TD><input type="submit" value="保存" name="sbmt" class="btnGreen left">　<a href="{ai9me::U('Img/index')}"  class="btnGray vm">取消</a></TD>

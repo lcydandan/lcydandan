@@ -18,9 +18,11 @@ class WeixinAction extends Action
     }
     private function reply($data)
     {
+    	//自定义菜单事件
         if ('CLICK' == $data['Event']) {
             $data['Content'] = $data['EventKey'];
         }
+        //用户订阅事件
         if ('subscribe' == $data['Event']) {
             $this->requestdata('follownum');
             $data = M('Areply')->field('home,keyword,content')->where(array(
@@ -65,6 +67,7 @@ class WeixinAction extends Action
         } elseif ('unsubscribe' == $data['Event']) {
             $this->requestdata('unfollownum');
         }
+        
         $Pin       = new GetPin();
         $key       = $data['Content'];
         $open      = M('Token_open')->where(array(
