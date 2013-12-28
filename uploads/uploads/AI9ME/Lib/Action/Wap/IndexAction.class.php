@@ -152,7 +152,7 @@ class IndexAction extends BaseAction
         $this->display($this->tpl['tpltypename']);
     }
     
-    public function index($token='', $weburl='', $generatehtml='')
+    public function index($token='', $weburl='', $generatehtml='', $tpltypename='')
     {
     	$this->common($token, $weburl);
     	if ($token == '')
@@ -168,13 +168,17 @@ class IndexAction extends BaseAction
         $this->assign('tpl', $this->tpl);
         $this->assign('copyright', $this->copyright);
                 
+        if ($tpltypename == '')
+        {
+        	$tpltypename = $this->tpl['tpltypename'];
+        }
         if ($generatehtml == '')
         {
-        	$this->display($this->tpl['tpltypename']);        	
+        	$this->display($tpltypename);        	
         }
         else 
         {
-        	$this->buildHtml($generatehtml,'', $this->tpl['tpltypename']);
+        	$this->buildHtml($generatehtml,'', $tpltypename);
         }
     }
     

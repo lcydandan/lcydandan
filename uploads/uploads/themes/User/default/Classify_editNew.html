@@ -6,13 +6,13 @@
     <div class="phone">
     	<div class="phone_right"></div>
         <div class="close"></div>
-        <iframe class="preview" src="{ai9me::U('Wap/Index/index',array('token'=>$_GET['token'], 'weburl'=>$weburl))}" width="337" height="454" frameborder="0" scrolling="auto"></iframe>
+        <iframe id="webpreview" class="preview" src="{ai9me::U('Wap/Index/index',array('token'=>$_GET['token'], 'weburl'=>$weburl))}" width="337" height="454" frameborder="0" scrolling="auto"></iframe>
 	</div>
 </div>
 </TD>
 <TD>
 	<form class="form" method="post"   action="{ai9me::U('Classify/upsaveMany')}"  target="_top" enctype="multipart/form-data" >
-	选择网页模板： <select id="webmodel" name="webmodel" onload="alert('loaded');" onchange="modelChange(this.value)">
+	选择网页模板： <select id="webmodel" name="webmodel" onchange="modelChange(this)">
 		<option value="tpl_101_index" >模板1</option>
 		<option value="tpl_102_index" >模板2</option>
 		<option value="tpl_103_index" >模板3</option>
@@ -106,9 +106,6 @@
 </TABLE>        
         
         
-        
-        
-        
         <div class="clr"></div>
       </div>
     </div>
@@ -139,16 +136,23 @@
 			if (tplname == tplarray[i])
 			{
 				document.getElementById("webmodel").selectedIndex = i;
-				document.getElementById("webpreview").src = tplimages[i];
+				var tpltypename = tplarray[i];
+				var srctmp = "{ai9me::U('Wap/Index/index',array('token'=>$token, 'weburl'=>$weburl, 'tpltypename'=>tplreplace))}";
+				var src = srctmp.replace("tplreplace", tpltypename);		
+				document.getElementById("webpreview").src = src;
 				break;
 			}
 		}
 		
 	};
-	function modelChange(value)
+	function modelChange(selectObj)
 	{
 		var index = selectObj.selectedIndex;
-		document.getElementById("webpreview").src = tplimages[index];
+		var tpltypename = tplarray[index];
+		var srctmp = "{ai9me::U('Wap/Index/index',array('token'=>$token, 'weburl'=>$weburl, 'tpltypename'=>tplreplace))}";
+		var src = srctmp.replace("tplreplace", tpltypename);		
+		document.getElementById("webpreview").src = src;
+		
 	}
 	
 	function deleteImg(obj)
