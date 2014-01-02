@@ -3,26 +3,18 @@
  *语音回复
 **/
 class ClassifyAction extends UserAction{
+	private $tplarray = array("tpl_101_index", "tpl_102_index","tpl_103_index","tpl_104_index","tpl_105_index",
+	"tpl_106_index","tpl_107_index","tpl_108_index","tpl_109_index","tpl_110_index",
+	"tpl_111_index","tpl_112_index","tpl_113_index","tpl_114_index","tpl_115_index");
+	
+	
 	public function index(){
 		$db=D('Classify');
 		$where['token']=session('token');
 		$count=$db->where($where)->count();
 		$page=new Page($count,25);
 		$weburl = $db->where($where)->distinct(true)->field('weburl,name')->limit($page->firstRow.','.$page->listRows)->select();
-// 		$webinfo = array();
-// 		$i = 0;
-// 		foreach ($weburl as $currenturl)
-// 		{
-// 			$condition['token'] = $where['token'];		
-// 			$condition['weburl'] = $currenturl;
-// 			$info = $db->where($condtion)->order('sorts desc')->limit($page->firstRow.','.$page->listRows)->select();
-// 			$data['url'] = $currenturl;
-// 			$data['name'] = $info['name'];
-// 			$webinfo[$i] = $data;	
-// 			$i++;		
-// 		}
-		//$info=$db->where($where)->order('sorts desc')->limit($page->firstRow.','.$page->listRows)->select();
-				
+
 		$this->assign('page',$page->show());
 		$this->assign('info',$weburl);
 		
@@ -51,8 +43,14 @@ class ClassifyAction extends UserAction{
 	}
 	
 	public function del(){
+		$where['token']=$this->_get('token');
 		$where['weburl']=$this->_get('weburl');
-		if(D(MODULE_NAME)->where($where)->delete()){
+		$id = D(MODULE_NAME)->where($where)->delete(); 
+		if ($id)
+		{
+			$id = D('Flash')->where($where)->delete();			
+		}
+		if($id){
 			$this->success('操作成功',U(MODULE_NAME.'/index'));
 		}else{
 			$this->error('操作失败',U(MODULE_NAME.'/index'));
@@ -84,30 +82,48 @@ class ClassifyAction extends UserAction{
 	{		
 		$token = session('token');
 		$db = M(MODULE_NAME);
+		$flashDb = M('Flash');
 		$id = null;
-		$name = $this->_post('name');
-		$tpl = $this->_post('webmodel');
+		$webname = $this->_post('webname');
+		$tpltypeid = $this->_post('webmodel');
+		$tpltypename = $this->tplarray[(int)($tpltypeid) - 1];
 		$classifyData = array();
 		$current = 0;
-		$weburl = 'http://tmp'.date('YmdHis').'html';
+		$generatehtml = date('YmdHis').rand(100, 999);
+		$weburl = 'http://'.$_SERVER['SERVER_NAME'].'/AI9MEdata/html/'.$generatehtml.'.html';
+			
 		for ($i=0; $i<20; $i++)
 		{
-			$data['name'] = $name;
+			$imgname = $this->_post('name'.$i);
+			$imginfo = $this->_post('info'.$i);			
 			$img = $this->_post('img'.$i);
-			if ($img == null)
+			if ($imgname == null && $imginfo == null && $img == null)
 			{
 				continue;
 			}
 			$data['img'] = $img;
 			$data['url'] = str_replace('&amp;', "&", $this->_post('url'.$i));
-			$data['info'] = $this->_post('info'.$i);
-			$data['name'] = $this->_post('name');
+			$data['info'] = $imginfo;
+			$data['name'] = $imgname;
 			$data['status'] = '1';
 			$data['sorts'] = strval($i);
 			$data['token'] = $token;
  			$data['weburl'] = $weburl;
-			$data['tpltypename'] = $tpl;
+ 			$data['tpltypeid'] = $tpltypeid;
+			$data['tpltypename'] = $tpltypename;
+			$data['webname'] = $webname;
 			$classifyData[$current] = $data;
+			
+			$flash = $this->_post('flash'.$i);
+			if ($flash == '1')
+			{
+				$flashdata['token'] = $token;
+				$flashdata['img'] = $data['img'];
+				$flashdata['url'] = $data['url'];
+				$flashdata['info'] = $data['info'];
+				$flashdata['weburl'] = $weburl;
+				$flashDb->add($flashdata);
+			}
 			$current++;
 		}
 
@@ -126,11 +142,9 @@ class ClassifyAction extends UserAction{
 		{
 			//根据添加的信息生成静态网页
 			$generatehtml = date('YmdHis').rand(100, 999);
-			R('Wap/Index/index', array('token'=>$token, 'weburl'=>$weburl, 'generatehtml'=>$generatehtml));
-			$finalweburl = 'http://'.$_SERVER['SERVER_NAME'].'/AI9MEdata/html/'.$generatehtml.'.html';
-			
-			$db->where($where)->setField('weburl', $finalweburl);		
-			$this->success('操作成功',U(MODULE_NAME.'/index'));	
+ 			R('Wap/Index/index', array('token'=>$token, 'weburl'=>$weburl, 'generatehtml'=>$generatehtml, 'tpltypeid'=>$tpltypeid));
+					
+ 			$this->success('操作成功',U(MODULE_NAME.'/index'));	
 		}
 		else
 		{
@@ -172,10 +186,6 @@ class ClassifyAction extends UserAction{
 		return $arr;
 	}
 	
-	public function deleteMany()
-	{
-		$token = session('token');
-	}
 	
 	public function upsaveMany()
 	{
@@ -188,7 +198,7 @@ class ClassifyAction extends UserAction{
 		
 		$id = null;
 		$name = $this->_post('name');
-		$tpl = $this->_post('webmodel');
+		$tpltypeid = $this->_post('webmodel');
 		for ($i=0; $i<20; $i++)
 		{
 			$data['name'] = $name;
@@ -207,7 +217,9 @@ class ClassifyAction extends UserAction{
 			$data['sorts'] = strval($i);
 			$data['token'] = $token;
 			$data['weburl'] = $weburl;
-			$data['tpltypename'] = $tpl;
+			$data['tpltypeid'] = $tpltypeid;
+			$id = (int)$tpltypeid;
+			$data['tpltypename'] = $this->tplarray[(int)($tpltypeid) - 1];
 			$id = $db->add($data);
 			if ($id == false)
 			{

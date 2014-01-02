@@ -11,6 +11,9 @@ class IndexAction extends BaseAction
     private $copyright;
     public $company;
     public $token;
+	private $tplarray = array("tpl_101_index", "tpl_102_index","tpl_103_index","tpl_104_index","tpl_105_index",
+	"tpl_106_index","tpl_107_index","tpl_108_index","tpl_109_index","tpl_110_index",
+	"tpl_111_index","tpl_112_index","tpl_113_index","tpl_114_index","tpl_115_index");
     
     
     public function _initialize()
@@ -38,7 +41,14 @@ class IndexAction extends BaseAction
         $copy            = D('user_group')->field('iscopyright')->find($gid['gid']); //查询用户所属组
         $this->copyright = $copy['iscopyright'];
         $this->info      = $info;
-        $tpl['tpltypename'] = $info[0]['tpltypename'];
+        $tpltypeid = $this->_post('tpltypeid');
+        if ($tpltypeid == null)
+        {
+        	$tpltypeid = $info[0]['tpltypeid'];
+        }
+        $tpl['tpltypeid'] = $tpltypeid;
+        $tpl['tpltypename'] = $this->tplarray[(int)$tpltypeid - 1];
+        
         $this->tpl       = $tpl;
         $company_db      = M('company');
         $this->company   = $company_db->where(array(
@@ -48,6 +58,23 @@ class IndexAction extends BaseAction
         $this->assign('company', $this->company);
         $this->assign('token', $this->token);
 		$home            = M('Home')->where($where)->select();
+		
+// 		$homeInfo        = M('Menuplus')->where($where)->select();
+// 		$arr             = $homeInfo[0];
+// 		$arr = array_slice($arr,5);
+// 		$array = array_chunk($arr,3,true);
+// 		$arrayNew = array();
+// 		foreach($array as $k=>$v) {
+// 			foreach($v as $k2=>$v2) {
+// 				$b = explode('_',$k2);
+// 				break;
+// 			}
+// 			$a = array_values($v);
+// 			$arrayNew[$k]['url'] = $a[0];
+// 			$arrayNew[$k]['sort'] = $a[1];
+// 			$arrayNew[$k]['display'] = $a[2];
+// 			$arrayNew[$k]['name'] = $b[0];
+// 		}
 		$arrayNew = array();
 		foreach($info as $v) {
 			$arrayNew[$k]['url'] = $v['url'];
@@ -107,6 +134,7 @@ class IndexAction extends BaseAction
     	$this->copyright = $copy['iscopyright'];
     	$this->info      = $info;
     	$tpl['tpltypename'] = $info[0]['tpltypename'];
+    	$tpl['tpltypeid'] = $info[0]['tpltypeid'];
     	$this->tpl       = $tpl;
     	$company_db      = M('company');
     	$this->company   = $company_db->where(array(
@@ -152,22 +180,42 @@ class IndexAction extends BaseAction
         $this->display($this->tpl['tpltypename']);
     }
     
-    public function index($token='', $weburl='', $generatehtml='', $tpltypename='')
+    public function index($token='', $weburl='', $generatehtml='', $tpltypeid='')
     {
-    	$this->common($token, $weburl);
+    	if ($this->tpl == null)
+    	{
+    		$this->common($token, $weburl);
+    	}
     	if ($token == '')
     	{
     		$where['token'] = $this->_get('token');
+    	}
+    	else 
+    	{
+    		$where['token'] = $token;
+    	}
+    	if ($weburl == '')
+    	{
+    		$where['weburl'] = $this->_get('weburl');
+    	}
+    	else 
+    	{
+    		$where['weburl'] = $weburl;
     	}
         $flash          = M('Flash')->where($where)->select();
         $count          = count($flash);
         $this->assign('flash', $flash);
         $this->assign('info', $this->info);
         $this->assign('num', $count);
-        $this->assign('info', $this->info);
+        
+        if ($tpltypeid != '')
+        {
+        	$this->tpl['tpltypeid'] = $tpltypeid;
+        	$this->tpl['tpltypename'] = $this->tplarray[(int)$tpltypeid - 1];
+        }
         $this->assign('tpl', $this->tpl);
         $this->assign('copyright', $this->copyright);
-                
+        
         if ($tpltypename == '')
         {
         	$tpltypename = $this->tpl['tpltypename'];

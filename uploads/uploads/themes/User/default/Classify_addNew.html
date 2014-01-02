@@ -12,21 +12,21 @@
 <TD>
 	<form class="form" method="post"   action="{ai9me::U('Classify/insertMany')}"  target="_top" enctype="multipart/form-data" >
 	选择网页模板： <select id="webmodel" name="webmodel" onchange="modelChange(this)">
-		<option value="tpl_101_index" selected="selected">模板1</option>
-		<option value="tpl_102_index" >模板2</option>
-		<option value="tpl_103_index" >模板3</option>
-		<option value="tpl_104_index" >模板4</option>
-		<option value="tpl_105_index" >模板5</option>
-		<option value="tpl_106_index" >模板6</option>
-		<option value="tpl_107_index" >模板7</option>
-		<option value="tpl_108_index" >模板8</option>
-		<option value="tpl_109_index" >模板9</option>
-		<option value="tpl_110_index" >模板10</option>
-		<option value="tpl_111_index" >模板11</option>
-		<option value="tpl_112_index" >模板12</option>
-		<option value="tpl_113_index" >模板13</option>
-		<option value="tpl_114_index" >模板14</option>
-		<option value="tpl_115_index" >模板15</option>
+		<option value="1" selected="selected">模板1</option>
+		<option value="2" >模板2</option>
+		<option value="3" >模板3</option>
+		<option value="4" >模板4</option>
+		<option value="5" >模板5</option>
+		<option value="6" >模板6</option>
+		<option value="7" >模板7</option>
+		<option value="8" >模板8</option>
+		<option value="9" >模板9</option>
+		<option value="10" >模板10</option>
+		<option value="11" >模板11</option>
+		<option value="12" >模板12</option>
+		<option value="13" >模板13</option>
+		<option value="14" >模板14</option>
+		<option value="15" >模板15</option>
 	</select>
  	<div class="mycontent" >
          <div class="cLineB">
@@ -38,8 +38,8 @@
          	<TABLE id="classifyTable" class="userinfoArea" style=" margin:20px 0 0 0;" border="0" cellSpacing="0" cellPadding="0" width="100%" margin-top="5px">
 			<THEAD>
 			<TR>
-			  <TH valign="top"><label for="keyword">网站标题：</label></TH>
-			  <TD><input type="input" class="px" id="keyword" value="" name="name" style="width:450px" ><br />
+			  <TH valign="top"><label for="keyword">网站名称：</label></TH>
+			  <TD><input type="input" class="px" id="keyword" value="" name="webname" style="width:450px" ><br />
 			                      该名称在手机上不显示，只用于标识不同3G网站
 			                     </TD>
 			  <TD>&nbsp;</TD>
@@ -54,15 +54,21 @@
 				      <tr>  
 					  <th>图片标题：</th>
 					  <td>
+					  	  <input class="input info" name="name0"><br />					  	  
+					  </td>
+					  </tr>
+				      <tr>  
+					  <th>图片描述：</th>
+					  <td>
 					  	  <input class="input info" name="info0"><br />
-					  	  30个字描述图片，可为空  
 					  </td>
 					  </tr>
 					  <tr>
 						  <th>图片上传：</th>
 						  <td><input class="input img" name="img0"><br />
 						  	建议图片大小：宽720高400  
-						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img0))}')" value="点击上传图片">
+						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'imgtext'=>img0, 'imgview'=>imgview0))}')" value="点击上传图片">
+						  	<img width="60" height="60" name="imgview0" src="">
 						  </td>						   	
 					  </tr>
 					  <tr>
@@ -70,6 +76,13 @@
 						  <td><input class="input url" name="url0"><br />
 						  	以http://开头
 						  </td>
+					  </tr>
+					  <tr>
+						  <TH valign="top"><label for="keyword">作为幻灯片：</label></TH>
+						  <TD><input type="radio" class="px" id="keyword" value="1" name="flash0" checked/>是<span width="50"></span>
+						  <input type="radio" class="px" id="keyword" value="0" name="flash0"  />否
+						                   </TD>
+						  <TD>&nbsp;</TD>
 					  </tr>
 					  <tr>
 					  	<th></th>

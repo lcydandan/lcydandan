@@ -66,7 +66,8 @@ $(function () {
 			success: function(data) {
 				btn.html("添加附件");
 				alert("图片上传成功");
-                window.opener.document.all.<?php echo $_GET['n'];?>.value+=""+data.pic+"";
+                window.opener.document.all.<?php echo $_GET['imgtext'];?>.value+=data.pic;
+                window.opener.document.all.<?php echo $_GET['imgview'];?>.src=data.pic;
                 self.close();
 			},
 			error:function(xhr){
