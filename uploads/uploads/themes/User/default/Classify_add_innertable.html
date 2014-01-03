@@ -9,18 +9,25 @@
   <TD>
   <div style="border:1px solid #ccc;">
   <TABLE class="imgtable">
-  <tr>
   
+  <tr>  
   <th>图片标题：</th>
   <td>
+  	  <input class="input name"><br />					  	  
+  </td>
+  </tr>
+  <tr>  
+  <th>图片描述：</th>
+  <td>
   	<input class="input info" ><br />
-  	30个字描述图片，可为空  
+  	 对图片的详细描述，建议30字以内
   </td>
   </tr>
   <tr>
   <th>图片上传：</th>
   <td><input class="input img"><br />
   	建议图片大小：宽720高400  <input class="upload" type="button" value="点击上传图片">
+  	<img width="60" height="60" class="imgview" src="">
   </td>
    	
   </tr>
@@ -30,6 +37,13 @@
   	以http://开头
   </td>
   	</tr>
+  	
+  <tr>
+	  <TH valign="top"><label for="keyword">作为幻灯片：</label></TH>
+	  <TD><input type="radio" class="px yes" id="keyword" value="1" checked/>是
+	  <input type="radio" class="px no" id="keyword" value="0" />否
+	                   </TD>
+  </tr>
   	<tr>
   	<th></th>
   	<td>

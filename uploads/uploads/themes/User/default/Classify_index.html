@@ -17,7 +17,8 @@
 <thead>
 <tr>
     <th style=" width:120px;">标题</th>
-    <th style=" width:650px;">链接地址</th>
+    <th style=" width:600px;">链接地址</th>
+    <th style="width:150px;">更新时间</th>
     <th style=" width:50px;">预览</th>
     <th style=" width:150px;" class="norightborder">操作</th>
 </tr>
@@ -25,8 +26,9 @@
 
 <volist name="info" id="vo">
 <tr>
-<td>{ai9me:$vo.name}</td>
+<td>{ai9me:$vo.webname}</td>
 <td><a href="{ai9me:$vo.weburl}" target="_blank">{ai9me:$vo.weburl}</a></td>
+<td>{ai9me:$vo.updatetime|date="Y-m-d H:i:s",###}</td>
 <td><a href="{ai9me::U('Yulan/index',array('token'=>$token,'weburl'=>$vo['weburl']))}" target="_blank">预览</a></td>
 <td class="norightborder">		
 	<a target="ddd" href="{ai9me::U('Classify/editNew',array('token'=>$token,'weburl'=>$vo['weburl']))}">编辑</a>

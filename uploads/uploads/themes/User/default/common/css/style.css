@@ -1524,6 +1524,7 @@ color:#333;
 	height:29px;
 	width:320px;
 }
+.imgtable .name {}
 
 .imgtable .info{}
 
@@ -1531,13 +1532,18 @@ color:#333;
 
 .imgtable .img {}
 
+.imgtable .flash {}
+
 .imgtable .delete {}
+
+.imgtable .yes {}
+
+.imgtable .no {}
 
 .imgtable .upload{
 	font-size:12px;
 	color:blue;
 }
-
 
 .btndelete {
 	color:red; font-size:14px; 

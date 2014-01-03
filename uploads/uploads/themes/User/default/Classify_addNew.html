@@ -54,13 +54,14 @@
 				      <tr>  
 					  <th>图片标题：</th>
 					  <td>
-					  	  <input class="input info" name="name0"><br />					  	  
+					  	  <input class="input name" name="name0"><br />					  	  
 					  </td>
 					  </tr>
 				      <tr>  
 					  <th>图片描述：</th>
 					  <td>
 					  	  <input class="input info" name="info0"><br />
+					  	  对图片的详细描述，建议30字以内
 					  </td>
 					  </tr>
 					  <tr>
@@ -79,8 +80,8 @@
 					  </tr>
 					  <tr>
 						  <TH valign="top"><label for="keyword">作为幻灯片：</label></TH>
-						  <TD><input type="radio" class="px" id="keyword" value="1" name="flash0" checked/>是<span width="50"></span>
-						  <input type="radio" class="px" id="keyword" value="0" name="flash0"  />否
+						  <TD><input type="radio" class="px yes" id="keyword" value="1" name="flash0" checked/>是<span width="50"></span>
+						  <input type="radio" class="px no" id="keyword" value="0" name="flash0"  />否
 						                   </TD>
 						  <TD>&nbsp;</TD>
 					  </tr>
@@ -182,19 +183,29 @@
 				newrow.innerHTML = xmlhttp.responseText;
 				
 
+				var names = document.getElementsByClassName("input name");
+				names[names.length-1].name = "name" + nameIndex;
 				var infos = document.getElementsByClassName("input info");
 				infos[infos.length-1].name = "info" + nameIndex;
 				var imgs = document.getElementsByClassName("input img");
 				imgs[imgs.length-1].name = "img" + nameIndex;
 				var urls = document.getElementsByClassName("input url");
 				urls[urls.length-1].name = "url" + nameIndex;
+				var flashYes = document.getElementsByClassName("px yes");
+				flashYes[flashYes.length-1].name = "flash" + nameIndex;
+				var flashNo = document.getElementsByClassName("px no");
+				flashNo[flashNo.length-1].name = "flash" + nameIndex;
+				var imgview = document.getElementsByClassName("imgview");
+				imgview[imgview.length-1].name = "imgview" + nameIndex;
 					
 				var uploads = document.getElementsByClassName("upload");
 				uploads[uploads.length-1].onclick = function()
 				{
 					var imgname = "img" + nameIndex;
-					var tmpurl = "{ai9me::U('Upload/index',array('token'=>$token,'n'=>imgreplace))}";
-					var url = tmpurl.replace("imgreplace", imgname);					
+					var viewname = "imgview" + nameIndex;
+					var tmpurl = "{ai9me::U('Upload/index',array('token'=>$token,'imgtext'=>imgreplace, 'imgview'=>imgviewreplace))}";
+					var url1 = tmpurl.replace("imgreplace", imgname);	
+					var url = url1.replace("imgviewreplace", viewname);
 					window.open(url);
 				};
 			}

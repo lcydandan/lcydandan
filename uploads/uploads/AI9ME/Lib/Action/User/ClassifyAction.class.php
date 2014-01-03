@@ -13,7 +13,7 @@ class ClassifyAction extends UserAction{
 		$where['token']=session('token');
 		$count=$db->where($where)->count();
 		$page=new Page($count,25);
-		$weburl = $db->where($where)->distinct(true)->field('weburl,name')->limit($page->firstRow.','.$page->listRows)->select();
+		$weburl = $db->where($where)->distinct(true)->field('weburl,webname')->limit($page->firstRow.','.$page->listRows)->select();
 
 		$this->assign('page',$page->show());
 		$this->assign('info',$weburl);
@@ -57,7 +57,6 @@ class ClassifyAction extends UserAction{
 		}
 	}
 	public function insert(){
-// 		$this->all_insert();
 		$data['name'] = $this->_post('name');
 		$size = sizeof($this->_post('name'));
 		echo $size;
@@ -91,7 +90,7 @@ class ClassifyAction extends UserAction{
 		$current = 0;
 		$generatehtml = date('YmdHis').rand(100, 999);
 		$weburl = 'http://'.$_SERVER['SERVER_NAME'].'/AI9MEdata/html/'.$generatehtml.'.html';
-			
+		$createtime = time();
 		for ($i=0; $i<20; $i++)
 		{
 			$imgname = $this->_post('name'.$i);
@@ -112,10 +111,11 @@ class ClassifyAction extends UserAction{
  			$data['tpltypeid'] = $tpltypeid;
 			$data['tpltypename'] = $tpltypename;
 			$data['webname'] = $webname;
+			$data['flash'] = $this->_post('flash'.$i);
+			$data['updatetime'] = $createtime;
 			$classifyData[$current] = $data;
 			
-			$flash = $this->_post('flash'.$i);
-			if ($flash == '1')
+			if ($data['flash'] == '1')
 			{
 				$flashdata['token'] = $token;
 				$flashdata['img'] = $data['img'];
@@ -148,32 +148,13 @@ class ClassifyAction extends UserAction{
 		}
 		else
 		{
-			$this->error('操作失败',U(MODULE_NAME.'/index'));
 			//失败删除已保存的记录
 			$db->where($where)->delete();
+			D('Flash')->where($where)->delete();			
+			$this->error('操作失败',U(MODULE_NAME.'/index'));
 		}
 	}
-	
-	public function generateHtml($token, $weburl)
-	{
-		$where['token'] = $token;
-		$flash          = M('Flash')->where($where)->select();
-		$count          = count($flash);
-		$this->assign('flash', $flash);
-		$info = M('Classify')->where(array(
-				'token' => $token,
-				'weburl' => $weburl
-			))->order('sorts desc')->select();
-		$info = $this->convertLinks($info); //加外链等信息
-		$this->assign('num', $count);
-		$this->assign('info', $info);
-		echo count($info);
-// 		$this->assign('tpl', $this->tpl);
-// 		$this->assign('copyright', $this->copyright);
-// 		$this->display($info[0]['tpltypename']);
-		$this->buildHtml('tmp_tmp3.html','', $info[0]['tpltypename']);
-	}
-	
+		
 	public function convertLinks($arr)
 	{
 		$i = 0;
@@ -199,6 +180,7 @@ class ClassifyAction extends UserAction{
 		$id = null;
 		$name = $this->_post('name');
 		$tpltypeid = $this->_post('webmodel');
+		$updatetime = time();
 		for ($i=0; $i<20; $i++)
 		{
 			$data['name'] = $name;
@@ -218,12 +200,25 @@ class ClassifyAction extends UserAction{
 			$data['token'] = $token;
 			$data['weburl'] = $weburl;
 			$data['tpltypeid'] = $tpltypeid;
+			$data['flash'] = $this->_post('flash'.$i);
 			$id = (int)$tpltypeid;
 			$data['tpltypename'] = $this->tplarray[(int)($tpltypeid) - 1];
+			$data['updatetime'] = $updatetime;
 			$id = $db->add($data);
+
 			if ($id == false)
 			{
 				break;
+			}
+								
+			if ($data['flash'] == '1')
+			{
+				$flashdata['token'] = $token;
+				$flashdata['img'] = $data['img'];
+				$flashdata['url'] = $data['url'];
+				$flashdata['info'] = $data['info'];
+				$flashdata['weburl'] = $weburl;
+				$flashDb->add($flashdata);
 			}
 		}
 		if ($id)
