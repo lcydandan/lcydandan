@@ -13,7 +13,7 @@ class ClassifyAction extends UserAction{
 		$where['token']=session('token');
 		$count=$db->where($where)->count();
 		$page=new Page($count,25);
-		$weburl = $db->where($where)->distinct(true)->field('weburl,webname')->limit($page->firstRow.','.$page->listRows)->select();
+		$weburl = $db->where($where)->distinct(true)->field('weburl,webname,updatetime')->limit($page->firstRow.','.$page->listRows)->select();
 
 		$this->assign('page',$page->show());
 		$this->assign('info',$weburl);
@@ -178,28 +178,29 @@ class ClassifyAction extends UserAction{
 		$olddata = $db->where($where)->select();
 		
 		$id = null;
-		$name = $this->_post('name');
+		$webname = $this->_post('webname');
 		$tpltypeid = $this->_post('webmodel');
 		$updatetime = time();
 		for ($i=0; $i<20; $i++)
 		{
-			$data['name'] = $name;
+			$name = $this->_post('name'.$i);
 			$img = $this->_post('img'.$i);
 			$info = $this->_post('info'.$i);
-			if ($img == null && $info == null)
+			if ($name == null && $img == null && $info == null)
 			{
 				continue;
 			}
 			$id = null;
 			$data['img'] = $img;
 			$data['url'] = str_replace('&amp;', "&", $this->_post('url'.$i));
-			$data['name'] = $this->_post('name');
+			$data['name'] = $name;
 			$data['info'] = $info;
 			$data['status'] = '1';
 			$data['sorts'] = strval($i);
 			$data['token'] = $token;
 			$data['weburl'] = $weburl;
 			$data['tpltypeid'] = $tpltypeid;
+			$data['webname'] = $webname;
 			$data['flash'] = $this->_post('flash'.$i);
 			$id = (int)$tpltypeid;
 			$data['tpltypename'] = $this->tplarray[(int)($tpltypeid) - 1];

@@ -40,7 +40,7 @@
 			<THEAD>
 			<TR>
 			  <TH valign="top"><label for="keyword">网站标题：</label></TH>
-			  <TD><input type="input" class="px" id="keyword" value="{ai9me:$info[0].name}" name="name" style="width:450px" ><br />
+			  <TD><input type="input" class="px" id="keyword" value="{ai9me:$info[0].webname}" name="webname" style="width:450px" ><br />
 			                      该名称在手机上不显示，只用于标识不同3G网站
 			                     </TD>
 			  <TD>&nbsp;</TD>
@@ -61,17 +61,17 @@
 					  </td>
 					  </tr>
 				      <tr>  
-					  <th>图片标题：</th>
+					  <th>图片描述：</th>
 					  <td>
 					  	  <input class="input info" name="info{ai9me:$vo.sorts}" value="{ai9me:$vo.info}"><br />
-					  	  30个字描述图片，可为空  
+					  	  对图片的详细描述，建议30字以内，可为空
 					  </td>
 					  </tr>
 					  <tr>
 						  <th>图片上传：</th>
 						  <td><input class="input img" name="img{ai9me:$vo.sorts}" value="{ai9me:$vo.img}"><br />
 						  	建议图片大小：宽720高400  
-						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'imgtext'=>img{ai9me:$vo.sorts}, 'imgview'=>imgview0))}')" value="点击上传图片">
+						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img.$vo['sorts']))}')" value="点击上传图片">
 						  	<img width="60" height="60" name="imgview{ai9me:$vo.sorts}" src="{ai9me:$vo.img}">
 						  </td>						   	
 					  </tr>
@@ -81,10 +81,10 @@
 						  	以http://开头
 						  </td>
 					  </tr>
-					  <tr>
+					   <tr>
 						  <TH valign="top"><label for="keyword">作为幻灯片：</label></TH>
-						  <TD><input type="radio" class="px yes" id="keyword" value="1" name="flash{ai9me:$vo.sorts}"  <if condition="$vo['flash'] eq '1'">checked</if> />是
-						  <input type="radio" class="px no" id="keyword" value="0" name="flash{ai9me:$vo.sorts}" <if condition="$vo['flash'] eq '0'">checked</if> />否
+						  <TD><input type="radio" class="px yes" id="keyword" value="1" name="flash{ai9me:$vo.sorts}" <if condition="$vo['flash'] eq '1'">checked</if>  />是
+						  <input type="radio" class="px no" id="keyword" value="0" name="flash{ai9me:$vo.sorts}" <if condition="$vo['flash'] eq '0'">checked</if>/>否
 						                   </TD>
 						  <TD>&nbsp;</TD>
 					  </tr>
