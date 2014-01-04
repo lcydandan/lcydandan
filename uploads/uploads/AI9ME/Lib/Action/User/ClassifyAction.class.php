@@ -142,7 +142,6 @@ class ClassifyAction extends UserAction{
 		if ($id)
 		{
 			//根据添加的信息生成静态网页
-			$generatehtml = date('YmdHis').rand(100, 999);
  			R('Wap/Index/index', array('token'=>$token, 'weburl'=>$weburl, 'generatehtml'=>$generatehtml, 'tpltypeid'=>$tpltypeid));
 					
  			$this->success('操作成功',U(MODULE_NAME.'/index'));	
@@ -207,7 +206,7 @@ class ClassifyAction extends UserAction{
 			$data['tpltypename'] = $this->tplarray[(int)($tpltypeid) - 1];
 			$data['updatetime'] = $updatetime;
 			
-			//如果作为幻灯片，那么假如flash数据库
+			//如果作为幻灯片，那么加入flash数据库
 			if ($data['flash'] == '1')
 			{
 				$flashdata['token'] = $token;
@@ -236,6 +235,11 @@ class ClassifyAction extends UserAction{
 				$oldwhere['id'] = $old['flashid'];
 				$flashDb->where($oldwhere)->delete();
 			}
+			//生成静态页面
+			$indexstart = strrpos($weburl, "/");
+			$indexend = strrpos($weburl, ".html");
+			$generatehtml = substr($weburl, $indexstart+1, $indexend-$indexstart-1);
+			R('Wap/Index/index', array('token'=>$token, 'weburl'=>$weburl, 'generatehtml'=>$generatehtml, 'tpltypeid'=>$tpltypeid));
 			$this->success('操作成功',U(MODULE_NAME.'/index'));
 		}
 		else
