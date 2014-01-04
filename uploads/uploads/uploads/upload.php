@@ -66,8 +66,15 @@ $(function () {
 			success: function(data) {
 				btn.html("添加附件");
 				alert("图片上传成功");
-                window.opener.document.all.<?php echo $_GET['imgtext'];?>.value=data.pic;
-                window.opener.document.all.<?php echo $_GET['imgview'];?>.src=data.pic;
+                window.opener.document.all.<?php echo $_GET['n'];?>.value=data.pic;
+               
+                    var imgview = window.opener.document.all.<?php echo $_GET['imgview'];?>;
+                    if (imgview != null)
+                    {
+                        imgview.src = data.pic;
+                        imgview.style.display = "inline";
+                    } 
+                
                 self.close();
 			},
 			error:function(xhr){

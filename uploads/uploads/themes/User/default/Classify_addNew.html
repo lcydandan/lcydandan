@@ -44,36 +44,45 @@
 			                     </TD>
 			  <TD>&nbsp;</TD>
 			</TR>
-			</THEAD>
+			</THEAD>			
 			<TBODY>
+				<TR>
+				<TH valign="top">网站背景图片:</TH>
+				<TD>				
+				<input class="bgimg" name="bgimg" onchange="imgChange(this.value, this.name)">
+				<input type="button" class="bgimgupload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>bgimg, 'imgview'=>bgimgview))}')" value="点击上传图片">
+				<br />建议图片大小：宽720高400<img name="bgimgview" style="width:60px;height:60px;display:none;" src="">
+					
+				</TD>
+				</TR>
 				  <TR>
 				  <TH valign="top">图文编辑：</TH>
 				  <TD>
 				  <div style="border:1px solid #ccc;">
 				  <TABLE class="imgtable">
 				      <tr>  
-					  <th>图片标题：</th>
+					  <th valign="top">图片标题：</th>
 					  <td>
 					  	  <input class="input name" name="name0"><br />					  	  
 					  </td>
 					  </tr>
 				      <tr>  
-					  <th>图片描述：</th>
+					  <th valign="top">图片描述：</th>
 					  <td>
 					  	  <input class="input info" name="info0"><br />
 					  	  对图片的详细描述，建议30字以内，可为空
 					  </td>
 					  </tr>
 					  <tr>
-						  <th>图片上传：</th>
-						  <td><input class="input img" name="img0"><br />
+						  <th valign="top">图片上传：</th>
+						  <td><input class="input img" name="img0" onchange="imgChange(this.value, this.name)"><br />
 						  	建议图片大小：宽720高400  
-						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'imgtext'=>img0, 'imgview'=>imgview0))}')" value="点击上传图片">
-						  	<img width="60" height="60" name="imgview0" src="">
+						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img0, 'imgview'=>img0view))}')" value="点击上传图片">
+						  	<img style="display:none;" width="60px" height="60px" name="img0view" src="">
 						  </td>						   	
 					  </tr>
 					  <tr>
-						  <th>二次链接地址：</th>
+						  <th valign="top">二次链接地址：</th>
 						  <td><input class="input url" name="url0"><br />
 						  	以http://开头
 						  </td>
@@ -148,6 +157,16 @@
 		document.getElementById("webpreview").src = tplimages[index];
 	}
 	
+	function bgimgChange(obj)
+	{
+		alert ("上传了背景图片");
+		if (obj.src != "")
+		{
+			obj.style.width = "60px";
+			obj.style.height = "60px";
+		}
+	}
+	
 	function deleteImg(obj)
 	{	
 		var rowindex = obj.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.rowIndex;
@@ -180,8 +199,7 @@
 				var rowindex = obj.parentNode.parentNode.rowIndex;
 				var table = document.getElementById("classifyTable");
 				var newrow = table.insertRow(rowindex);
-				newrow.innerHTML = xmlhttp.responseText;
-				
+				newrow.innerHTML = xmlhttp.responseText;				
 
 				var names = document.getElementsByClassName("input name");
 				names[names.length-1].name = "name" + nameIndex;
@@ -189,21 +207,21 @@
 				infos[infos.length-1].name = "info" + nameIndex;
 				var imgs = document.getElementsByClassName("input img");
 				imgs[imgs.length-1].name = "img" + nameIndex;
+				var imgview = document.getElementsByClassName("imgview");
+				imgview[imgview.length-1].name = "img" + nameIndex + "view";
 				var urls = document.getElementsByClassName("input url");
 				urls[urls.length-1].name = "url" + nameIndex;
 				var flashYes = document.getElementsByClassName("px yes");
 				flashYes[flashYes.length-1].name = "flash" + nameIndex;
 				var flashNo = document.getElementsByClassName("px no");
 				flashNo[flashNo.length-1].name = "flash" + nameIndex;
-				var imgview = document.getElementsByClassName("imgview");
-				imgview[imgview.length-1].name = "imgview" + nameIndex;
 					
 				var uploads = document.getElementsByClassName("upload");
 				uploads[uploads.length-1].onclick = function()
 				{
 					var imgname = "img" + nameIndex;
-					var viewname = "imgview" + nameIndex;
-					var tmpurl = "{ai9me::U('Upload/index',array('token'=>$token,'imgtext'=>imgreplace, 'imgview'=>imgviewreplace))}";
+					var viewname = "img" + nameIndex + "view";
+					var tmpurl = "{ai9me::U('Upload/index',array('token'=>$token,'n'=>imgreplace, 'imgview'=>imgviewreplace))}";
 					var url1 = tmpurl.replace("imgreplace", imgname);	
 					var url = url1.replace("imgviewreplace", viewname);
 					window.open(url);
@@ -216,6 +234,14 @@
  		
  		
  	}
+	
+	function imgChange(imgurl, imgname)
+	{
+		var viewername = imgname + "view";
+		var ele = document.getElementsByName(viewername);
+		ele[0].src = imgurl;
+		ele[0].style.display = "inline";
+	}
 	
 	
 </script>

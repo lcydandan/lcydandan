@@ -33,12 +33,16 @@ class ClassifyAction extends UserAction{
 	}
 	
 	public function editNew(){
-		$weburl['weburl'] =$this->_get('weburl');
+		$where['token'] = $this->_get('token');
+		$where['weburl'] =$this->_get('weburl');
 		
-		$info=M('Classify')->where($weburl)->order('sorts')->select();
+		$info=M('Classify')->where($where)->order('sorts')->select();
 		
 		$this->assign('info',$info);
 		$this->assign('weburl', $info[0]['weburl']);
+		$home = M('Home')->where($where)->find();
+		$this->assign('bgimg', $home['homebgurl']);
+		
 		$this->display();
 	}
 	
@@ -49,6 +53,10 @@ class ClassifyAction extends UserAction{
 		if ($id)
 		{
 			$id = D('Flash')->where($where)->delete();			
+		}
+		if ($id)
+		{
+			$id = D('Home')->where($where)->delete();
 		}
 		if($id){
 			$this->success('操作成功',U(MODULE_NAME.'/index'));
@@ -136,6 +144,16 @@ class ClassifyAction extends UserAction{
 				break;
 			}
 		}
+		
+		//如果有背景图片，那么添加至home数据库
+		$bgimg = $this->_post('bgimg');
+		if ($bgimg != null)
+		{
+			$homedata['token'] = $token;
+			$homedata['weburl'] = $weburl;
+			$homedata['homebgurl'] = $bgimg;
+			D('home')->add($homedata);
+		}
 
 		$where['token'] = $token;
 		$where['weburl'] = $weburl;
@@ -222,8 +240,7 @@ class ClassifyAction extends UserAction{
 			if ($id == false)
 			{
 				break;
-			}
-					
+			}					
 		}
 		if ($id)
 		{
@@ -235,6 +252,20 @@ class ClassifyAction extends UserAction{
 				$oldwhere['id'] = $old['flashid'];
 				$flashDb->where($oldwhere)->delete();
 			}
+			
+			//更新Home的数据库信息
+			$homeDb = D('Home');
+			$home = $homeDb->where($where)->delete();
+			$bgimg = $this->_post('bgimg');
+			if ($bgimg != null)
+			{
+				$homedata['token'] = $token;
+				$homedata['weburl'] = $weburl;
+				$homedata['homebgurl'] = $bgimg;
+				D('home')->add($homedata);				
+			}
+			
+			
 			//生成静态页面
 			$indexstart = strrpos($weburl, "/");
 			$indexend = strrpos($weburl, ".html");

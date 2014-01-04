@@ -713,6 +713,8 @@ CREATE TABLE IF NOT EXISTS `ai9me_home` (
   `title` varchar(30) NOT NULL,
   `picurl` varchar(120) NOT NULL,
   `info` varchar(120) NOT NULL,
+  `homebgurl` varchar(100) NOT NULL,
+  `weburl` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
