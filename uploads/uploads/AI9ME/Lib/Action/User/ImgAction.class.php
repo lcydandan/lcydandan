@@ -15,11 +15,11 @@ class ImgAction extends UserAction{
 		$this->display();
 	}
 	public function add(){
-		$class=M('Classify')->where(array('token'=>session('token')))->select();
-		if($class==false){$this->error('请先添加3G网站分类',U('Classify/index',array('token'=>session('token'))));}
+		//$class=M('Classify')->where(array('token'=>session('token')))->select();
+		//if($class==false){$this->error('请先添加3G网站分类',U('Classify/index',array('token'=>session('token'))));}
 		$db=M('Classify');
 		$where['token']=session('token');
-		$info=$db->where($where)->select();
+		$info=$db->where($where)->distinct(true)->field('weburl, webname')->select();
 		$this->assign('info',$info);
 		$this->display();
 	}

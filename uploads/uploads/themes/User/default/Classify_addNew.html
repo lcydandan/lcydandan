@@ -51,7 +51,7 @@
 				<TD>				
 				<input class="bgimg" name="bgimg" onchange="imgChange(this.value, this.name)">
 				<input type="button" class="bgimgupload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>bgimg, 'imgview'=>bgimgview))}')" value="点击上传图片">
-				<br />建议图片大小：宽720高400<img name="bgimgview" style="width:60px;height:60px;display:none;" src="">
+				<br />有的模板不需要背景图片，可为空<img name="bgimgview" style="width:60px;height:60px;display:none;" src="">
 					
 				</TD>
 				</TR>
@@ -78,7 +78,7 @@
 						  <td><input class="input img" name="img0" onchange="imgChange(this.value, this.name)"><br />
 						  	建议图片大小：宽720高400  
 						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img0, 'imgview'=>img0view))}')" value="点击上传图片">
-						  	<img style="display:none;" width="60px" height="60px" name="img0view" src="">
+						  	<img class="imgview" style="display:none;" width="60px" height="60px" name="img0view" src="">
 						  </td>						   	
 					  </tr>
 					  <tr>

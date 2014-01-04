@@ -53,7 +53,7 @@
 				<TD>				
 				<input class="bgimg" name="bgimg" value="{ai9me:$bgimg}" onchange="imgChange(this.value, this.name)" >
 				<input type="button" class="bgimgupload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>bgimg, 'imgview'=>bgimgview))}')" value="点击上传图片">
-				<br />建议图片大小：宽720高400<img name="bgimgview" width="60px" height="60px" src="{ai9me:$bgimg}" <if condition="$bgimg eq ''">style="display:none;"</if>>
+				<br />有的模板不需要背景图片，可为空<img name="bgimgview" width="60px" height="60px" src="{ai9me:$bgimg}" <if condition="$bgimg eq ''">style="display:none;"</if>>
 					
 				</TD>
 				</TR>
@@ -81,7 +81,7 @@
 						  <td><input class="input img" name="img{ai9me:$vo.sorts}" value="{ai9me:$vo.img}" onchange="imgChange(this.value, this.name)"><br />
 						  	建议图片大小：宽720高400  
 						  	<input type="button" class="upload"  onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>img.$vo['sorts'],'imgview'=>img.$vo['sorts'].view))}')" value="点击上传图片">
-						  	<img width="60px" height="60px" name="img{ai9me:$vo.sorts}view" src="{ai9me:$vo.img}" <if condition="$vo['img'] eq ''">style="display:none;"</if>>
+						  	<img class="imgview" width="60px" height="60px" name="img{ai9me:$vo.sorts}view" src="{ai9me:$vo.img}" <if condition="$vo['img'] eq ''">style="display:none;"</if>>
 						  </td>						   	
 					  </tr>
 					  <tr>
