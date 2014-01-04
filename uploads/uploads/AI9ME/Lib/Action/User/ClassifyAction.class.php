@@ -113,7 +113,6 @@ class ClassifyAction extends UserAction{
 			$data['webname'] = $webname;
 			$data['flash'] = $this->_post('flash'.$i);
 			$data['updatetime'] = $createtime;
-			$classifyData[$current] = $data;
 			
 			if ($data['flash'] == '1')
 			{
@@ -122,8 +121,10 @@ class ClassifyAction extends UserAction{
 				$flashdata['url'] = $data['url'];
 				$flashdata['info'] = $data['info'];
 				$flashdata['weburl'] = $weburl;
-				$flashDb->add($flashdata);
+				$flashid = $flashDb->add($flashdata);
+				$data['flashid'] = $flashid;
 			}
+			$classifyData[$current] = $data;
 			$current++;
 		}
 
@@ -173,7 +174,7 @@ class ClassifyAction extends UserAction{
 		$token = session('token');
 		$weburl = $this->_post('weburl');
 		$db = M(MODULE_NAME);
-		//先删除原来的
+		$flashDb = M('Flash');
 		$where['weburl']=$weburl;
 		$olddata = $db->where($where)->select();
 		
@@ -205,13 +206,8 @@ class ClassifyAction extends UserAction{
 			$id = (int)$tpltypeid;
 			$data['tpltypename'] = $this->tplarray[(int)($tpltypeid) - 1];
 			$data['updatetime'] = $updatetime;
-			$id = $db->add($data);
-
-			if ($id == false)
-			{
-				break;
-			}
-								
+			
+			//如果作为幻灯片，那么假如flash数据库
 			if ($data['flash'] == '1')
 			{
 				$flashdata['token'] = $token;
@@ -219,8 +215,16 @@ class ClassifyAction extends UserAction{
 				$flashdata['url'] = $data['url'];
 				$flashdata['info'] = $data['info'];
 				$flashdata['weburl'] = $weburl;
-				$flashDb->add($flashdata);
+				$flashid = $flashDb->add($flashdata);
+				$data['flashid'] = $flashid;
 			}
+			$id = $db->add($data);
+
+			if ($id == false)
+			{
+				break;
+			}
+					
 		}
 		if ($id)
 		{
@@ -229,6 +233,8 @@ class ClassifyAction extends UserAction{
 			{
 				$oldwhere['id'] = $old['id'];
 				$db->where($oldwhere)->delete();
+				$oldwhere['id'] = $old['flashid'];
+				$flashDb->where($oldwhere)->delete();
 			}
 			$this->success('操作成功',U(MODULE_NAME.'/index'));
 		}

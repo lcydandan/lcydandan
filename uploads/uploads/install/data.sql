@@ -424,6 +424,9 @@ CREATE TABLE IF NOT EXISTS `ai9me_classify` (
   `weburl` char(255) NOT NULL,
   `tpltypename` varchar(20) NOT NULL,
   `tpltypeid` varchar(2) NOT NULL,
+  `flash`	varchar(1) NOT NULL,
+  `updatetime` int(11) NOT NULL,
+  `flashid` int(11)  DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
