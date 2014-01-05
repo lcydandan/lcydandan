@@ -52,41 +52,29 @@ items : [
                   <TH valign="top"><label for="text">简介：</label></TH>
                   <TD><textarea  class="px" id="Hfcontent"     name="text" style="width:580px;  height:100px">{ai9me:$info.text}</textarea><br />限制200字内
 </TD>
-                </TR>
+                </TR>                
+				
                 <TR>
-                  <TH valign="top"><label for="classid">文章所属类别：</label></TH>
-                  <TD>
-                   <select name="classid"   > 
-                    <option  value="0">请选择</option>
-                      <volist name="res" id="vo">
-						<option value="{ai9me:$vo.id},{ai9me:$vo.name}"<eq name="info.classid" value="$vo.id"> selected="selected"</eq>>{ai9me:$vo.name}</option>
-                      </volist>
-                    </select>
-					<a href="{ai9me::U('Classify/add')}">添加分类</a>
-                  </TD>
-                </TR> 
-				<TR>
-                  <TH valign="top"><label for="pic">封面图片地址：</label></TH>
+                  <TH valign="top"><label for="pic">图片地址：</label></TH>
                   <TD><input class="text textMiddle inputQ"  name="pic" value="{ai9me:$info.pic}" style="width:480px;"  /><input class="btnFile btnGreen" type=button onclick="window.open('{ai9me::U('Upload/index',array('token'=>$token,'n'=>pic))}')" value="点击上传图片"><br />
-                  支持外链和上传到本地或者云相册
-</TD>
-                </TR>
-				<input type="hidden" name="id" value="{ai9me:$info.id}" />
-               <TR>
-                  <TH valign="top"><label for="showpic">详细页是否显示封面：</label></TH>
-                  <TD>
-				  是<input class="radio" type="radio" name="showpic" value="1" <eq name="info.showpic" value="1"> checked="checked"</eq> />
-				  否<input class="radio" type="radio" name="showpic" value="0" <eq name="info.showpic" value="0"> checked="checked"</eq> />
-                  
-</TD>
+                		  支持外链和上传到本地或者云相册 
+					</TD>
                 </TR>
                 <TR>
                   <TH valign="top"><label for="info">图文详细页内容：</label></TH>
                   <TD><textarea name="info" id="info"  rows="5" style="width:590px;height:360px">{ai9me:$info.info}</textarea></TD>
                 </TR>  
-                 <TR>
-                  <TH valign="top"><label for="url">图文外链网址：</label></TH>
-                  <TD><input type="input" class="px" id="url" value="{ai9me:$info.url}" name="url" style="width:580px;"><br /><span class="red">如需跳转到其他网址，请在这里填写网址(例如：http://baidu.com，记住必须有http://)</span>如果填写了图文详细内容，这里请留空，不要设置！</TD>
+                <TR>
+                  <TH valign="top"><label for="url">二次链接地址：</label></TH>
+                  <TD><input type="input" class="px" id="url" value="{ai9me:$info.url}" name="url" style="width:580px;"><br /><span class="red">如需跳转到其他网址，请在这里填写网址(例如：http://baidu.com，记住必须有http://)</span>如果填写了图文详细内容，这里请留空，不要设置！
+                  
+                   	<br />可以选择已经编辑好的3G网站：<select name="classid" onchange="webChange(this)">
+                   		<option value="0,,"></option>
+                      <volist name="res" id="vo">
+                     <option value="{ai9me:$vo.id},{ai9me:$vo.webname},{ai9me:$vo.weburl}" <if condition="$info['url'] eq $vo['weburl']">selected</if>>{ai9me:$vo.webname}</option>
+                      </volist>  
+                    </select><a href="{ai9me::U('Classify/addNew')}" style="color:blue;"target="ddd" >添加3G网站素材</a>
+                    </TD>
                 </TR>
                 <TR>
                   <TH></TH>
@@ -106,4 +94,12 @@ items : [
   </div> 
 <!--底部-->
   	</div>
+  	<script type="text/javascript">
+  		function webChange(obj)
+  		{  	  			
+ 	  		var values = obj.value.split(",");  			
+ 	  		document.getElementById("url").value = values[2];  
+  		}  		
+ 
+  	</script>
 <include file="Public:footer"/>

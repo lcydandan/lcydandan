@@ -15,18 +15,30 @@ class ImgAction extends UserAction{
 		$this->display();
 	}
 	public function add(){
-		//$class=M('Classify')->where(array('token'=>session('token')))->select();
-		//if($class==false){$this->error('请先添加3G网站分类',U('Classify/index',array('token'=>session('token'))));}
 		$db=M('Classify');
 		$where['token']=session('token');
-		$info=$db->where($where)->distinct(true)->field('weburl, webname')->select();
+		$weburls=$db->where($where)->distinct(true)->field('weburl')->select();
+		$info = array();
+		for ($i=0; $i<count($weburls); $i++)
+		{
+			$where['weburl'] = $weburls[$i]['weburl'];
+			$data = $db->where($where)->field('id,webname,weburl')->select();
+			$info[$i] = $data[0];
+		}
 		$this->assign('info',$info);
 		$this->display();
 	}
 	public function edit(){
 		$db=M('Classify');
 		$where['token']=session('token');
-		$info=$db->where($where)->select();
+		$weburls=$db->where($where)->distinct(true)->field('weburl')->select();
+		$info = array();
+		for ($i=0; $i<count($weburls); $i++)
+		{
+			$where['weburl'] = $weburls[$i]['weburl'];
+			$data = $db->where($where)->field('id,webname,weburl')->select();
+			$info[$i] = $data[0];
+		}
 		$where['id']=$this->_get('id','intval');
 		$where['uid']=session('uid');
 		$res=D('Img')->where($where)->find();
@@ -35,7 +47,8 @@ class ImgAction extends UserAction{
 		$this->display();
 	}
 	public function del(){
-		$where['id']=$this->_get('id','intval');
+		$id = $this->_get('id', 'intval');
+		$where['id']=$id;
 		$where['uid']=session('uid');
 		if(D(MODULE_NAME)->where($where)->delete()){
 			M('Keyword')->where(array('pid'=>$id,'token'=>session('token'),'module'=>'Img'))->delete();
@@ -53,6 +66,7 @@ class ImgAction extends UserAction{
 			$img = $this->_upload();
 			$_POST['pic'] = C('site_url')."/".str_replace("./","",$img[0]['savepath'].$img[0]['savename']);
     	}
+    	$_POST['showpic'] = 1;
 		$this->all_insert();
 	}
 	public function upsave(){
@@ -62,6 +76,7 @@ class ImgAction extends UserAction{
 			$img = $this->_upload();
 			$_POST['pic'] = C('site_url')."/".str_replace("./","",$img[0]['savepath'].$img[0]['savename']);
     	}
+    	$_POST['showpic'] = 1;
 		$this->all_save();
 	}
 }

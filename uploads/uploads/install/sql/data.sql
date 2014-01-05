@@ -425,6 +425,7 @@ CREATE TABLE IF NOT EXISTS `ai9me_classify` (
   `tpltypename` varchar(20) NOT NULL,
   `tpltypeid` varchar(2) NOT NULL,
   `flash`	varchar(1) NOT NULL,
+  `createtime` int(11) NOT NULL,
   `updatetime` int(11) NOT NULL,
   `flashid` int(11)  DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -825,7 +826,8 @@ CREATE TABLE IF NOT EXISTS `ai9me_img` (
   `type` varchar(1) NOT NULL COMMENT '关键词匹配类型',
   `text` text NOT NULL COMMENT '简介',
   `classid` int(11) NOT NULL,
-  `classname` varchar(60) NOT NULL,
+  `classname` varchar(30) NOT NULL,
+  `classurl` char(255) NOT NULL,
   `pic` char(255) NOT NULL COMMENT '封面图片',
   `showpic` varchar(1) NOT NULL COMMENT '图片是否显示封面',
   `info` text NOT NULL COMMENT '图文详细内容',

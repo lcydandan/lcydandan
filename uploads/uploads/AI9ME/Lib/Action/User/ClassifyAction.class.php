@@ -13,7 +13,7 @@ class ClassifyAction extends UserAction{
 		$where['token']=session('token');
 		$count=$db->where($where)->count();
 		$page=new Page($count,25);
-		$weburl = $db->where($where)->distinct(true)->field('weburl,webname,updatetime')->limit($page->firstRow.','.$page->listRows)->select();
+		$weburl = $db->where($where)->distinct(true)->field('weburl,webname,createtime,updatetime')->order('createtime')->limit($page->firstRow.','.$page->listRows)->select();
 
 		$this->assign('page',$page->show());
 		$this->assign('info',$weburl);
@@ -120,6 +120,7 @@ class ClassifyAction extends UserAction{
 			$data['tpltypename'] = $tpltypename;
 			$data['webname'] = $webname;
 			$data['flash'] = $this->_post('flash'.$i);
+			$data['createtime'] = $createtime;
 			$data['updatetime'] = $createtime;
 			
 			if ($data['flash'] == '1')
@@ -192,12 +193,16 @@ class ClassifyAction extends UserAction{
 		$weburl = $this->_post('weburl');
 		$db = M(MODULE_NAME);
 		$flashDb = M('Flash');
+		$where['token'] = $token;
 		$where['weburl']=$weburl;
 		$olddata = $db->where($where)->select();
 		
 		$id = null;
 		$webname = $this->_post('webname');
 		$tpltypeid = $this->_post('webmodel');
+		//保留数据的createtime
+		$res = $db->where($where)->select();
+		$createtime = $res[0]['createtime'];
 		$updatetime = time();
 		for ($i=0; $i<20; $i++)
 		{
@@ -222,6 +227,7 @@ class ClassifyAction extends UserAction{
 			$data['flash'] = $this->_post('flash'.$i);
 			$id = (int)$tpltypeid;
 			$data['tpltypename'] = $this->tplarray[(int)($tpltypeid) - 1];
+			$data['createtime'] = $createtime; 
 			$data['updatetime'] = $updatetime;
 			
 			//如果作为幻灯片，那么加入flash数据库
