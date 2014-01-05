@@ -83,7 +83,7 @@ class BaseAction extends Action
 				if ($name == "Img")
 				{
 					$data['id']    = $_POST['id'];
-					$da['classname'] = $_POST['classname'];
+					//$da['classname'] = $_POST['classname'];
 					M('Img')->where($data)->save($da);
 				}
                 $this->success('操作成功', U(MODULE_NAME . $back));

@@ -17,28 +17,14 @@ class ImgAction extends UserAction{
 	public function add(){
 		$db=M('Classify');
 		$where['token']=session('token');
-		$weburls=$db->where($where)->distinct(true)->field('weburl')->select();
-		$info = array();
-		for ($i=0; $i<count($weburls); $i++)
-		{
-			$where['weburl'] = $weburls[$i]['weburl'];
-			$data = $db->where($where)->field('id,webname,weburl')->select();
-			$info[$i] = $data[0];
-		}
+		$info=$db->where($where)->distinct(true)->field('weburl,webname')->select();
 		$this->assign('info',$info);
 		$this->display();
 	}
 	public function edit(){
 		$db=M('Classify');
 		$where['token']=session('token');
-		$weburls=$db->where($where)->distinct(true)->field('weburl')->select();
-		$info = array();
-		for ($i=0; $i<count($weburls); $i++)
-		{
-			$where['weburl'] = $weburls[$i]['weburl'];
-			$data = $db->where($where)->field('id,webname,weburl')->select();
-			$info[$i] = $data[0];
-		}
+		$info=$db->where($where)->distinct(true)->field('weburl,webname')->select();
 		$where['id']=$this->_get('id','intval');
 		$where['uid']=session('uid');
 		$res=D('Img')->where($where)->find();
