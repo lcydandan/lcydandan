@@ -90,13 +90,6 @@
 						  	以http://开头
 						  </td>
 					  </tr>
-					   <tr>
-						  <TH valign="top"><label for="keyword">作为幻灯片：</label></TH>
-						  <TD><input type="radio" class="px yes" id="keyword" value="1" name="flash{ai9me:$vo.sorts}" <if condition="$vo['flash'] eq '1'">checked</if>  />是
-						  <input type="radio" class="px no" id="keyword" value="0" name="flash{ai9me:$vo.sorts}" <if condition="$vo['flash'] eq '0'">checked</if>/>否
-						                   </TD>
-						  <TD>&nbsp;</TD>
-					  </tr>
 					  <tr>
 					  	<th></th>
 					  	<td>
@@ -223,10 +216,6 @@
 				imgview[imgview.length-1].name = "img" + nameIndex + "view";
 				var urls = document.getElementsByClassName("input url");
 				urls[urls.length-1].name = "url" + nameIndex;
-				var flashYes = document.getElementsByClassName("px yes");
-				flashYes[flashYes.length-1].name = "flash" + nameIndex;
-				var flashNo = document.getElementsByClassName("px no");
-				flashNo[flashNo.length-1].name = "flash" + nameIndex;
 					
 				var uploads = document.getElementsByClassName("upload");
 				uploads[uploads.length-1].onclick = function()

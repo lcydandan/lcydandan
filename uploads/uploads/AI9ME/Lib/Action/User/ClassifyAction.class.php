@@ -22,6 +22,16 @@ class ClassifyAction extends UserAction{
 	}
 	
 	public function add(){
+		$where['token'] = session('token');
+		//$flashinfo = D('Flash')->where($where)->distinct(true)->field('info')->select();
+		//$this->assign('flashinfo', $flashinfo);
+		$this->display();
+	}
+	
+	public function addNew(){
+		$where['token'] = session('token');
+		$flashinfo = D('Flash')->where($where)->distinct(true)->field('info')->select();
+		$this->assign('flash', $flashinfo);
 		$this->display();
 	}
 	
@@ -123,16 +133,6 @@ class ClassifyAction extends UserAction{
 			$data['createtime'] = $createtime;
 			$data['updatetime'] = $createtime;
 			
-			if ($data['flash'] == '1')
-			{
-				$flashdata['token'] = $token;
-				$flashdata['img'] = $data['img'];
-				$flashdata['url'] = $data['url'];
-				$flashdata['info'] = $data['info'];
-				$flashdata['weburl'] = $weburl;
-				$flashid = $flashDb->add($flashdata);
-				$data['flashid'] = $flashid;
-			}
 			$classifyData[$current] = $data;
 			$current++;
 		}
@@ -154,6 +154,15 @@ class ClassifyAction extends UserAction{
 			$homedata['weburl'] = $weburl;
 			$homedata['homebgurl'] = $bgimg;
 			D('home')->add($homedata);
+		}
+		
+		//将对应的flash加入classifyflash数据库
+		$flashinfo = $this->_post('flashinfo');
+		if ($flashinfo != null) {
+			$flashdata['flashinfo'] = $flashinfo;
+			$flashdata['weburl'] = $weburl;
+			$flashdata['token'] = $token;
+			D('classifyflash')->add($flashdata);
 		}
 
 		$where['token'] = $token;

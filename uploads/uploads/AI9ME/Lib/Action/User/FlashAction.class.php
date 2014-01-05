@@ -46,7 +46,7 @@ class FlashAction extends UserAction{
     	$data['url']=trim($_POST['url']);
     	$result=M('flash')->add($data);
 		if($result!==false){
-				$this->success('操作成功');
+				$this->success('操作成功',U(MODULE_NAME.'/index'));
 			}
 	}
 	public function upsave(){

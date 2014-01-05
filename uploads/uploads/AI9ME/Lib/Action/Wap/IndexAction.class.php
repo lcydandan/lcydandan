@@ -202,7 +202,13 @@ class IndexAction extends BaseAction
     	{
     		$where['weburl'] = $weburl;
     	}
-        $flash          = M('Flash')->where($where)->select();
+    	$classifyflash = M('classifyflash')->where($where)->select();
+    	$flash = array();
+    	if (count($classifyflash) != 0)
+    	{
+    		$flash = M('Flash')->where(array('token'=>$token, 'info'=>$classifyflash[0]['flashinfo']))->select();
+    	}
+       
         $count          = count($flash);
         $this->assign('flash', $flash);
         $this->assign('info', $this->info);

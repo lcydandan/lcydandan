@@ -424,16 +424,22 @@ CREATE TABLE IF NOT EXISTS `ai9me_classify` (
   `weburl` char(255) NOT NULL,
   `tpltypename` varchar(20) NOT NULL,
   `tpltypeid` varchar(2) NOT NULL,
-  `flash`	varchar(1) NOT NULL,
   `createtime` int(11) NOT NULL,
   `updatetime` int(11) NOT NULL,
-  `flashid` int(11)  DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 --
 -- 导出表中的数据 `ai9me_classify`
 --
+
+
+CREATE TABLE IF NOT EXISTS `ai9me_classifyflash` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `token` varchar(30) NOT NULL,
+  `weburl` char(255) NOT NULL,
+  `flashinfo` varchar(90) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
