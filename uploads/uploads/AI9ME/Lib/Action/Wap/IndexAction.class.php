@@ -35,7 +35,7 @@ class IndexAction extends BaseAction
         $info            = M('Classify')->where(array(
             'token' => $this->_get('token'),
             'weburl' => $weburl
-        ))->order('sorts desc')->select();
+        ))->order('sorts')->select();
         $info            = $this->convertLinks($info); //加外链等信息
         $gid             = D('Users')->field('gid')->find($tpl['uid']);
         $copy            = D('user_group')->field('iscopyright')->find($gid['gid']); //查询用户所属组
@@ -127,7 +127,7 @@ class IndexAction extends BaseAction
     	$info            = M('Classify')->where(array(
     			'token' => $this->token,
     			'weburl' => $weburl
-    	))->order('sorts desc')->select();
+    	))->order('sorts')->select();
     	$info            = $this->convertLinks($info); //加外链等信息
     	$gid             = D('Users')->field('gid')->find($tpl['uid']);
     	$copy            = D('user_group')->field('iscopyright')->find($gid['gid']); //查询用户所属组

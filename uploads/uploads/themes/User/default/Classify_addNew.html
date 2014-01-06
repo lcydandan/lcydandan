@@ -11,7 +11,8 @@
 </div>
 <TD>
 	<form class="form" method="post"   action="{ai9me::U('Classify/insertMany')}"  target="_top" enctype="multipart/form-data" >
-	选择网页模板： <select id="webmodel" name="webmodel" onchange="modelChange(this)">
+	<span style="font-size:16px;font-weight:bold;margin-left:20px;">选择网页模板： </span>
+	<select id="webmodel" name="webmodel" onchange="modelChange(this)">
 		<option value="1" selected="selected">模板1</option>
 		<option value="2" >模板2</option>
 		<option value="3" >模板3</option>
@@ -28,7 +29,7 @@
 		<option value="14" >模板14</option>
 		<option value="15" >模板15</option>
 	</select>
-	<a href="{ai9me::U('Tmpls/index',array('token'=>$token))}" target="_blank">点击查看所有模板</a>
+	<a style="color:red;" href="{ai9me::U('Tmpls/index',array('token'=>$token))}" target="_blank">点击查看所有模板</a>
  	<div class="mycontent" >
          <div class="cLineB">
          	<h4>添加3G网站素材</h4>
