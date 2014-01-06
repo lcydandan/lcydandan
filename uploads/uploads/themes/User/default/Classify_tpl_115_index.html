@@ -98,7 +98,7 @@ document.getElementById("thelist").getElementsByTagName("img").item(i).style.css
 
 <volist name="info" id="vo">   
 <li>
-<a href="<if condition="$vo['url'] eq ''">{ai9me::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{ai9me:$vo.url}</if>">
+<a href="<if condition="$vo['url'] eq ''">{ai9me:$vo.img}<else/>{ai9me:$vo.url}</if>">
 <div class="menubtn">
 <div class="menumesg">
 <div class="menuimg"><div class="menuimg2"><img src="{ai9me:$vo.img}" /></div></div>

@@ -65,7 +65,7 @@
             <ul class="todayList">
                 <volist name="info" id="vo">
                     <li class="only3">
-                        <a href="<if condition="$vo['url'] eq ''">{ai9me::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{ai9me:$vo.url|htmlspecialchars_decode}</if>">
+                        <a href="<if condition="$vo['url'] eq ''">{ai9me:$vo.img}<else/>{ai9me:$vo.url|htmlspecialchars_decode}</if>">
                             <h2>{ai9me:$vo.name}</h2>
                             <p>{ai9me:$vo.info}</p>
                             <span class="icon">&nbsp;</span>

@@ -63,7 +63,7 @@
             <volist name="info" id="vo">
                 <li>
                     <div class="menubtn">
-                       <a href="<if condition="$vo['url'] eq ''">{ai9me::U('Wap/Index/lists',array('classid'=>$vo['id'],'token'=>$vo['token']))}<else/>{ai9me:$vo.url|htmlspecialchars_decode}</if>">
+                       <a href="<if condition="$vo['url'] eq ''">{ai9me:$vo.img}<else/>{ai9me:$vo.url|htmlspecialchars_decode}</if>">
                             <div class="menumesg">
                                 <div class="menuimg"><img src="{ai9me:$vo.img}"></div>
                                 <div class="menutitle">{ai9me:$vo.name}</div>
