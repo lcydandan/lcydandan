@@ -49,6 +49,17 @@
 			</THEAD>
 			<TBODY>
 				<TR>
+				<TH valign="top">幻灯片选择:</TH>
+				<TD>				
+					<select name="flashinfo">
+						<option value=""></option>
+						<volist name="flash" id="vo">
+							<option value="{ai9me:$vo.info}" <if condition="$vo['info'] eq $classifyflash['flashinfo']">selected</if>>{ai9me:$vo.info}</option>
+						</volist>
+					</select>
+				</TD>
+				</TR>
+				<TR>
 				<TH valign="top">网站背景图片:</TH>
 				<TD>				
 				<input class="bgimg" name="bgimg" value="{ai9me:$bgimg}" onchange="imgChange(this.value, this.name)" >

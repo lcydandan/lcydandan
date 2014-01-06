@@ -44,9 +44,17 @@ class ClassifyAction extends UserAction{
 	
 	public function editNew(){
 		$where['token'] = $this->_get('token');
-		$where['weburl'] =$this->_get('weburl');
+		$flash = D('Flash')->where($where)->distinct(true)->field('info')->select();
+		$this->assign('flash', $flash);		
 		
+		$where['weburl'] =$this->_get('weburl');		
 		$info=M('Classify')->where($where)->order('sorts')->select();
+				
+		$classifyflash = D('classifyflash')->where($where)->select();
+		if (count($classifyflash) != 0)
+		{
+			$this->assign('classifyflash', $classifyflash[0]);
+		}
 		
 		$this->assign('info',$info);
 		$this->assign('weburl', $info[0]['weburl']);
@@ -239,17 +247,6 @@ class ClassifyAction extends UserAction{
 			$data['createtime'] = $createtime; 
 			$data['updatetime'] = $updatetime;
 			
-			//如果作为幻灯片，那么加入flash数据库
-			if ($data['flash'] == '1')
-			{
-				$flashdata['token'] = $token;
-				$flashdata['img'] = $data['img'];
-				$flashdata['url'] = $data['url'];
-				$flashdata['info'] = $data['info'];
-				$flashdata['weburl'] = $weburl;
-				$flashid = $flashDb->add($flashdata);
-				$data['flashid'] = $flashid;
-			}
 			$id = $db->add($data);
 
 			if ($id == false)
@@ -268,6 +265,16 @@ class ClassifyAction extends UserAction{
 				$flashDb->where($oldwhere)->delete();
 			}
 			
+			//更新classifyflash数据库
+			$flashinfo = $this->_post('flashinfo');
+			D('classifyflash')->where($where)->delete();
+			if ($flashinfo != null) {
+				$flashdata['flashinfo'] = $flashinfo;
+				$flashdata['weburl'] = $weburl;
+				$flashdata['token'] = $token;
+				D('classifyflash')->add($flashdata);
+			}
+			
 			//更新Home的数据库信息
 			$homeDb = D('Home');
 			$home = $homeDb->where($where)->delete();
@@ -278,8 +285,7 @@ class ClassifyAction extends UserAction{
 				$homedata['weburl'] = $weburl;
 				$homedata['homebgurl'] = $bgimg;
 				D('home')->add($homedata);				
-			}
-			
+			}			
 			
 			//生成静态页面
 			$indexstart = strrpos($weburl, "/");
