@@ -14,7 +14,7 @@ define('APP_NAME', 'AI9ME');
 define('CONF_PATH','./AI9MEdata/conf/');
 define('RUNTIME_PATH','./AI9MEdata/logs/');
 define('TMPL_PATH','./themes/');
-define('HTML_PATH','./AI9MEdata/html/');
+define('HTML_PATH','./themes/Wap/default/html/');
 define('APP_PATH','./AI9ME/');
 define('CORE','./AI9ME/_Core');
 require(CORE.'/AI9ME.php');

@@ -70,11 +70,11 @@ class ClassifyAction extends UserAction{
 		$id = D(MODULE_NAME)->where($where)->delete(); 
 		if ($id)
 		{
-			$id = D('Flash')->where($where)->delete();			
+			$id = D('Home')->where($where)->delete();
 		}
 		if ($id)
 		{
-			$id = D('Home')->where($where)->delete();
+			D('classifyflash')->where($where)->delete();
 		}
 		if($id){
 			$this->success('操作成功',U(MODULE_NAME.'/index'));
@@ -115,7 +115,7 @@ class ClassifyAction extends UserAction{
 		$classifyData = array();
 		$current = 0;
 		$generatehtml = date('YmdHis').rand(100, 999);
-		$weburl = 'http://'.$_SERVER['SERVER_NAME'].'/AI9MEdata/html/'.$generatehtml.'.html';
+		$weburl = 'http://'.$_SERVER['SERVER_NAME'].'/themes/Wap/default/html/'.$generatehtml.'.html';
 		$createtime = time();
 		for ($i=0; $i<20; $i++)
 		{

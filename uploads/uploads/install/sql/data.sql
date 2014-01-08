@@ -424,6 +424,7 @@ CREATE TABLE IF NOT EXISTS `ai9me_classify` (
   `weburl` char(255) NOT NULL,
   `tpltypename` varchar(20) NOT NULL,
   `tpltypeid` varchar(2) NOT NULL,
+  `webname` varchar(20) NOT NULL,	
   `createtime` int(11) NOT NULL,
   `updatetime` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -435,7 +436,7 @@ CREATE TABLE IF NOT EXISTS `ai9me_classify` (
 
 CREATE TABLE IF NOT EXISTS `ai9me_classifyflash` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `token` varchar(30) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `weburl` char(255) NOT NULL,
   `flashinfo` varchar(90) NOT NULL,
   PRIMARY KEY (`id`)
