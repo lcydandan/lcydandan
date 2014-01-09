@@ -6,7 +6,7 @@
   
  </div>
          <div class="cLineC" style="line-height: 32px;">
- <a  target="ddd" href="{ai9me::U('Classify/addNew')}" class="btnGrayS vm bigbtn" >添加素材</a>　 
+ <a  target="ddd" href="{ai9me::U('Classify/add')}" class="btnGrayS vm bigbtn" >添加素材</a>　 
 </div>
  
  <div class="msgWrap form">
@@ -31,7 +31,7 @@
 <td>{ai9me:$vo.updatetime|date="Y-m-d H:i:s",###}</td>
 <td><a href="{ai9me::U('Yulan/index',array('token'=>$token,'weburl'=>$vo['weburl']))}" target="_blank">预览</a></td>
 <td class="norightborder">		
-	<a target="ddd" href="{ai9me::U('Classify/editNew',array('token'=>$token,'weburl'=>$vo['weburl']))}">编辑</a>
+	<a target="ddd" href="{ai9me::U('Classify/edit',array('token'=>$token,'weburl'=>$vo['weburl']))}">编辑</a>
 	<a href="{ai9me::U('Classify/del',array('token'=>$token,'weburl'=>$vo['weburl']))}">删除</a>
 </td>
 </tr>

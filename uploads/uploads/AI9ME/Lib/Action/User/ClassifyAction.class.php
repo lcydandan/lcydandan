@@ -21,14 +21,8 @@ class ClassifyAction extends UserAction{
 		$this->display();
 	}
 	
-	public function add(){
-		$where['token'] = session('token');
-		//$flashinfo = D('Flash')->where($where)->distinct(true)->field('info')->select();
-		//$this->assign('flashinfo', $flashinfo);
-		$this->display();
-	}
 	
-	public function addNew(){
+	public function add(){
 		$where['token'] = session('token');
 		$flashinfo = D('Flash')->where($where)->distinct(true)->field('info')->select();
 		$this->assign('flash', $flashinfo);
@@ -36,13 +30,6 @@ class ClassifyAction extends UserAction{
 	}
 	
 	public function edit(){
-		$id=$this->_get('id','intval');
-		$info=M('Classify')->find($id);
-		$this->assign('info',$info);
-		$this->display();
-	}
-	
-	public function editNew(){
 		$where['token'] = $this->_get('token');
 		$flash = D('Flash')->where($where)->distinct(true)->field('info')->select();
 		$this->assign('flash', $flash);		
