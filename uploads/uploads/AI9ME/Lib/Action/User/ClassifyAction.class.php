@@ -124,7 +124,6 @@ class ClassifyAction extends UserAction{
  			$data['tpltypeid'] = $tpltypeid;
 			$data['tpltypename'] = $tpltypename;
 			$data['webname'] = $webname;
-			$data['flash'] = $this->_post('flash'.$i);
 			$data['createtime'] = $createtime;
 			$data['updatetime'] = $createtime;
 			
@@ -196,28 +195,36 @@ class ClassifyAction extends UserAction{
 		$token = session('token');
 		$weburl = $this->_post('weburl');
 		$db = M(MODULE_NAME);
-		$flashDb = M('Flash');
 		$where['token'] = $token;
 		$where['weburl']=$weburl;
-		$olddata = $db->where($where)->select();
 		
-		$id = null;
+		$id = false;
 		$webname = $this->_post('webname');
 		$tpltypeid = $this->_post('webmodel');
 		//保留数据的createtime
-		$res = $db->where($where)->select();
-		$createtime = $res[0]['createtime'];
+		$olddatas = $db->where($where)->select();
+		$createtime = $olddatas[0]['createtime'];
 		$updatetime = time();
+		if ($createtime == 0)
+		{
+			$createtime = $updatetime;
+		}
+		$postids = array();
+		$newdata = array();
 		for ($i=0; $i<20; $i++)
 		{
+			$classifyid = $this->_post('id'.$i, 'intval');				
+			if ($classifyid != null)
+			{
+				$postids[] = $classifyid;
+			}	
 			$name = $this->_post('name'.$i);
 			$img = $this->_post('img'.$i);
 			$info = $this->_post('info'.$i);
-			if ($name == null && $img == null && $info == null)
+			if ($classifyid == null && $name == null && $img == null && $info == null)
 			{
 				continue;
 			}
-			$id = null;
 			$data['img'] = $img;
 			$data['url'] = str_replace('&amp;', "&", $this->_post('url'.$i));
 			$data['name'] = $name;
@@ -228,30 +235,45 @@ class ClassifyAction extends UserAction{
 			$data['weburl'] = $weburl;
 			$data['tpltypeid'] = $tpltypeid;
 			$data['webname'] = $webname;
-			$data['flash'] = $this->_post('flash'.$i);
-			$id = (int)$tpltypeid;
 			$data['tpltypename'] = $this->tplarray[(int)($tpltypeid) - 1];
 			$data['createtime'] = $createtime; 
 			$data['updatetime'] = $updatetime;
-			
-			$id = $db->add($data);
-
-			if ($id == false)
+			if ($classifyid != null)
 			{
-				break;
-			}					
+				$data['id'] = $classifyid;
+				$id = $db->save($data);
+			}
+			else 
+			{
+				$data['id'] = null;
+				$newdata[] = $data;
+			}						
 		}
+		
+		//向数据库加入新增的图文信息
+		foreach ($newdata as $vdata)
+		{
+			$id = $db->add($vdata);
+		}
+		
 		if ($id)
 		{
-			//删除原有的数据
-			foreach ($olddata as $old)
+			//从数据库删除被删除的图文信息
+			foreach ($olddatas as $old)
 			{
-				$oldwhere['id'] = $old['id'];
-				$db->where($oldwhere)->delete();
-				$oldwhere['id'] = $old['flashid'];
-				$flashDb->where($oldwhere)->delete();
+				$exist = false;
+				foreach ($postids as $pid)
+				{
+					if ($old['id'] == $pid) {
+						$exist = true;
+						break;
+					}
+				}
+				if ($exist == false)
+				{
+					$db->where(array('id'=>$old['id']))->delete();
+				}
 			}
-			
 			//更新classifyflash数据库
 			$flashinfo = $this->_post('flashinfo');
 			D('classifyflash')->where($where)->delete();
@@ -261,10 +283,10 @@ class ClassifyAction extends UserAction{
 				$flashdata['token'] = $token;
 				D('classifyflash')->add($flashdata);
 			}
-			
+				
 			//更新Home的数据库信息
 			$homeDb = D('Home');
-			$home = $homeDb->where($where)->delete();
+			$homeDb->where($where)->delete();
 			$bgimg = $this->_post('bgimg');
 			if ($bgimg != null)
 			{
