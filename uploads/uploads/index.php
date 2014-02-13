@@ -9,7 +9,7 @@ if (get_magic_quotes_gpc()) {
 	$_GET = array_map('stripslashes_deep', $_GET);
 	$_COOKIE = array_map('stripslashes_deep', $_COOKIE); 
 }
-define('APP_DEBUG',true);
+define('APP_DEBUG',true  );
 define('APP_NAME', 'AI9ME');
 define('CONF_PATH','./AI9MEdata/conf/');
 define('RUNTIME_PATH','./AI9MEdata/logs/');
